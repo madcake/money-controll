@@ -1,0 +1,240 @@
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
+
+package shiny.mc.feature.add_category
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import moneycontroll.composeapp.generated.resources.Res
+import moneycontroll.composeapp.generated.resources.common_cancel
+import moneycontroll.composeapp.generated.resources.common_save
+import moneycontroll.composeapp.generated.resources.error_category_duplicated_title
+import moneycontroll.composeapp.generated.resources.error_category_empty_title
+import moneycontroll.composeapp.generated.resources.placeholders_category_title
+import org.jetbrains.compose.resources.stringResource
+import shiny.mc.core.domain.value.CategoryError
+import shiny.mc.core.domain.value.CategoryType
+import shiny.mc.theme.components.SmallCircularProgressIndicator
+
+@Composable
+fun AddCategoryScene(
+    title: TextFieldState,
+    categoryType: CategoryType,
+    commandState: CommandState<AddCategoryCmd>,
+    onCategoryTypeSelected: (CategoryType) -> Unit,
+    onSave: () -> Unit,
+) {
+    Column(
+        modifier = Modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            state = title,
+            placeholder = { Text(stringResource(Res.string.placeholders_category_title)) },
+            enabled = commandState !is CommandState.Processing,
+            lineLimits = TextFieldLineLimits.SingleLine,
+            leadingIcon = {
+                CategoryTypeMenu(
+                    categoryType = categoryType,
+                    commandState = commandState,
+                    onCategoryTypeSelected = onCategoryTypeSelected,
+                )
+            },
+            trailingIcon = {
+                IconButton(onClick = onSave) {
+                    when (commandState) {
+                        is CommandState.Processing -> SmallCircularProgressIndicator()
+                        CommandState.Idle,
+                        is CommandState.Success,
+                        is CommandState.Failure,
+                            -> Icon(imageVector = Icons.Default.Add, contentDescription = "")
+                    }
+                }
+            }
+        )
+        AddCategoryError(commandState)
+    }
+}
+
+@Composable
+private fun CategoryTypeMenu(
+    categoryType: CategoryType,
+    commandState: CommandState<AddCategoryCmd>,
+    onCategoryTypeSelected: (CategoryType) -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        modifier = Modifier
+            .width(IntrinsicSize.Max)
+            .clip(MaterialTheme.shapes.extraSmall),
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .menuAnchor(ExposedDropdownMenuAnchorType.SecondaryEditable),
+        ) {
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End)
+            ) {
+                Icon(
+                    imageVector = categoryType.icon,
+                    contentDescription = categoryType.name
+                )
+                BasicTextField(
+                    modifier = Modifier
+                        .width(IntrinsicSize.Max),
+                    value = categoryType.name,
+                    onValueChange = { },
+                    readOnly = true,
+                    enabled = commandState !is CommandState.Processing
+                )
+                TrailingIcon(expanded = expanded)
+            }
+        }
+
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+        ) {
+            CategoryType.entries.forEach { item ->
+                DropdownMenuItem(
+                    text = {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = item.icon,
+                                contentDescription = item.name
+                            )
+                            Text(item.name)
+                        }
+                    },
+                    onClick = {
+                        onCategoryTypeSelected(item)
+                        expanded = false
+                    },
+                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun AddCategoryError(commandState: CommandState<AddCategoryCmd>) {
+    val message = when (commandState) {
+        is CommandState.Failure -> when (commandState.err) {
+            is CategoryError.DuplicatedTitle -> stringResource(Res.string.error_category_duplicated_title)
+            is CategoryError.EmptyTitle -> stringResource(Res.string.error_category_empty_title)
+            is CategoryError.UnknownError -> stringResource(Res.string.error_category_duplicated_title, commandState.err)
+            else -> stringResource(Res.string.error_category_duplicated_title, commandState.err.message ?: "")
+        }
+        else -> return
+    }
+    Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = message,
+        color = MaterialTheme.colorScheme.error,
+        style = MaterialTheme.typography.bodySmallEmphasized
+    )
+}
+
+@Composable
+private fun ColumnScope.AddCategoryActions(
+    commandState: CommandState<AddCategoryCmd>,
+    onSave: () -> Unit,
+    onCancel: (() -> Unit)? = null,
+) {
+    Row(
+        modifier = Modifier.align(Alignment.End),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        onCancel?.let {
+            TextButton(onClick = onCancel) {
+                Text(stringResource(Res.string.common_cancel))
+            }
+        }
+
+        TextButton(
+            onClick = onSave,
+            enabled = commandState !is CommandState.Processing
+        ) {
+            Box {
+                when (commandState) {
+                    is CommandState.Processing -> SmallCircularProgressIndicator()
+                    CommandState.Idle,
+                    is CommandState.Success,
+                    is CommandState.Failure,
+                        -> Text(stringResource(Res.string.common_save))
+                }
+            }
+        }
+    }
+}
+
+val CategoryType.icon: ImageVector
+    get() = when (this) {
+        CategoryType.Asset -> Icons.Default.Download
+        CategoryType.Liability -> Icons.Default.Upload
+    }
+
+@Preview
+@Composable
+fun AddCategoryScenePreview() {
+    MaterialTheme {
+        AddCategoryScene(
+            title = rememberTextFieldState(""),
+            categoryType = CategoryType.Liability,
+            commandState = CommandState.Idle,
+            onSave = {},
+            onCategoryTypeSelected = { _ -> },
+        )
+    }
+}
