@@ -1,7 +1,7 @@
-package shiny.mc.feature.records.model
+package shiny.mc.feature.period.model
 
 interface RecordItem {
-    val id: Int
+    val id: String
     val title: String
     val scheduledValue: String
     val realValue: String

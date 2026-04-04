@@ -49,6 +49,7 @@ kotlin {
             implementation(libs.compose.icons)
             implementation(libs.compose.icons.extended)
             implementation(projects.shared)
+            implementation(libs.kotlinx.datetime)
             // Navigation
             implementation(libs.navigation3)
             implementation(libs.navigation3.material3.adaptive)

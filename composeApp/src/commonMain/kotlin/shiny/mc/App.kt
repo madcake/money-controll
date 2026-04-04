@@ -29,7 +29,7 @@ import moneycontroll.composeapp.generated.resources.compose_multiplatform
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.feature.categories.CategoriesNavScreen
-import shiny.mc.feature.records.ExpensesListNavScreen
+import shiny.mc.feature.period.PeriodNavScreen
 import shiny.mc.services.store.RoomStore
 import shiny.mc.services.store.dao.ExpenseDao
 
@@ -39,7 +39,10 @@ object Root : NavKey
 @Serializable
 object Expenses : NavKey
 
-object Categories : NavKey
+class Categories(
+    val month: Int,
+    val year: Int,
+) : NavKey
 
 @Composable
 @Preview
@@ -57,16 +60,18 @@ fun App() {
                 onBack = { backStack.removeLastOrNull() },
                 entryProvider = entryProvider {
                     entry<Expenses> {
-                        ExpensesListNavScreen(
-                            onCategories = { backStack.add(Categories) }
+                        PeriodNavScreen(
+                            onCategories = { month, year ->
+                                backStack.add(Categories(month, year))
+                            }
                         )
                     }
                     entry<Root> {
                         Root({ backStack.add(Expenses) })
                     }
 
-                    entry<Categories> {
-                        CategoriesNavScreen(onCancel = onCancel)
+                    entry<Categories> { it ->
+                        CategoriesNavScreen(it.month, it.year, onCancel = onCancel)
                     }
                 }
             )

@@ -2,10 +2,12 @@ package shiny.mc.theme.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ColumnItem(
     headline: String,
     modifier: Modifier = Modifier,
+    containerColor: Color? = null,
     supporting: String? = null,
     leading: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
@@ -22,6 +25,7 @@ fun ColumnItem(
 ) {
     ColumnItem(
         modifier = modifier,
+        containerColor = containerColor,
         headline = { ColumnItemTitleText(headline) },
         supporting = supporting?.let { { ColumnItemSupportText(supporting) } },
         trailing = trailing,
@@ -35,6 +39,7 @@ fun ColumnItem(
 fun ColumnItem(
     headline: @Composable () -> Unit,
     modifier: Modifier = Modifier,
+    containerColor: Color? = null,
     supporting: @Composable (() -> Unit)? = null,
     leading: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
@@ -47,7 +52,8 @@ fun ColumnItem(
         headlineContent = headline,
         supportingContent = supporting?.let { { supporting() } },
         leadingContent = leading,
-        trailingContent = trailing
+        trailingContent = trailing,
+        colors = if (containerColor == null) ListItemDefaults.colors() else ListItemDefaults.colors().copy(containerColor = containerColor)
     )
 }
 

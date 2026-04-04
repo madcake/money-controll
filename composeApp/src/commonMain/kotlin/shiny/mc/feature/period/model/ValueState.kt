@@ -1,4 +1,4 @@
-package shiny.mc.feature.records.model
+package shiny.mc.feature.period.model
 
 enum class ValueState {
     Deficit,

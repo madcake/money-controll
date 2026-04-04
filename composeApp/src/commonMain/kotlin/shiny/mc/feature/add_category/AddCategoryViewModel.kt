@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +27,7 @@ import shiny.mc.core.domain.value.CategoryType
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
-class AddCategoryViewModel constructor(
+class AddCategoryViewModel(
     private val addCategory: AddCategory,
     private val categoryInputValidator: CategoryInputValidator
 ): ViewModel() {
@@ -67,7 +66,6 @@ class AddCategoryViewModel constructor(
         val (title, type, command) = it
         flow {
             emit(CommandState.Processing(command))
-            delay(5000)
             try {
                 categoryInputValidator.validateCategoryInput(it.first, it.second)
 

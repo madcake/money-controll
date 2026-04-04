@@ -2,6 +2,7 @@ package shiny.mc.core.repositories
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import org.koin.core.annotation.Singleton
 import shiny.mc.core.domain.aggregate.CategoryRecord
@@ -10,6 +11,7 @@ import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.CategoryRecordDao
 import shiny.mc.services.store.entity.toDto
 import shiny.mc.services.store.entity.toEntity
+import kotlin.js.ExperimentalJsReflectionCreateInstance
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Singleton
@@ -50,6 +52,10 @@ class CategoryRepositoryImpl(
         TODO("Not yet implemented")
     }
 
+    override suspend fun addRecords(records: List<CategoryRecord>) {
+        record.insert(records.toEntity())
+    }
+
     override fun getRecords(): Flow<List<CategoryRecord>> {
         TODO("Not yet implemented")
     }
@@ -63,9 +69,9 @@ class CategoryRepositoryImpl(
     }
 
     override fun getRecords(
-        start: Long,
-        end: Long
+        month: Int,
+        year: Int,
     ): Flow<List<CategoryRecord>> {
-        TODO("Not yet implemented")
+        return record.getRecords(month, year).toDto()
     }
 }

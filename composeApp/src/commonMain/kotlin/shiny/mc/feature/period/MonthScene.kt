@@ -15,9 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import shiny.mc.feature.records.RecordsScene
-import shiny.mc.feature.records.model.RecordItem
-import shiny.mc.feature.records.model.ValueState
+import shiny.mc.feature.period.model.RecordItem
+import shiny.mc.feature.period.model.ValueState
 
 @Composable
 fun MonthScene(
@@ -57,10 +56,10 @@ fun MonthScene(
 @Preview
 @Composable
 fun MonthScenePreview() {
-    class Item(override val id: Int) : RecordItem {
+    class Item(override val id: String) : RecordItem {
         override val title: String = "Record Item #$id"
-        override val scheduledValue: String = "${(id + 1000) * 34}"
-        override val realValue: String = "${(id + 1108) * 34}"
+        override val scheduledValue: String = "${(id.toInt() + 1000) * 34}"
+        override val realValue: String = "${(id.toInt() + 1108) * 34}"
         override val valueState: ValueState = ValueState.Surplus
     }
     MaterialTheme {
@@ -69,12 +68,12 @@ fun MonthScenePreview() {
             year = "2026",
             currentDatetime = "02.04.2026",
             items = listOf(
-                Item(1),
-                Item(2),
-                Item(3),
-                Item(4),
-                Item(5),
-                Item(10),
+                Item("1"),
+                Item("2"),
+                Item("3"),
+                Item("4"),
+                Item("5"),
+                Item("10"),
             )
         )
     }

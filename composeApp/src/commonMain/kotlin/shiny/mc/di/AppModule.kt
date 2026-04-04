@@ -6,13 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.singleOf
-import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.KoinAppDeclaration
-import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.plugin.module.dsl.create
-import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
 import shiny.mc.SimpleViewModel
 import shiny.mc.core.coordinators.category.AddCategory
@@ -23,12 +19,16 @@ import shiny.mc.core.coordinators.category.DeleteCategory
 import shiny.mc.core.coordinators.category.DeleteCategoryImpl
 import shiny.mc.core.coordinators.category.SearchCategories
 import shiny.mc.core.coordinators.category.SearchCategoriesImpl
+import shiny.mc.core.coordinators.record.AddRecords
+import shiny.mc.core.coordinators.record.GetPeriodRecords
+import shiny.mc.core.coordinators.records.AddRecordsImpl
+import shiny.mc.core.coordinators.records.GetPeriodRecordsImpl
 import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.CategoryRepositoryImpl
 import shiny.mc.feature.add_category.AddCategoryViewModel
 import shiny.mc.feature.add_expense.AddExpenseViewModel
 import shiny.mc.feature.categories.CategoriesViewModel
-import shiny.mc.feature.records.ExpensesListViewModel
+import shiny.mc.feature.period.PeriodViewModel
 import shiny.mc.services.store.RoomStore
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.CategoryRecordDao
@@ -37,23 +37,14 @@ import shiny.mc.services.store.dao.ExpenseDao
 expect val platformModule: Module
 
 val storeModule = module {
-//    singleOf(::getRoomDatabase)
-//    singleOf(::getExpenseDao)
-//    singleOf(::getCategoryDao)
-//    singleOf(::getCategoryRecordDao)
     single<RoomStore> { create(::getRoomDatabase) }
     single<ExpenseDao> { create(::getExpenseDao) }
     single<CategoryDao> { create(::getCategoryDao) }
     single<CategoryRecordDao> { create(::getCategoryRecordDao) }
-//    single { getRoomDatabase(get()) }
-//    single { get<RoomStore>().expenseDao() }
-//    single { get<RoomStore>().categoryDao() }
-//    single { get<RoomStore>().categoryRecordDao() }
 }
 
 val repositoryModule = module {
     single<CategoryRepository> { create(::CategoryRepositoryImpl) }
-//    single<CategoryRepositoryImpl>() bind CategoryRepository::class
 }
 
 val coordinateModule = module {
@@ -61,11 +52,13 @@ val coordinateModule = module {
     single<CategoryInputValidator> { create(::CategoryInputValidatorImpl) }
     single<SearchCategories> { create(::SearchCategoriesImpl) }
     single<DeleteCategory> { create(::DeleteCategoryImpl) }
+    single<GetPeriodRecords> { create(::GetPeriodRecordsImpl) }
+    single<AddRecords> { create(::AddRecordsImpl) }
 }
 
 val viewModelModule = module {
     viewModel<SimpleViewModel>()
-    viewModel<ExpensesListViewModel>()
+    viewModel<PeriodViewModel>()
     viewModel<AddExpenseViewModel>()
     viewModel<AddCategoryViewModel>()
     viewModel<CategoriesViewModel>()

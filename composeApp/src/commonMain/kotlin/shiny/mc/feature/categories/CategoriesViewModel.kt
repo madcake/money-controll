@@ -13,12 +13,16 @@ import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
 import shiny.mc.core.coordinators.category.DeleteCategory
 import shiny.mc.core.coordinators.category.SearchCategories
+import shiny.mc.core.coordinators.record.AddRecord
+import shiny.mc.core.coordinators.record.AddRecords
+import shiny.mc.core.domain.entity.Category
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
-class CategoriesViewModel constructor(
+class CategoriesViewModel(
     private val searchCategories: SearchCategories,
     private val deleteCategory: DeleteCategory,
+    private val addRecords: AddRecords
 ) : ViewModel() {
     val queryState = TextFieldState("")
     val query = snapshotFlow { queryState.text.toString() }
@@ -30,4 +34,8 @@ class CategoriesViewModel constructor(
         id ?: return
         viewModelScope.launch { deleteCategory.deleteCategory(id) }
     }
+
+       fun addToPeriod(categories: List<Category>, month: Int, year: Int) = viewModelScope.launch {
+           addRecords.addRecords(categories, month, year)
+       }
 }

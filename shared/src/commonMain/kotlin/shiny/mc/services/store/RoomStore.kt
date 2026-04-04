@@ -7,12 +7,11 @@ import androidx.room.RoomDatabaseConstructor
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import org.koin.core.annotation.Singleton
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.CategoryRecordDao
 import shiny.mc.services.store.dao.ExpenseDao
 import shiny.mc.services.store.entity.CategoryEntity
-import shiny.mc.services.store.entity.CategoryRecordEntity
+import shiny.mc.services.store.entity.RecordEntity
 import shiny.mc.services.store.entity.Expense
 import shiny.mc.services.store.entity.TokenEntity
 import shiny.mc.services.store.entity.TransactionEntity
@@ -21,7 +20,7 @@ import shiny.mc.services.store.entity.TransactionEntity
     entities = [
         Expense::class,
         CategoryEntity::class,
-        CategoryRecordEntity::class,
+        RecordEntity::class,
         TokenEntity::class,
         TransactionEntity::class,
     ],

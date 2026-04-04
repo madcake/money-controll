@@ -1,8 +1,6 @@
-package shiny.mc.feature.records
+package shiny.mc.feature.period
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,25 +21,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.feature.add_expense.AddExpenseNavScreen
-import shiny.mc.feature.records.components.RecordItemView
-import shiny.mc.feature.records.model.RecordItem
-import shiny.mc.feature.records.model.ValueState
+import shiny.mc.feature.period.components.RecordItemView
+import shiny.mc.feature.period.model.RecordItem
+import shiny.mc.feature.period.model.ValueState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ExpensesListNavScreen(
-    onCategories: () -> Unit,
-    viewModel: ExpensesListViewModel = koinViewModel<ExpensesListViewModel>()
+fun PeriodNavScreen(
+    onCategories: (Int, Int) -> Unit,
+    viewModel: PeriodViewModel = koinViewModel<PeriodViewModel>()
 ) {
-    val items by viewModel.items.collectAsStateWithLifecycle()
+    val period by viewModel.period.collectAsStateWithLifecycle()
+    val items by viewModel.records.collectAsStateWithLifecycle()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Expenses") },
+                title = { Text(period) },
                 actions = {
                     IconButton(
-                        onClick = onCategories
+                        onClick = { onCategories(4, 2026) }
                     ) {
                         Icon(imageVector = Icons.Default.Category, contentDescription = null)
                     }
@@ -49,38 +48,20 @@ fun ExpensesListNavScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
+        RecordsScene(
             modifier = Modifier.padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            item {
-                AddExpenseNavScreen()
-            }
-            items(items) { item ->
-                Column {
-                    Row {
-                        Column {
-                            Text(item.title)
-                            Text(item.description)
-                        }
-                        Column {
-                            Text("${item.plannedValue}")
-                            Text("${item.realValue}")
-                        }
-                    }
-                    Text(item.type.name)
-                }
-            }
-        }
+            items = items,
+        )
     }
 }
 
 @Composable
 fun RecordsScene(
     items: List<RecordItem>,
+    modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items, key = { it.id }) { item ->
@@ -92,22 +73,22 @@ fun RecordsScene(
 @Preview
 @Composable
 fun RecordsScenePreview() {
-    class Item(override val id: Int) : RecordItem {
+    class Item(override val id: String) : RecordItem {
         override val title: String = "Record Item #$id"
-        override val scheduledValue: String = "${(id + 1000) * 34}"
-        override val realValue: String = "${(id + 1108) * 34}"
+        override val scheduledValue: String = "${(id.toInt() + 1000) * 34}"
+        override val realValue: String = "${(id.toInt() + 1108) * 34}"
         override val valueState: ValueState = ValueState.Surplus
     }
 
     MaterialTheme {
         RecordsScene(
             items = listOf(
-                Item(1),
-                Item(2),
-                Item(3),
-                Item(4),
-                Item(5),
-                Item(10),
+                Item("1"),
+                Item("2"),
+                Item("3"),
+                Item("4"),
+                Item("5"),
+                Item("10"),
             )
         )
     }

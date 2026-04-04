@@ -70,6 +70,14 @@ interface CategoryRepository {
     suspend fun addRecord(record: CategoryRecord)
 
     /**
+     * Add records for category
+     *
+     * @param records Category record object
+     * @throws shiny.mc.core.domain.value.CategoryError
+     */
+    suspend fun addRecords(records: List<CategoryRecord>)
+
+    /**
      * Get all records in store
      *
      * @return records
@@ -96,13 +104,13 @@ interface CategoryRepository {
     fun getRecords(categoryId: Long): Flow<List<CategoryRecord>>
 
     /**
-     * Get records by period
+     * Get records by period. Period equals month.
      *
-     * @param start period start in unix timestamp ms
-     * @param end period end in unix timestamp ms
+     * @param month month number start from 1 (Junuary)
+     * @param year year number
      * @return category record or empty list
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    fun getRecords(start: Long, end: Long): Flow<List<CategoryRecord>>
+    fun getRecords(month: Int, year: Int): Flow<List<CategoryRecord>>
 }
 
