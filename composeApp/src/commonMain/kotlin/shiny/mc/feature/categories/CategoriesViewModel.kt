@@ -4,7 +4,6 @@ import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Delete
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
@@ -13,7 +12,6 @@ import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
 import shiny.mc.core.coordinators.category.DeleteCategory
 import shiny.mc.core.coordinators.category.SearchCategories
-import shiny.mc.core.coordinators.record.AddRecord
 import shiny.mc.core.coordinators.record.AddRecords
 import shiny.mc.core.domain.entity.Category
 
