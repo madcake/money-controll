@@ -27,7 +27,7 @@ import shiny.mc.services.store.entity.TransactionEntity
     version = 1,
     exportSchema = false,
 )
-//@TypeConverters(Converters::class)
+
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class RoomStore : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao
@@ -35,7 +35,7 @@ abstract class RoomStore : RoomDatabase() {
     abstract fun categoryRecordDao(): CategoryRecordDao
 }
 
-// The Room compiler generates the `actual` implementations.
+
 @Suppress("KotlinNoActualForExpect", "EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<RoomStore> {
     override fun initialize(): RoomStore
@@ -51,5 +51,3 @@ fun getStore(
         .setQueryCoroutineContext(Dispatchers.IO)
         .build()
 }
-
-fun getExpenseDao(store: RoomStore): ExpenseDao = store.expenseDao()

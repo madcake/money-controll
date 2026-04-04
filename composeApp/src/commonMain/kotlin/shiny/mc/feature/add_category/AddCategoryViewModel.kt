@@ -45,9 +45,9 @@ class AddCategoryViewModel(
     ) { title, type ->
         try {
             categoryInputValidator.validateCategoryInput(title, type)
-        } catch (err: CategoryError) {
+        } catch (_: CategoryError) {
             false
-        } catch (err: Throwable) {
+        } catch (_: Throwable) {
             false
         }
     }
@@ -106,12 +106,6 @@ class AddCategoryViewModel(
 
     fun onSave() {
         command.update { AddCategoryCmd.Save() }
-//        viewModelScope.launch {
-//            val title = title.value
-//            val type = type.value
-//            titleState.clearText()
-//            addCategory.addCategory(title, type)
-//        }
     }
 }
 
@@ -120,7 +114,7 @@ sealed interface AddCategoryCmd {
     class Save : AddCategoryCmd
 }
 
-sealed class CommandState<Command>(command: Command? = null) {
+sealed class CommandState<Command>(val command: Command? = null) {
     object Idle : CommandState<AddCategoryCmd>()
     class Processing<Command>(command: Command) : CommandState<Command>(command)
     class Success<Command>(command: Command) : CommandState<Command>(command)

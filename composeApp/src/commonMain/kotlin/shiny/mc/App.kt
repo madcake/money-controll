@@ -71,61 +71,15 @@ fun App() {
                         )
                     }
                     entry<Root> {
-                        Root({ backStack.add(Expenses) })
+
                     }
 
-                    entry<Categories> { it ->
+                    entry<Categories> {
                         CategoriesNavScreen(it.month, it.year, onCancel = onCancel)
                     }
                 }
             )
         }
 
-    }
-}
-
-@Composable
-fun Expenses(obj: Expenses) {
-    val viewModel = koinViewModel<SimpleViewModel>()
-    val items by viewModel.items.collectAsStateWithLifecycle();
-    Column {
-        items.forEach {
-            Text(it.title)
-        }
-    }
-}
-
-@Composable
-fun Root(
-    onExpenses: () -> Unit,
-) {
-    val store = koinInject<RoomStore>()
-    val dao = koinInject<ExpenseDao>()
-    val viewModel = koinViewModel<SimpleViewModel>()
-    dao.getExpanses()
-    var showContent by remember { mutableStateOf(false) }
-    Column(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.primaryContainer)
-            .safeContentPadding()
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Button(onClick = { showContent = !showContent }) {
-            Text("Click me!")
-        }
-        Button(onExpenses) {
-            Text("Expenses")
-        }
-        AnimatedVisibility(showContent) {
-            val greeting = remember { Greeting().greet() }
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Image(painterResource(Res.drawable.compose_multiplatform), null)
-                Text("Compose: $greeting")
-            }
-        }
     }
 }
