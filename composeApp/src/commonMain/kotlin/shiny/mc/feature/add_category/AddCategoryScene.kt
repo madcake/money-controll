@@ -83,7 +83,7 @@ fun AddCategoryScene(
                 IconButton(onClick = onSave) {
                     when (commandState) {
                         is CommandState.Processing -> SmallCircularProgressIndicator()
-                        CommandState.Idle,
+                        is CommandState.Idle,
                         is CommandState.Success,
                         is CommandState.Failure,
                             -> Icon(imageVector = Icons.Default.Add, contentDescription = "")
@@ -209,7 +209,7 @@ private fun ColumnScope.AddCategoryActions(
             Box {
                 when (commandState) {
                     is CommandState.Processing -> SmallCircularProgressIndicator()
-                    CommandState.Idle,
+                    is CommandState.Idle,
                     is CommandState.Success,
                     is CommandState.Failure,
                         -> Text(stringResource(Res.string.common_save))
@@ -232,7 +232,7 @@ fun AddCategoryScenePreview() {
         AddCategoryScene(
             title = rememberTextFieldState(""),
             categoryType = CategoryType.Liability,
-            commandState = CommandState.Idle,
+            commandState = CommandState.Idle(),
             onSave = {},
             onCategoryTypeSelected = { _ -> },
         )

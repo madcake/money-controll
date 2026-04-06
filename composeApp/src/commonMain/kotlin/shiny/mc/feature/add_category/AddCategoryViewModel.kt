@@ -54,7 +54,7 @@ class AddCategoryViewModel(
     .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
-    val command = MutableStateFlow<AddCategoryCmd>(AddCategoryCmd.None)
+    private val command = MutableStateFlow<AddCategoryCmd>(AddCategoryCmd.None)
 
     val commandState = combine(
         title.onEach { command.update { AddCategoryCmd.None } },
@@ -89,7 +89,7 @@ class AddCategoryViewModel(
         when (state) {
             is CommandState.Failure,
             is CommandState.Success -> command.update { AddCategoryCmd.None } // Reset command
-            CommandState.Idle,
+            is CommandState.Idle,
             is CommandState.Processing -> {}
         }
     }
@@ -98,7 +98,7 @@ class AddCategoryViewModel(
             titleState.clearText()
         }
     }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), CommandState.Idle)
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), CommandState.Idle())
 
     fun onCategoryTypeSelected(type: CategoryType) {
         this.type.update { type }
@@ -115,7 +115,7 @@ sealed interface AddCategoryCmd {
 }
 
 sealed class CommandState<Command>(val command: Command? = null) {
-    object Idle : CommandState<AddCategoryCmd>()
+    class Idle<Command> : CommandState<Command>()
     class Processing<Command>(command: Command) : CommandState<Command>(command)
     class Success<Command>(command: Command) : CommandState<Command>(command)
     class Failure<Command>(val err: Throwable, command: Command) : CommandState<Command>(command)

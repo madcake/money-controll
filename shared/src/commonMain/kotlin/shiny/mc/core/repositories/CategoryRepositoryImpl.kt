@@ -2,6 +2,7 @@ package shiny.mc.core.repositories
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import org.koin.core.annotation.Singleton
 import shiny.mc.core.domain.aggregate.CategoryRecord
@@ -47,7 +48,7 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun addRecord(record: CategoryRecord) {
-        TODO("Not yet implemented")
+        addRecords(listOf(record))
     }
 
     override suspend fun addRecords(records: List<CategoryRecord>) {
@@ -59,7 +60,7 @@ class CategoryRepositoryImpl(
     }
 
     override fun getRecord(recordId: String): Flow<CategoryRecord?> {
-        TODO("Not yet implemented")
+        return record.getRecord(recordId).map { it?.toDto() }
     }
 
     override fun getRecords(categoryId: Long): Flow<List<CategoryRecord>> {

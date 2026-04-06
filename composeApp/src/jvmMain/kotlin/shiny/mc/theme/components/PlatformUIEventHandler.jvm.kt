@@ -9,9 +9,12 @@ import androidx.compose.ui.input.pointer.PointerButton
 @OptIn(ExperimentalFoundationApi::class)
 actual fun Modifier.itemEventHandler(
     onMenu: (() -> Unit)?,
-    onClick: () -> Unit
+    onClick: (() -> Unit)?,
 ): Modifier {
-    val modifier = onClick(matcher = PointerMatcher.Primary, onClick = onClick)
+    if (onMenu == null && onClick == null) {
+        return Modifier
+    }
+    val modifier = onClick(matcher = PointerMatcher.Primary, onClick = onClick ?: {})
     return if (onMenu != null) {
         modifier.onClick(
             matcher = PointerMatcher.mouse(PointerButton.Secondary),

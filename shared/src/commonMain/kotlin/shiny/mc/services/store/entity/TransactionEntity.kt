@@ -3,29 +3,49 @@ package shiny.mc.services.store.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
-import androidx.room.ForeignKey.Companion.NO_ACTION
 import androidx.room.PrimaryKey
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.mapLatest
+import shiny.mc.core.domain.entity.Transaction
 
 @Entity(
+    tableName = "record_transaction",
     foreignKeys = [
         ForeignKey(
             entity = RecordEntity::class,
             parentColumns = ["id"],
-            childColumns = ["categoryRecordId"],
+            childColumns = ["recordId"],
             onDelete = CASCADE,
-        ),
-        ForeignKey(
-            entity = TokenEntity::class,
-            parentColumns = ["id"],
-            childColumns = ["tokenId"],
-            onDelete = NO_ACTION,
         ),
     ]
 )
 class TransactionEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val categoryRecordId: String,
+    @PrimaryKey(autoGenerate = true) val id: Long,
+    val recordId: String,
     val value: Float,
-    val datetime: Long? = null,
-    val tokenId: Int? = null,
+    val purpose: String,
+    val datetime: Long,
 )
+
+fun TransactionEntity.toDto() = Transaction(
+    id = id,
+    purpose = purpose,
+    value = value,
+    datetime = datetime,
+)
+
+fun List<TransactionEntity>.toDto() = map { it.toDto() }
+
+@OptIn(ExperimentalCoroutinesApi::class)
+fun Flow<List<TransactionEntity>>.toDto() = mapLatest { it.toDto() }
+
+fun Transaction.toEntity(recordId: String) = TransactionEntity(
+    id = id ?: 0,
+    recordId = recordId,
+    purpose = purpose,
+    value = value,
+    datetime = datetime,
+)
+
+fun List<Transaction>.toEntity(recordId: String) = map { it.toEntity(recordId) }

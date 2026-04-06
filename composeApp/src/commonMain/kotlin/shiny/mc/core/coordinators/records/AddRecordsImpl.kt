@@ -17,10 +17,12 @@ class AddRecordsImpl(
         month: Int,
         year: Int
     ) = withContext(Dispatchers.IO) {
+
         categoryRepository.addRecords(
             records = categories.map {
+                val recordId = "${it.id}:$month:$year"
                 CategoryRecord(
-                    id = "",
+                    id = recordId,
                     category = it,
                     month = month,
                     year = year,

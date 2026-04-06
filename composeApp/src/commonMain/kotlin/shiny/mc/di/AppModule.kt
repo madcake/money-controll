@@ -21,18 +21,29 @@ import shiny.mc.core.coordinators.category.SearchCategories
 import shiny.mc.core.coordinators.category.SearchCategoriesImpl
 import shiny.mc.core.coordinators.record.AddRecords
 import shiny.mc.core.coordinators.record.GetPeriodRecords
+import shiny.mc.core.coordinators.record.GetRecord
 import shiny.mc.core.coordinators.records.AddRecordsImpl
 import shiny.mc.core.coordinators.records.GetPeriodRecordsImpl
+import shiny.mc.core.coordinators.records.GetRecordImpl
+import shiny.mc.core.coordinators.transaction.AddRecordTransaction
+import shiny.mc.core.coordinators.transaction.AddRecordTransactionImpl
+import shiny.mc.core.coordinators.transaction.GetRecordTransactions
+import shiny.mc.core.coordinators.transaction.GetRecordTransactionsImpl
 import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.CategoryRepositoryImpl
+import shiny.mc.core.repositories.TransactionRepository
+import shiny.mc.core.repositories.TransactionRepositoryImpl
 import shiny.mc.feature.add_category.AddCategoryViewModel
 import shiny.mc.feature.add_expense.AddExpenseViewModel
+import shiny.mc.feature.add_transaction.AddTransactionViewModel
 import shiny.mc.feature.categories.CategoriesViewModel
 import shiny.mc.feature.period.PeriodViewModel
+import shiny.mc.feature.record.RecordViewModel
 import shiny.mc.services.store.RoomStore
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.CategoryRecordDao
 import shiny.mc.services.store.dao.ExpenseDao
+import shiny.mc.services.store.dao.TransactionDao
 
 expect val platformModule: Module
 
@@ -41,10 +52,12 @@ val storeModule = module {
     single<ExpenseDao> { create(::getExpenseDao) }
     single<CategoryDao> { create(::getCategoryDao) }
     single<CategoryRecordDao> { create(::getCategoryRecordDao) }
+    single<TransactionDao> { create(::getTransactionDao) }
 }
 
 val repositoryModule = module {
     single<CategoryRepository> { create(::CategoryRepositoryImpl) }
+    single<TransactionRepository> { create(::TransactionRepositoryImpl) }
 }
 
 val coordinateModule = module {
@@ -54,6 +67,9 @@ val coordinateModule = module {
     single<DeleteCategory> { create(::DeleteCategoryImpl) }
     single<GetPeriodRecords> { create(::GetPeriodRecordsImpl) }
     single<AddRecords> { create(::AddRecordsImpl) }
+    single<GetRecord> { create(::GetRecordImpl) }
+    single<GetRecordTransactions> { create(::GetRecordTransactionsImpl) }
+    single<AddRecordTransaction> { create(::AddRecordTransactionImpl) }
 }
 
 val viewModelModule = module {
@@ -62,6 +78,8 @@ val viewModelModule = module {
     viewModel<AddExpenseViewModel>()
     viewModel<AddCategoryViewModel>()
     viewModel<CategoriesViewModel>()
+    viewModel<RecordViewModel>()
+    viewModel<AddTransactionViewModel>()
 }
 
 fun getRoomDatabase(
@@ -85,6 +103,10 @@ fun getCategoryDao(store: RoomStore): CategoryDao {
 
 fun getCategoryRecordDao(store: RoomStore): CategoryRecordDao {
     return store.categoryRecordDao()
+}
+
+fun getTransactionDao(store: RoomStore): TransactionDao {
+    return store.transactionDao()
 }
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {

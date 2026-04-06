@@ -5,8 +5,12 @@ import androidx.compose.ui.Modifier
 
 actual fun Modifier.itemEventHandler(
     onMenu: (() -> Unit)?,
-    onClick: () -> Unit
-): Modifier = combinedClickable(
-    onClick = onClick,
-    onLongClick = onMenu,
-)
+    onClick: (() -> Unit)?,
+): Modifier = if (onMenu == null && onClick == null) {
+    return Modifier
+} else {
+    combinedClickable(
+        onClick = onClick ?: {},
+        onLongClick = onMenu,
+    )
+}

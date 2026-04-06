@@ -11,11 +11,12 @@ import shiny.mc.theme.components.ColumnItemValue
 @Composable
 fun RecordItemView(
     item: RecordItem,
+    onClick: () -> Unit,
 ) {
     ColumnItem(
         headline = item.title,
         trailing = { ColumnItemValue(item.scheduledValue, item.realValue) },
-        onClick = {}
+        onClick = onClick,
     )
 }
 
@@ -30,7 +31,8 @@ fun RecordItemViewPreview() {
                 override val scheduledValue: String = "150 000"
                 override val realValue: String = "170 000"
                 override val valueState: ValueState = ValueState.Surplus
-            }
+            },
+            onClick = {},
         )
     }
 }

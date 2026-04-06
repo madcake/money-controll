@@ -24,6 +24,7 @@ fun MonthScene(
     year: String,
     currentDatetime: String,
     items: List<RecordItem>,
+    onRecord: (String) -> Unit,
 ) {
     Column(
         modifier = Modifier.padding(16.dp),
@@ -49,6 +50,7 @@ fun MonthScene(
         }
         RecordsScene(
             items = items,
+            onRecord = onRecord,
         )
     }
 }
@@ -74,7 +76,8 @@ fun MonthScenePreview() {
                 Item("4"),
                 Item("5"),
                 Item("10"),
-            )
+            ),
+            onRecord = {}
         )
     }
 }

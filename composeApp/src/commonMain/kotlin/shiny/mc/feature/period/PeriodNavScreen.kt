@@ -29,6 +29,7 @@ import shiny.mc.feature.period.model.ValueState
 @Composable
 fun PeriodNavScreen(
     onCategories: (Int, Int) -> Unit,
+    onRecord: (String) -> Unit,
     viewModel: PeriodViewModel = koinViewModel<PeriodViewModel>()
 ) {
     val period by viewModel.period.collectAsStateWithLifecycle()
@@ -51,6 +52,7 @@ fun PeriodNavScreen(
         RecordsScene(
             modifier = Modifier.padding(innerPadding),
             items = items,
+            onRecord = onRecord,
         )
     }
 }
@@ -58,6 +60,7 @@ fun PeriodNavScreen(
 @Composable
 fun RecordsScene(
     items: List<RecordItem>,
+    onRecord: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -65,7 +68,9 @@ fun RecordsScene(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(items, key = { it.id }) { item ->
-            RecordItemView(item)
+            RecordItemView(item) {
+                onRecord(item.id)
+            }
         }
     }
 }
@@ -89,7 +94,8 @@ fun RecordsScenePreview() {
                 Item("4"),
                 Item("5"),
                 Item("10"),
-            )
+            ),
+            onRecord = {},
         )
     }
 }

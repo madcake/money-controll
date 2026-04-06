@@ -15,12 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 fun ColumnItem(
     headline: String,
     modifier: Modifier = Modifier,
-    containerColor: Color? = null,
     supporting: String? = null,
+    containerColor: Color? = null,
     leading: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
     onMenu: (() -> Unit)? = null,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) {
     ColumnItem(
         modifier = modifier,
@@ -43,7 +43,7 @@ fun ColumnItem(
     leading: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
     onMenu: (() -> Unit)? = null,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) {
     ListItem(
         modifier = modifier
