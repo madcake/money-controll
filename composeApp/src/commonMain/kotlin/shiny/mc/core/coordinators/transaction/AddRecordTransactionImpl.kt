@@ -8,7 +8,7 @@ class AddRecordTransactionImpl(
 ) : AddRecordTransaction {
     override suspend fun addTransaction(
         recordId: String,
-        value: Float,
+        value: Double,
         purpose: String,
         datetime: Long
     ) {

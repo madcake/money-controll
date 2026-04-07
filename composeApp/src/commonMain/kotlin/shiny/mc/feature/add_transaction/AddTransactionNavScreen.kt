@@ -4,13 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AddTransactionNavScreen(
     onCancel: () -> Unit,
     recordId: String,
-    viewModel: AddTransactionViewModel = koinViewModel { parametersOf(recordId) }
+    viewModel: AddTransactionViewModel = koinViewModel()
 ) {
     val date by viewModel.date.collectAsStateWithLifecycle()
     val commandState by viewModel.commandState.collectAsStateWithLifecycle()
@@ -21,6 +20,6 @@ fun AddTransactionNavScreen(
         purpose = viewModel.purposeState,
         date = date,
         onDateSelect = viewModel::date,
-        onAdd = viewModel::add,
+        onAdd = { viewModel.add(recordId) },
     )
 }

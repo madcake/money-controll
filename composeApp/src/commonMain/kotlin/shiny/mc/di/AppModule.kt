@@ -44,8 +44,8 @@ import shiny.mc.feature.record.EditRecordViewModel
 import shiny.mc.feature.record.RecordViewModel
 import shiny.mc.services.store.RoomStore
 import shiny.mc.services.store.dao.CategoryDao
-import shiny.mc.services.store.dao.CategoryRecordDao
 import shiny.mc.services.store.dao.ExpenseDao
+import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.dao.TransactionDao
 
 expect val platformModule: Module
@@ -54,7 +54,7 @@ val storeModule = module {
     single<RoomStore> { create(::getRoomDatabase) }
     single<ExpenseDao> { create(::getExpenseDao) }
     single<CategoryDao> { create(::getCategoryDao) }
-    single<CategoryRecordDao> { create(::getCategoryRecordDao) }
+    single<RecordDao> { create(::getCategoryRecordDao) }
     single<TransactionDao> { create(::getTransactionDao) }
 }
 
@@ -106,7 +106,7 @@ fun getCategoryDao(store: RoomStore): CategoryDao {
     return store.categoryDao()
 }
 
-fun getCategoryRecordDao(store: RoomStore): CategoryRecordDao {
+fun getCategoryRecordDao(store: RoomStore): RecordDao {
     return store.categoryRecordDao()
 }
 

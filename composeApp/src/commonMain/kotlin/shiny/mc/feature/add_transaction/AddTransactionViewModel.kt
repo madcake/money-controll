@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import org.koin.core.annotation.InjectedParam
 import org.koin.core.annotation.KoinViewModel
 import shiny.mc.core.coordinators.transaction.AddRecordTransaction
 import shiny.mc.feature.add_category.CommandState
@@ -29,7 +28,6 @@ import kotlin.time.Clock
 @KoinViewModel
 class AddTransactionViewModel(
     private val addRecordTransaction: AddRecordTransaction,
-    @InjectedParam private val recordId: String,
 ) : ViewModel() {
 
     val purposeState = TextFieldState()
@@ -52,7 +50,7 @@ class AddTransactionViewModel(
     ) { purpose, value, date, command ->
         when (command) {
             is AddTransactionCommand.Add -> AddTransactionCommand.Save(
-                recordId = recordId,
+                recordId = command.recordId,
                 purpose =  purpose,
                 value = value,
                 date = date,
@@ -70,7 +68,7 @@ class AddTransactionViewModel(
             try {
                 addRecordTransaction.addTransaction(
                     recordId = recordId,
-                    value = value.toFloat(),
+                    value = value.toDouble(),
                     purpose = purpose,
                     datetime = date,
                 )
@@ -94,8 +92,8 @@ class AddTransactionViewModel(
     .flowOn(Dispatchers.IO)
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CommandState.Idle())
 
-    fun add() {
-        command.update { AddTransactionCommand.Add }
+    fun add(recordId: String) {
+        command.update { AddTransactionCommand.Add(recordId) }
     }
 
     fun date(date: Long?) {
@@ -116,7 +114,7 @@ class AddTransactionViewModel(
 
 sealed interface AddTransactionCommand {
     object None : AddTransactionCommand
-    object Add : AddTransactionCommand
+    data class Add(val recordId: String) : AddTransactionCommand
     data class Save(
         val recordId: String,
         val purpose: String,

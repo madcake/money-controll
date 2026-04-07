@@ -8,7 +8,7 @@ import org.koin.core.annotation.Singleton
 import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.entity.Category
 import shiny.mc.services.store.dao.CategoryDao
-import shiny.mc.services.store.dao.CategoryRecordDao
+import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.entity.toDto
 import shiny.mc.services.store.entity.toEntity
 
@@ -16,7 +16,7 @@ import shiny.mc.services.store.entity.toEntity
 @Singleton
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
-    private val recordDao: CategoryRecordDao,
+    private val recordDao: RecordDao,
 ) : CategoryRepository {
     override fun getCategories(): Flow<List<Category>> {
         return categoryDao.getCategories().toDto()

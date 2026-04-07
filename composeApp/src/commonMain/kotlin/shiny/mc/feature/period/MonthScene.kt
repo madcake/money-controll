@@ -59,7 +59,7 @@ fun MonthScene(
 fun MonthScenePreview() {
     class Item(override val id: String) : RecordItem {
         override val title: String = "Record Item #$id"
-        override val scheduledValue: String = "${(id.toInt() + 1000) * 34}"
+        override val scheduledValue: String = "${(id.toInt()) * 3400}"
         override val realValue: String = "${(id.toInt() + 1108) * 34}"
         override val valueState: ValueState = ValueState.Surplus
     }
@@ -68,7 +68,7 @@ fun MonthScenePreview() {
             month = "April",
             year = "2026",
             items = listOf(
-                Item("1"),
+                Item("0"),
                 Item("2"),
                 Item("3"),
                 Item("4"),

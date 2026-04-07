@@ -22,6 +22,7 @@ import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.feature.period.model.ValueState
+import shiny.mc.platform.format
 import kotlin.time.Clock
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -61,7 +62,11 @@ class PeriodViewModel(
 private class RecordItemImpl(data: Record) : RecordItem {
     override val id: String = data.id
     override val title: String = data.category.title
-    override val scheduledValue: String = data.scheduledValue.toString()
-    override val realValue: String = "0.0"
-    override val valueState: ValueState = ValueState.Surplus
+    override val scheduledValue: String = data.scheduledValue.format()
+    override val realValue: String = data.realValue.format()
+    override val valueState: ValueState = if (data.scheduledValue >= data.realValue) {
+        ValueState.Surplus
+    } else {
+        ValueState.Deficit
+    }
 }

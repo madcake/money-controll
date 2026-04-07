@@ -19,11 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.domain.entity.Transaction
 import shiny.mc.feature.add_transaction.AddTransactionNavScreen
+import shiny.mc.platform.format
 import shiny.mc.theme.components.ColumnItem
 import shiny.mc.theme.components.ColumnItemValue
+import kotlin.time.Instant
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -78,11 +85,18 @@ fun RecordNavScreen(
     }
 }
 
+@OptIn(FormatStringsInDatetimeFormats::class)
 @Composable
 private fun TransactionItem(tx: Transaction) {
     ColumnItem(
         headline = tx.purpose,
-        supporting = tx.datetime.toString(),
-        trailing = { ColumnItemValue(tx.value.toString(), "") }
+        supporting = tx.datetime.let {
+            val date = Instant.fromEpochMilliseconds(it).toLocalDateTime(TimeZone.currentSystemDefault())
+            LocalDateTime.Format {
+                byUnicodePattern("dd MM yyyy")
+            }.format(date)
+//            "${date.day} ${date.month.number} ${date.year}"
+        },
+        trailing = { ColumnItemValue(tx.value.format(), "") }
     )
 }

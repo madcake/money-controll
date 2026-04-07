@@ -15,7 +15,16 @@ fun RecordItemView(
 ) {
     ColumnItem(
         headline = item.title,
-        trailing = { ColumnItemValue(item.scheduledValue, item.realValue) },
+        trailing = {
+            ColumnItemValue(
+                value = item.scheduledValue,
+                supportValue = item.realValue,
+                supportColor = when (item.valueState) {
+                    ValueState.Deficit -> MaterialTheme.colorScheme.error
+                    ValueState.Surplus -> MaterialTheme.colorScheme.secondary
+                }
+            )
+        },
         onClick = onClick,
     )
 }

@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import shiny.mc.services.store.dao.CategoryDao
-import shiny.mc.services.store.dao.CategoryRecordDao
 import shiny.mc.services.store.dao.ExpenseDao
+import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.dao.TransactionDao
 import shiny.mc.services.store.entity.CategoryEntity
 import shiny.mc.services.store.entity.Expense
@@ -30,7 +30,7 @@ import shiny.mc.services.store.entity.TransactionEntity
 abstract class RoomStore : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao
     abstract fun categoryDao(): CategoryDao
-    abstract fun categoryRecordDao(): CategoryRecordDao
+    abstract fun categoryRecordDao(): RecordDao
     abstract fun transactionDao(): TransactionDao
 }
 

@@ -6,6 +6,7 @@ import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
@@ -82,15 +83,20 @@ fun ColumnItemSupportText(
 fun ColumnItemValue(
     value: String,
     supportValue: String,
+    valueColor: Color = Color.Unspecified,
+    supportColor: Color = Color.Unspecified,
 ) {
-    Column {
+    Column(
+        horizontalAlignment = Alignment.End
+    ) {
         Text(
             text = value,
+            color = valueColor,
             style = MaterialTheme.typography.bodyMedium,
         )
         Text(
             text = supportValue,
-            color = MaterialTheme.colorScheme.error,
+            color = supportColor,
             style = MaterialTheme.typography.bodyMedium,
         )
     }
@@ -106,7 +112,7 @@ fun PreviewColumnItem() {
             trailing = {
                 ColumnItemValue(
                     value = "1000.34",
-                    supportValue = "1100.89"
+                    supportValue = "0"
                 )
             },
             onClick = {}

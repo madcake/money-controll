@@ -23,7 +23,7 @@ import shiny.mc.core.domain.entity.Transaction
 class TransactionEntity(
     @PrimaryKey(autoGenerate = true) val id: Long,
     val recordId: String,
-    val value: Float,
+    val value: Double,
     val purpose: String,
     val datetime: Long,
 )

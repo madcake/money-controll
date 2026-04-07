@@ -6,11 +6,11 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import shiny.mc.services.store.entity.RecordCategoryEntity
 import shiny.mc.services.store.entity.RecordEntity
+import shiny.mc.services.store.entity.RecordSummaryEntity
 
 @Dao
-interface CategoryRecordDao {
+interface RecordDao {
 
     @Insert
     suspend fun insert(record: RecordEntity)
@@ -29,14 +29,17 @@ interface CategoryRecordDao {
             record.year,
             record.scheduledValue,
             category.title,
-            category.type
+            category.type,
+            SUM(record_transaction.value) as real
         FROM
             record
         JOIN category ON record.categoryId = category.id
+        LEFT JOIN record_transaction ON record.id = record_transaction.recordId
         WHERE
             month = :month AND year = :year
+        GROUP BY record.id
     """)
-    fun getRecords(month: Int, year: Int): Flow<List<RecordCategoryEntity>>
+    fun getRecords(month: Int, year: Int): Flow<List<RecordSummaryEntity>>
 
     @Query("""
         SELECT
@@ -46,12 +49,15 @@ interface CategoryRecordDao {
             record.year,
             record.scheduledValue,
             category.title,
-            category.type
+            category.type,
+            SUM(record_transaction.value) as real
         FROM
             record
         JOIN category ON record.categoryId = category.id
+        LEFT JOIN record_transaction ON record.id = record_transaction.recordId
         WHERE
             record.id = :recordId
+        GROUP BY record.id
     """)
-    fun getRecord(recordId: String): Flow<RecordCategoryEntity?>
+    fun getRecord(recordId: String): Flow<RecordSummaryEntity?>
 }

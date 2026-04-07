@@ -80,7 +80,7 @@ fun RecordsScene(
 fun RecordsScenePreview() {
     class Item(override val id: String) : RecordItem {
         override val title: String = "Record Item #$id"
-        override val scheduledValue: String = "${(id.toInt() + 1000) * 34}"
+        override val scheduledValue: String = "${(id.toInt()) * 34}"
         override val realValue: String = "${(id.toInt() + 1108) * 34}"
         override val valueState: ValueState = ValueState.Surplus
     }
@@ -88,7 +88,7 @@ fun RecordsScenePreview() {
     MaterialTheme {
         RecordsScene(
             items = listOf(
-                Item("1"),
+                Item("0"),
                 Item("2"),
                 Item("3"),
                 Item("4"),
