@@ -22,9 +22,11 @@ import shiny.mc.core.coordinators.category.SearchCategoriesImpl
 import shiny.mc.core.coordinators.record.AddRecords
 import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.coordinators.record.GetRecord
+import shiny.mc.core.coordinators.record.UpdateRecord
 import shiny.mc.core.coordinators.records.AddRecordsImpl
 import shiny.mc.core.coordinators.records.GetPeriodRecordsImpl
 import shiny.mc.core.coordinators.records.GetRecordImpl
+import shiny.mc.core.coordinators.records.UpdateRecordImpl
 import shiny.mc.core.coordinators.transaction.AddRecordTransaction
 import shiny.mc.core.coordinators.transaction.AddRecordTransactionImpl
 import shiny.mc.core.coordinators.transaction.GetRecordTransactions
@@ -38,6 +40,7 @@ import shiny.mc.feature.add_expense.AddExpenseViewModel
 import shiny.mc.feature.add_transaction.AddTransactionViewModel
 import shiny.mc.feature.categories.CategoriesViewModel
 import shiny.mc.feature.period.PeriodViewModel
+import shiny.mc.feature.record.EditRecordViewModel
 import shiny.mc.feature.record.RecordViewModel
 import shiny.mc.services.store.RoomStore
 import shiny.mc.services.store.dao.CategoryDao
@@ -70,6 +73,7 @@ val coordinateModule = module {
     single<GetRecord> { create(::GetRecordImpl) }
     single<GetRecordTransactions> { create(::GetRecordTransactionsImpl) }
     single<AddRecordTransaction> { create(::AddRecordTransactionImpl) }
+    single<UpdateRecord> { create(::UpdateRecordImpl) }
 }
 
 val viewModelModule = module {
@@ -80,6 +84,7 @@ val viewModelModule = module {
     viewModel<CategoriesViewModel>()
     viewModel<RecordViewModel>()
     viewModel<AddTransactionViewModel>()
+    viewModel<EditRecordViewModel>()
 }
 
 fun getRoomDatabase(

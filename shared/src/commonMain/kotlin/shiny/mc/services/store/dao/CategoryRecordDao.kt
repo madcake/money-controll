@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import shiny.mc.services.store.entity.RecordCategoryEntity
 import shiny.mc.services.store.entity.RecordEntity
@@ -16,6 +17,9 @@ interface CategoryRecordDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(records: List<RecordEntity>)
+
+    @Update
+    suspend fun update(entity: RecordEntity)
 
     @Query("""
         SELECT
@@ -50,5 +54,4 @@ interface CategoryRecordDao {
             record.id = :recordId
     """)
     fun getRecord(recordId: String): Flow<RecordCategoryEntity?>
-
 }

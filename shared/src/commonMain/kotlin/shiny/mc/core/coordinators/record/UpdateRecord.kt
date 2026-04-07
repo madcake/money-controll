@@ -1,7 +1,7 @@
 package shiny.mc.core.coordinators.record
 
-import shiny.mc.core.domain.aggregate.CategoryRecord
+import shiny.mc.core.domain.aggregate.Record
 
 interface UpdateRecord {
-    fun update(record: CategoryRecord)
+    suspend fun update(record: Record)
 }

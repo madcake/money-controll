@@ -1,7 +1,7 @@
 package shiny.mc.core.repositories
 
 import kotlinx.coroutines.flow.Flow
-import shiny.mc.core.domain.aggregate.CategoryRecord
+import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.entity.Category
 
 interface CategoryRepository {
@@ -67,7 +67,7 @@ interface CategoryRepository {
      * @param record Category record object
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    suspend fun addRecord(record: CategoryRecord)
+    suspend fun addRecord(record: Record)
 
     /**
      * Add records for category
@@ -75,7 +75,7 @@ interface CategoryRepository {
      * @param records Category record object
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    suspend fun addRecords(records: List<CategoryRecord>)
+    suspend fun addRecords(records: List<Record>)
 
     /**
      * Get all records in store
@@ -83,7 +83,7 @@ interface CategoryRepository {
      * @return records
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    fun getRecords(): Flow<List<CategoryRecord>>
+    fun getRecords(): Flow<List<Record>>
 
     /**
      * Get record by record id
@@ -92,7 +92,7 @@ interface CategoryRepository {
      * @return category record or null
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    fun getRecord(recordId: String): Flow<CategoryRecord?>
+    fun getRecord(recordId: String): Flow<Record?>
 
     /**
      * Get records by category id
@@ -101,7 +101,7 @@ interface CategoryRepository {
      * @return category record or empty list
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    fun getRecords(categoryId: Long): Flow<List<CategoryRecord>>
+    fun getRecords(categoryId: Long): Flow<List<Record>>
 
     /**
      * Get records by period. Period equals month.
@@ -111,6 +111,14 @@ interface CategoryRepository {
      * @return category record or empty list
      * @throws shiny.mc.core.domain.value.CategoryError
      */
-    fun getRecords(month: Int, year: Int): Flow<List<CategoryRecord>>
+    fun getRecords(month: Int, year: Int): Flow<List<Record>>
+
+    /**
+     * Update record
+     *
+     * @param record record
+     * @throws shiny.mc.core.domain.value.CategoryError.CategoryNotFound
+     */
+    suspend fun updateRecord(record: Record)
 }
 

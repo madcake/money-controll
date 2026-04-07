@@ -19,7 +19,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.annotation.KoinViewModel
 import shiny.mc.core.coordinators.record.GetPeriodRecords
-import shiny.mc.core.domain.aggregate.CategoryRecord
+import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.feature.period.model.ValueState
 import kotlin.time.Clock
@@ -58,7 +58,7 @@ class PeriodViewModel(
     }
 }
 
-private class RecordItemImpl(data: CategoryRecord) : RecordItem {
+private class RecordItemImpl(data: Record) : RecordItem {
     override val id: String = data.id
     override val title: String = data.category.title
     override val scheduledValue: String = data.scheduledValue.toString()

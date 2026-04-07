@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import org.koin.core.annotation.Singleton
-import shiny.mc.core.domain.aggregate.CategoryRecord
+import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.entity.Category
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.CategoryRecordDao
@@ -16,7 +16,7 @@ import shiny.mc.services.store.entity.toEntity
 @Singleton
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
-    private val record: CategoryRecordDao,
+    private val recordDao: CategoryRecordDao,
 ) : CategoryRepository {
     override fun getCategories(): Flow<List<Category>> {
         return categoryDao.getCategories().toDto()
@@ -47,30 +47,34 @@ class CategoryRepositoryImpl(
         return categoryDao.find(query).toDto()
     }
 
-    override suspend fun addRecord(record: CategoryRecord) {
+    override suspend fun addRecord(record: Record) {
         addRecords(listOf(record))
     }
 
-    override suspend fun addRecords(records: List<CategoryRecord>) {
-        record.insert(records.toEntity())
+    override suspend fun addRecords(records: List<Record>) {
+        recordDao.insert(records.toEntity())
     }
 
-    override fun getRecords(): Flow<List<CategoryRecord>> {
+    override fun getRecords(): Flow<List<Record>> {
         TODO("Not yet implemented")
     }
 
-    override fun getRecord(recordId: String): Flow<CategoryRecord?> {
-        return record.getRecord(recordId).map { it?.toDto() }
+    override fun getRecord(recordId: String): Flow<Record?> {
+        return recordDao.getRecord(recordId).map { it?.toDto() }
     }
 
-    override fun getRecords(categoryId: Long): Flow<List<CategoryRecord>> {
+    override fun getRecords(categoryId: Long): Flow<List<Record>> {
         TODO("Not yet implemented")
     }
 
     override fun getRecords(
         month: Int,
         year: Int,
-    ): Flow<List<CategoryRecord>> {
-        return record.getRecords(month, year).toDto()
+    ): Flow<List<Record>> {
+        return recordDao.getRecords(month, year).toDto()
+    }
+
+    override suspend fun updateRecord(record: Record) {
+        recordDao.update(record.toEntity())
     }
 }

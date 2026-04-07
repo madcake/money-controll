@@ -22,7 +22,6 @@ import shiny.mc.feature.period.model.ValueState
 fun MonthScene(
     month: String,
     year: String,
-    currentDatetime: String,
     items: List<RecordItem>,
     onRecord: (String) -> Unit,
 ) {
@@ -68,7 +67,6 @@ fun MonthScenePreview() {
         MonthScene(
             month = "April",
             year = "2026",
-            currentDatetime = "02.04.2026",
             items = listOf(
                 Item("1"),
                 Item("2"),

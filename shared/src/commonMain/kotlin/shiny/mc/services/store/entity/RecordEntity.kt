@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
-import shiny.mc.core.domain.aggregate.CategoryRecord
+import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.entity.Category
 
 @Entity(
@@ -39,7 +39,7 @@ data class RecordCategoryEntity(
     val type: CategoryTypeEntity,
 )
 
-fun CategoryRecord.toEntity(): RecordEntity = RecordEntity(
+fun Record.toEntity(): RecordEntity = RecordEntity(
     id = id,
     categoryId = category.id!!,
     month = month,
@@ -47,9 +47,9 @@ fun CategoryRecord.toEntity(): RecordEntity = RecordEntity(
     scheduledValue = scheduledValue,
 )
 
-fun List<CategoryRecord>.toEntity() = map { it.toEntity() }
+fun List<Record>.toEntity() = map { it.toEntity() }
 
-fun RecordCategoryEntity.toDto(): CategoryRecord = CategoryRecord(
+fun RecordCategoryEntity.toDto(): Record = Record(
     id = id,
     category = Category(
         id = categoryId,
@@ -58,7 +58,8 @@ fun RecordCategoryEntity.toDto(): CategoryRecord = CategoryRecord(
     ),
     month = month,
     year = year,
-    scheduledValue = scheduledValue
+    scheduledValue = scheduledValue,
+    realValue =  0.0,
 )
 
 fun List<RecordCategoryEntity>.toDto() = map { it.toDto() }

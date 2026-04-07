@@ -5,7 +5,6 @@ package shiny.mc.feature.add_category
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,7 +30,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,8 +42,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import moneycontroll.composeapp.generated.resources.Res
-import moneycontroll.composeapp.generated.resources.common_cancel
-import moneycontroll.composeapp.generated.resources.common_save
 import moneycontroll.composeapp.generated.resources.error_category_duplicated_title
 import moneycontroll.composeapp.generated.resources.error_category_empty_title
 import moneycontroll.composeapp.generated.resources.placeholders_category_title
@@ -184,39 +180,6 @@ private fun AddCategoryError(commandState: CommandState<AddCategoryCmd>) {
         color = MaterialTheme.colorScheme.error,
         style = MaterialTheme.typography.bodySmallEmphasized
     )
-}
-
-@Composable
-private fun ColumnScope.AddCategoryActions(
-    commandState: CommandState<AddCategoryCmd>,
-    onSave: () -> Unit,
-    onCancel: (() -> Unit)? = null,
-) {
-    Row(
-        modifier = Modifier.align(Alignment.End),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        onCancel?.let {
-            TextButton(onClick = onCancel) {
-                Text(stringResource(Res.string.common_cancel))
-            }
-        }
-
-        TextButton(
-            onClick = onSave,
-            enabled = commandState !is CommandState.Processing
-        ) {
-            Box {
-                when (commandState) {
-                    is CommandState.Processing -> SmallCircularProgressIndicator()
-                    is CommandState.Idle,
-                    is CommandState.Success,
-                    is CommandState.Failure,
-                        -> Text(stringResource(Res.string.common_save))
-                }
-            }
-        }
-    }
 }
 
 val CategoryType.icon: ImageVector

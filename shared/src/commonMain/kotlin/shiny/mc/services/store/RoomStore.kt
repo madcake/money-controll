@@ -4,9 +4,6 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.CategoryRecordDao
 import shiny.mc.services.store.dao.ExpenseDao
@@ -42,14 +39,14 @@ abstract class RoomStore : RoomDatabase() {
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<RoomStore> {
     override fun initialize(): RoomStore
 }
-
-fun getStore(
-    builder: RoomDatabase.Builder<RoomStore>,
-): RoomStore {
-    return builder
-        .addMigrations()
-        .fallbackToDestructiveMigrationOnDowngrade(true)
-        .setDriver(BundledSQLiteDriver())
-        .setQueryCoroutineContext(Dispatchers.IO)
-        .build()
-}
+//
+//fun getStore(
+//    builder: RoomDatabase.Builder<RoomStore>,
+//): RoomStore {
+//    return builder
+//        .addMigrations()
+//        .fallbackToDestructiveMigrationOnDowngrade(true)
+//        .setDriver(BundledSQLiteDriver())
+//        .setQueryCoroutineContext(Dispatchers.IO)
+//        .build()
+//}
