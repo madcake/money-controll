@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Category
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -20,6 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import moneycontroll.composeapp.generated.resources.Res
+import moneycontroll.composeapp.generated.resources.period_edit
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.feature.period.components.RecordItemView
 import shiny.mc.feature.period.model.RecordItem
@@ -43,7 +44,11 @@ fun PeriodNavScreen(
                     IconButton(
                         onClick = { onCategories(4, 2026) }
                     ) {
-                        Icon(imageVector = Icons.Default.Category, contentDescription = null)
+                        Icon(
+                            painter = painterResource(Res.drawable.period_edit),
+                            contentDescription = "Edit period"
+                        )
+//                        Icon(imageVector = Icons.Default.Category, contentDescription = null)
                     }
                 }
             )
