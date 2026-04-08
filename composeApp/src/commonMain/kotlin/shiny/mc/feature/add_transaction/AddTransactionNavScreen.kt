@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AddTransactionNavScreen(
@@ -25,7 +24,7 @@ fun AddTransactionNavScreen(
         state = commandState,
         value = viewModel.valueState,
         purpose = viewModel.purposeState,
-        date = date.takeIf { it > 0 } ?: record?.defaultDate() ?: 0,
+        date = date,
         onDateSelect = viewModel::date,
         onAdd = { viewModel.add(recordId) },
     )
