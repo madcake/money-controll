@@ -6,7 +6,6 @@ import shiny.mc.core.domain.value.CategoryError
 import shiny.mc.core.domain.value.CategoryType
 import shiny.mc.core.repositories.CategoryRepository
 
-@Singleton
 class CategoryInputValidatorImpl(
     private val categoryRepository: CategoryRepository,
 ) : CategoryInputValidator {

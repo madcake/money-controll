@@ -1,7 +1,10 @@
 package shiny.mc.core.repositories
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import org.koin.core.annotation.Singleton
@@ -13,7 +16,6 @@ import shiny.mc.services.store.entity.toDto
 import shiny.mc.services.store.entity.toEntity
 
 @OptIn(ExperimentalCoroutinesApi::class)
-@Singleton
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
     private val recordDao: RecordDao,
@@ -60,7 +62,8 @@ class CategoryRepositoryImpl(
     }
 
     override fun getRecord(recordId: String): Flow<Record?> {
-        return recordDao.getRecord(recordId).map { it?.toDto() }
+        return recordDao.getRecord(recordId)
+            .map { it?.toDto() }
     }
 
     override fun getRecords(categoryId: Long): Flow<List<Record>> {

@@ -15,9 +15,13 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import kotlinx.serialization.Serializable
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
+import shiny.mc.feature.add_transaction.AddTransactionViewModel
 import shiny.mc.feature.categories.CategoriesNavScreen
 import shiny.mc.feature.period.PeriodNavScreen
 import shiny.mc.feature.record.RecordNavScreen
+import shiny.mc.feature.record.RecordViewModel
 
 @Serializable
 object Expenses : NavKey
@@ -63,7 +67,9 @@ fun App() {
                     }
 
                     entry<Record> { entry ->
+                        val recordId = entry.recordId
                         RecordNavScreen(entry.recordId, onCancel)
+
                     }
                 }
             )

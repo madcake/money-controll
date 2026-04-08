@@ -5,7 +5,6 @@ import org.koin.core.annotation.Singleton
 import shiny.mc.core.domain.entity.Category
 import shiny.mc.core.repositories.CategoryRepository
 
-@Singleton
 class SearchCategoriesImpl(
     private val categoryRepository: CategoryRepository,
 ) : SearchCategories {

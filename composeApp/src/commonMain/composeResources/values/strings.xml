@@ -3,12 +3,18 @@
     <string name="common_save">Save</string>
 
     <string name="placeholders_add_expense_title">Title</string>
-    <string name="placeholders_add_expense_description">Desciption</string>
+    <string name="placeholders_add_expense_description">Description</string>
     <string name="placeholders_add_expense_value">Value</string>
     <string name="placeholders_add_transaction_purpose">Purpose of payment</string>
     <string name="placeholders_category_title">Category title...</string>
     <string name="placeholders_string_filter">Filter...</string>
+
     <string name="error_category_duplicated_title">Duplicated title</string>
     <string name="error_category_empty_title">Empty title</string>
     <string name="error_category_unknown_error">Unknown error: %1$s</string>
+
+    <string name="error_transaction_invalid_value">Invalid value. Must be not empty and grater than 0.</string>
+    <string name="error_transaction_empty_purpose">Purpose must be not empty</string>
+    <string name="error_transaction_invalid_date">Must be include in the period</string>
+    <string name="error_transaction_unknown_error">Unknown error: %1$s</string>
 </resources>

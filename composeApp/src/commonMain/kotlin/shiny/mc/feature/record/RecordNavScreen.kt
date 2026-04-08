@@ -37,7 +37,7 @@ import kotlin.time.Instant
 fun RecordNavScreen(
     recordId: String,
     onCancel: () -> Unit,
-    viewModel: RecordViewModel = koinViewModel()
+    viewModel: RecordViewModel = koinViewModel()//(key = recordId) { parametersOf(recordId) },
 ) {
     val record by viewModel.record(recordId).collectAsStateWithLifecycle()
     val transactions by viewModel.transactions(recordId).collectAsStateWithLifecycle()
@@ -95,7 +95,6 @@ private fun TransactionItem(tx: Transaction) {
             LocalDateTime.Format {
                 byUnicodePattern("dd MM yyyy")
             }.format(date)
-//            "${date.day} ${date.month.number} ${date.year}"
         },
         trailing = { ColumnItemValue(tx.value.format(), "") }
     )

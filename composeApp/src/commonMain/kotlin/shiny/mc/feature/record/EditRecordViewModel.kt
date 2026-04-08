@@ -5,7 +5,10 @@ import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -32,7 +35,8 @@ class EditRecordViewModel(
                 scheduleValueState.setTextAndPlaceCursorAtEnd(record.scheduledValue.toString())
             }
         }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), null)
+        .flowOn(Dispatchers.IO)
+        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     fun update() = viewModelScope.launch {
         record.value?.let {

@@ -28,7 +28,7 @@ import kotlin.time.Clock
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
 class PeriodViewModel(
-    private val getRecords: GetPeriodRecords
+    private val getRecords: GetPeriodRecords,
 ) : ViewModel() {
 
     private val _period = MutableStateFlow(getCurrentPeriod())

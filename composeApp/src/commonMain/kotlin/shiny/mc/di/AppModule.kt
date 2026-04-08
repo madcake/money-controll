@@ -5,10 +5,15 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
+import org.koin.core.logger.Logger
+import org.koin.core.logger.MESSAGE
 import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.plugin.module.dsl.create
+import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
 import shiny.mc.SimpleViewModel
 import shiny.mc.core.coordinators.category.AddCategory
@@ -33,6 +38,8 @@ import shiny.mc.core.coordinators.transaction.AddRecordTransaction
 import shiny.mc.core.coordinators.transaction.AddRecordTransactionImpl
 import shiny.mc.core.coordinators.transaction.GetRecordTransactions
 import shiny.mc.core.coordinators.transaction.GetRecordTransactionsImpl
+import shiny.mc.core.coordinators.transaction.TransactionValidator
+import shiny.mc.core.coordinators.transaction.TransactionValidatorImpl
 import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.CategoryRepositoryImpl
 import shiny.mc.core.repositories.TransactionRepository
@@ -61,22 +68,29 @@ val storeModule = module {
 }
 
 val repositoryModule = module {
-    single<CategoryRepository> { create(::CategoryRepositoryImpl) }
-    single<TransactionRepository> { create(::TransactionRepositoryImpl) }
+    includes(storeModule)
+    single<CategoryRepositoryImpl>() bind CategoryRepository::class
+    single<TransactionRepositoryImpl>() bind TransactionRepository::class
+//    single<CategoryRepository> { create(::CategoryRepositoryImpl) }
+//    single<TransactionRepository> { create(::TransactionRepositoryImpl) }
 }
 
 val coordinateModule = module {
-    single<AddCategory> { create(::AddCategoryImpl) }
-    single<CategoryInputValidator> { create(::CategoryInputValidatorImpl) }
-    single<SearchCategories> { create(::SearchCategoriesImpl) }
-    single<DeleteCategory> { create(::DeleteCategoryImpl) }
-    single<GetPeriodRecords> { create(::GetPeriodRecordsImpl) }
-    single<AddRecords> { create(::AddRecordsImpl) }
-    single<GetRecord> { create(::GetRecordImpl) }
-    single<GetRecordTransactions> { create(::GetRecordTransactionsImpl) }
-    single<AddRecordTransaction> { create(::AddRecordTransactionImpl) }
-    single<UpdateRecord> { create(::UpdateRecordImpl) }
-    single<ChangeRecords> { create(::ChangeRecordsImpl) }
+    includes(repositoryModule)
+    single<AddCategoryImpl>() bind AddCategory::class
+    single<CategoryInputValidatorImpl>() bind CategoryInputValidator::class
+    single<SearchCategoriesImpl>() bind SearchCategories::class
+    single<DeleteCategoryImpl>() bind DeleteCategory::class
+
+    single<GetPeriodRecordsImpl>() bind GetPeriodRecords::class
+    single<AddRecordsImpl>() bind AddRecords::class
+    single<GetRecordImpl>() bind GetRecord::class
+    single<UpdateRecordImpl>() bind UpdateRecord::class
+    single<ChangeRecordsImpl>() bind ChangeRecords::class
+
+    single<GetRecordTransactionsImpl>() bind GetRecordTransactions::class
+    single<TransactionValidatorImpl>() bind TransactionValidator::class
+    single<AddRecordTransactionImpl>() bind AddRecordTransaction::class
 }
 
 val viewModelModule = module {
@@ -119,11 +133,15 @@ fun getTransactionDao(store: RoomStore): TransactionDao {
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     appDeclaration()
+    logger(object : Logger() {
+        override fun display(level: Level, msg: MESSAGE) {
+            println("${level.name.uppercase()}: $msg")
+        }
+    })
     modules(
-        repositoryModule,
-        coordinateModule,
         viewModelModule,
-        storeModule,
+        coordinateModule,
+//        repositoryModule,
         platformModule,
     )
 }

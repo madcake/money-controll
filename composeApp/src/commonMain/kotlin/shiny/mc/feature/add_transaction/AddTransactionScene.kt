@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,11 +38,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import moneycontroll.composeapp.generated.resources.Res
+import moneycontroll.composeapp.generated.resources.error_transaction_empty_purpose
+import moneycontroll.composeapp.generated.resources.error_transaction_invalid_value
+import moneycontroll.composeapp.generated.resources.error_transaction_unknown_error
 import moneycontroll.composeapp.generated.resources.placeholders_add_expense_value
 import moneycontroll.composeapp.generated.resources.placeholders_add_transaction_purpose
 import org.jetbrains.compose.resources.stringResource
+import shiny.mc.core.domain.value.TransactionError
 import shiny.mc.core.model.CommandState
 import shiny.mc.theme.components.SmallCircularProgressIndicator
 import kotlin.time.Clock
@@ -50,6 +56,8 @@ import kotlin.time.Instant
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun AddTransactionScene(
+    recordMonth: Int,
+    recordYear: Int,
     state: CommandState<AddTransactionCommand>,
     value: TextFieldState,
     purpose: TextFieldState,
@@ -59,19 +67,15 @@ fun AddTransactionScene(
 ) {
     val isProcessing = state is CommandState.Processing
 
-    val current = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-    val year = current.year
-    val month = current.month
-
     var showDatePicker by remember { mutableStateOf(false) }
 
     val datePickerState = rememberDatePickerState(
         initialSelectedDateMillis = date,
-        yearRange = IntRange(year, year),
+        yearRange = IntRange(recordYear, recordYear),
         selectableDates = object : SelectableDates {
             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                 val date = Instant.fromEpochMilliseconds(utcTimeMillis).toLocalDateTime(TimeZone.UTC)
-                return year == date.year && month == date.month
+                return recordYear == date.year && recordMonth == date.month.number
             }
         },
     )
@@ -132,6 +136,7 @@ fun AddTransactionScene(
             },
             lineLimits = TextFieldLineLimits.MultiLine(1, 6),
         )
+        AddTransactionFailure(state)
     }
 
     if (showDatePicker) {
@@ -154,11 +159,32 @@ fun AddTransactionScene(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+private fun AddTransactionFailure(state: CommandState<AddTransactionCommand>) {
+    if (state !is CommandState.Failure) {
+        return
+    }
+    val message = when (state.err) {
+        is TransactionError.IncorrectValue -> stringResource(Res.string.error_transaction_invalid_value)
+        is TransactionError.IncorrectPurpose -> stringResource(Res.string.error_transaction_empty_purpose)
+        else -> stringResource(Res.string.error_transaction_unknown_error, state.err.message ?: "")
+    }
+    Text(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        text = message,
+        color = MaterialTheme.colorScheme.error,
+        style = MaterialTheme.typography.bodySmallEmphasized
+    )
+}
+
 @Preview
 @Composable
 fun AddTransactionScenePreview() {
     MaterialTheme {
         AddTransactionScene(
+            recordMonth = 4,
+            recordYear = 2026,
             state = CommandState.Idle(),
             value = rememberTextFieldState(),
             purpose = rememberTextFieldState(),
