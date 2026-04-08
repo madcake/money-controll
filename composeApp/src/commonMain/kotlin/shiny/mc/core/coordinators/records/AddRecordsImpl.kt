@@ -5,7 +5,9 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import shiny.mc.core.coordinators.record.AddRecords
 import shiny.mc.core.domain.aggregate.Record
+import shiny.mc.core.domain.aggregate.createId
 import shiny.mc.core.domain.entity.Category
+import shiny.mc.core.domain.value.RecordError
 import shiny.mc.core.repositories.CategoryRepository
 
 class AddRecordsImpl(
@@ -20,7 +22,8 @@ class AddRecordsImpl(
 
         categoryRepository.addRecords(
             records = categories.map {
-                val recordId = "${it.id}:$month:$year"
+                val categoryId = it.id ?: throw RecordError.CategoryNoneExist()
+                val recordId = Record.createId(categoryId, month, year)
                 Record(
                     id = recordId,
                     category = it,

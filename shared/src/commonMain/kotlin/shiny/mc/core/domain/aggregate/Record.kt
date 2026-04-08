@@ -9,4 +9,8 @@ data class Record(
     val year: Int,
     val scheduledValue: Double,
     val realValue: Double,
-)
+) {
+    companion object
+}
+
+fun Record.Companion.createId(categoryId: Long, month: Int, year: Int) = "${categoryId}:$month:$year"

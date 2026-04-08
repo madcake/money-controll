@@ -21,6 +21,9 @@ interface RecordDao {
     @Update
     suspend fun update(entity: RecordEntity)
 
+    @Query("DELETE FROM record WHERE id = :recordId")
+    suspend fun delete(recordId: String)
+
     @Query("""
         SELECT
             record.id,
@@ -60,4 +63,9 @@ interface RecordDao {
         GROUP BY record.id
     """)
     fun getRecord(recordId: String): Flow<RecordSummaryEntity?>
+
+    @Query("""
+        SELECT EXISTS(SELECT id FROM record WHERE id = :recordId)
+    """)
+    suspend fun hasRecord(recordId: String): Boolean
 }

@@ -20,10 +20,12 @@ import shiny.mc.core.coordinators.category.DeleteCategoryImpl
 import shiny.mc.core.coordinators.category.SearchCategories
 import shiny.mc.core.coordinators.category.SearchCategoriesImpl
 import shiny.mc.core.coordinators.record.AddRecords
+import shiny.mc.core.coordinators.record.ChangeRecords
 import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.coordinators.record.GetRecord
 import shiny.mc.core.coordinators.record.UpdateRecord
 import shiny.mc.core.coordinators.records.AddRecordsImpl
+import shiny.mc.core.coordinators.records.ChangeRecordsImpl
 import shiny.mc.core.coordinators.records.GetPeriodRecordsImpl
 import shiny.mc.core.coordinators.records.GetRecordImpl
 import shiny.mc.core.coordinators.records.UpdateRecordImpl
@@ -74,6 +76,7 @@ val coordinateModule = module {
     single<GetRecordTransactions> { create(::GetRecordTransactionsImpl) }
     single<AddRecordTransaction> { create(::AddRecordTransactionImpl) }
     single<UpdateRecord> { create(::UpdateRecordImpl) }
+    single<ChangeRecords> { create(::ChangeRecordsImpl) }
 }
 
 val viewModelModule = module {

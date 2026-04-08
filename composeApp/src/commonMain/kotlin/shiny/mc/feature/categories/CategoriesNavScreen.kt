@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,8 +18,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,7 +36,7 @@ fun CategoriesNavScreen(
     viewModel: CategoriesViewModel = koinViewModel(),
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
-    val selected = remember { mutableStateListOf<Long>() }
+    val selected by viewModel.selected(month, year).collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -56,18 +53,6 @@ fun CategoriesNavScreen(
                         placeholder = { Text(stringResource(Res.string.placeholders_string_filter)) },
                         trailingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "") }
                     )
-                },
-                actions = {
-                    if (selected.isNotEmpty()) {
-                        IconButton(
-                            onClick = {
-                                viewModel.addToPeriod(categories, month, year)
-                                onCancel()
-                            }
-                        ) {
-                            Icon(imageVector = Icons.Default.Check, contentDescription = "")
-                        }
-                    }
                 },
             )
         },
@@ -86,12 +71,10 @@ fun CategoriesNavScreen(
                     category = item,
                     isSelected = selected.contains(item.id),
                     onMenu = {
-                        viewModel.remoteCategory(item.id)
+                        viewModel.removeCategory(item.id)
                     }
                 ) {
-                    if (!selected.remove(item.id)) {
-                        selected.add(item.id ?: return@CategoryItem)
-                    }
+                    viewModel.addToPeriod(item, month, year)
                 }
             }
         }

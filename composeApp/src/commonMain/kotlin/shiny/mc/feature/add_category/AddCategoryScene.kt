@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
@@ -39,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import moneycontroll.composeapp.generated.resources.Res
@@ -48,6 +50,7 @@ import moneycontroll.composeapp.generated.resources.placeholders_category_title
 import org.jetbrains.compose.resources.stringResource
 import shiny.mc.core.domain.value.CategoryError
 import shiny.mc.core.domain.value.CategoryType
+import shiny.mc.core.model.CommandState
 import shiny.mc.theme.components.SmallCircularProgressIndicator
 
 @Composable
@@ -85,7 +88,11 @@ fun AddCategoryScene(
                             -> Icon(imageVector = Icons.Default.Add, contentDescription = "")
                     }
                 }
-            }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Done
+            ),
+            onKeyboardAction = { onSave() }
         )
         AddCategoryError(commandState)
     }
@@ -175,7 +182,7 @@ private fun AddCategoryError(commandState: CommandState<AddCategoryCmd>) {
         else -> return
     }
     Text(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
         text = message,
         color = MaterialTheme.colorScheme.error,
         style = MaterialTheme.typography.bodySmallEmphasized

@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.KoinViewModel
 import shiny.mc.core.coordinators.transaction.AddRecordTransaction
-import shiny.mc.feature.add_category.CommandState
+import shiny.mc.core.model.CommandState
 import kotlin.time.Clock
 
 @OptIn(ExperimentalCoroutinesApi::class)

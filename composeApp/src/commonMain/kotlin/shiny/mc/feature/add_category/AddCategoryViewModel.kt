@@ -24,6 +24,7 @@ import shiny.mc.core.coordinators.category.AddCategory
 import shiny.mc.core.coordinators.category.CategoryInputValidator
 import shiny.mc.core.domain.value.CategoryError
 import shiny.mc.core.domain.value.CategoryType
+import shiny.mc.core.model.CommandState
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
@@ -98,7 +99,11 @@ class AddCategoryViewModel(
             titleState.clearText()
         }
     }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), CommandState.Idle())
+    .stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(500),
+        CommandState.Idle()
+    )
 
     fun onCategoryTypeSelected(type: CategoryType) {
         this.type.update { type }
@@ -107,16 +112,4 @@ class AddCategoryViewModel(
     fun onSave() {
         command.update { AddCategoryCmd.Save() }
     }
-}
-
-sealed interface AddCategoryCmd {
-    object None : AddCategoryCmd
-    class Save : AddCategoryCmd
-}
-
-sealed class CommandState<Command>(val command: Command? = null) {
-    class Idle<Command> : CommandState<Command>()
-    class Processing<Command>(command: Command) : CommandState<Command>(command)
-    class Success<Command>(command: Command) : CommandState<Command>(command)
-    class Failure<Command>(val err: Throwable, command: Command) : CommandState<Command>(command)
 }

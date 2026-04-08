@@ -42,7 +42,7 @@ import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.placeholders_add_expense_value
 import moneycontroll.composeapp.generated.resources.placeholders_add_transaction_purpose
 import org.jetbrains.compose.resources.stringResource
-import shiny.mc.feature.add_category.CommandState
+import shiny.mc.core.model.CommandState
 import shiny.mc.theme.components.SmallCircularProgressIndicator
 import kotlin.time.Clock
 import kotlin.time.Instant

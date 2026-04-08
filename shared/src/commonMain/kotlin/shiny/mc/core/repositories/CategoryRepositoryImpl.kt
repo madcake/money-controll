@@ -77,4 +77,12 @@ class CategoryRepositoryImpl(
     override suspend fun updateRecord(record: Record) {
         recordDao.update(record.toEntity())
     }
+
+    override suspend fun hasRecord(recordId: String): Boolean {
+        return recordDao.hasRecord(recordId)
+    }
+
+    override suspend fun removeRecord(recordId: String) {
+        recordDao.delete(recordId)
+    }
 }

@@ -120,5 +120,22 @@ interface CategoryRepository {
      * @throws shiny.mc.core.domain.value.CategoryError.CategoryNotFound
      */
     suspend fun updateRecord(record: Record)
+
+    /**
+     * Check record id
+     *
+     * @param recordId recordId
+     * @throws shiny.mc.core.domain.value.RecordError
+     */
+    suspend fun hasRecord(recordId: String): Boolean
+
+
+    /**
+     * Remove record
+     *
+     * @param recordId recordId
+     * @throws shiny.mc.core.domain.value.RecordError
+     */
+    suspend fun removeRecord(recordId: String)
 }
 

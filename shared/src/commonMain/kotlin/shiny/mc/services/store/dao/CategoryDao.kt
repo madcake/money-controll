@@ -28,6 +28,12 @@ interface CategoryDao {
     @Query("SELECT * FROM category WHERE title = :title")
     fun getCategory(title: String): Flow<CategoryEntity?>
 
-    @Query("SELECT * FROM category WHERE title LIKE '%' || :query || '%'")
+    @Query("""
+        SELECT * FROM
+            category
+        WHERE
+            title LIKE '%' || :query || '%'
+        ORDER BY title
+    """)
     fun find(query: String): Flow<List<CategoryEntity>>
 }
