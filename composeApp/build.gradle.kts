@@ -53,6 +53,8 @@ kotlin {
             // Navigation
             implementation(libs.navigation3)
             implementation(libs.navigation3.material3.adaptive)
+            implementation(libs.navigation3.material3.adaptive.navigation)
+            implementation(libs.navigation3.material3.adaptive.layout)
             implementation(libs.navigation3.lifecycle.viewmodel)
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))

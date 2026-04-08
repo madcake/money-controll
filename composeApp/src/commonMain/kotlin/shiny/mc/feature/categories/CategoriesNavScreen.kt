@@ -44,11 +44,18 @@ fun CategoriesNavScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Select categories") },
                 navigationIcon = {
                     IconButton(onClick = onCancel) {
                         Icon(imageVector = Icons.Default.ArrowBackIosNew, contentDescription = "")
                     }
+                },
+                title = {
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        state = viewModel.queryState,
+                        placeholder = { Text(stringResource(Res.string.placeholders_string_filter)) },
+                        trailingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "") }
+                    )
                 },
                 actions = {
                     if (selected.isNotEmpty()) {
@@ -61,8 +68,11 @@ fun CategoriesNavScreen(
                             Icon(imageVector = Icons.Default.Check, contentDescription = "")
                         }
                     }
-                }
+                },
             )
+        },
+        bottomBar = {
+            AddCategoryNavScreen()
         }
     ) { innerPadding ->
 
@@ -71,17 +81,6 @@ fun CategoriesNavScreen(
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            stickyHeader {
-                AddCategoryNavScreen()
-            }
-            stickyHeader {
-                OutlinedTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    state = viewModel.queryState,
-                    placeholder = { Text(stringResource(Res.string.placeholders_string_filter)) },
-                    trailingIcon = { Icon(imageVector = Icons.Default.Search, contentDescription = "") }
-                )
-            }
             items(categories) { item ->
                 CategoryItem(
                     category = item,

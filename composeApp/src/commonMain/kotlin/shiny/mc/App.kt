@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -19,9 +20,6 @@ import shiny.mc.feature.period.PeriodNavScreen
 import shiny.mc.feature.record.RecordNavScreen
 
 @Serializable
-object Root : NavKey
-
-@Serializable
 object Expenses : NavKey
 
 class Categories(
@@ -33,6 +31,7 @@ class Record(
     val recordId: String,
 ) : NavKey
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 @Preview
 fun App() {
@@ -57,9 +56,6 @@ fun App() {
                                 backStack.add(Record(recordId))
                             }
                         )
-                    }
-                    entry<Root> {
-
                     }
 
                     entry<Categories> {
