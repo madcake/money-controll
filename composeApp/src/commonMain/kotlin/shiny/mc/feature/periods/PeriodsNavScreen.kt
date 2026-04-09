@@ -48,7 +48,7 @@ fun PeriodsNavScreen(
                 title = { Text(stringResource(Res.string.title_periods)) },
                 actions = {
                     IconButton(onClick = viewModel::newPeriod) {
-                        Icon(imageVector = Icons.Default.Add)
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "")
                     }
                 }
             )

@@ -6,20 +6,17 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import shiny.mc.services.store.dao.AppConfigDao
 import shiny.mc.services.store.dao.CategoryDao
-import shiny.mc.services.store.dao.ExpenseDao
 import shiny.mc.services.store.dao.PeriodDao
 import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.dao.TransactionDao
 import shiny.mc.services.store.entity.AppConfigEntity
 import shiny.mc.services.store.entity.CategoryEntity
-import shiny.mc.services.store.entity.Expense
 import shiny.mc.services.store.entity.RecordEntity
 import shiny.mc.services.store.entity.TokenEntity
 import shiny.mc.services.store.entity.TransactionEntity
 
 @Database(
     entities = [
-        Expense::class,
         CategoryEntity::class,
         RecordEntity::class,
         TokenEntity::class,
@@ -32,7 +29,6 @@ import shiny.mc.services.store.entity.TransactionEntity
 
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class RoomStore : RoomDatabase() {
-    abstract fun expenseDao(): ExpenseDao
     abstract fun categoryDao(): CategoryDao
     abstract fun categoryRecordDao(): RecordDao
     abstract fun transactionDao(): TransactionDao
@@ -45,14 +41,3 @@ abstract class RoomStore : RoomDatabase() {
 expect object AppDatabaseConstructor : RoomDatabaseConstructor<RoomStore> {
     override fun initialize(): RoomStore
 }
-//
-//fun getStore(
-//    builder: RoomDatabase.Builder<RoomStore>,
-//): RoomStore {
-//    return builder
-//        .addMigrations()
-//        .fallbackToDestructiveMigrationOnDowngrade(true)
-//        .setDriver(BundledSQLiteDriver())
-//        .setQueryCoroutineContext(Dispatchers.IO)
-//        .build()
-//}

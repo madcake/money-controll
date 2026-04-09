@@ -15,7 +15,10 @@ import org.koin.dsl.module
 import org.koin.plugin.module.dsl.create
 import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
-import shiny.mc.SimpleViewModel
+import shiny.mc.core.coordinators.app_config.GetCurrentPeriod
+import shiny.mc.core.coordinators.app_config.GetCurrentPeriodImpl
+import shiny.mc.core.coordinators.app_config.SetCurrentPeriod
+import shiny.mc.core.coordinators.app_config.SetCurrentPeriodImpl
 import shiny.mc.core.coordinators.category.AddCategory
 import shiny.mc.core.coordinators.category.AddCategoryImpl
 import shiny.mc.core.coordinators.category.CategoryInputValidator
@@ -42,6 +45,8 @@ import shiny.mc.core.coordinators.transaction.GetRecordTransactions
 import shiny.mc.core.coordinators.transaction.GetRecordTransactionsImpl
 import shiny.mc.core.coordinators.transaction.TransactionValidator
 import shiny.mc.core.coordinators.transaction.TransactionValidatorImpl
+import shiny.mc.core.repositories.AppConfigRepository
+import shiny.mc.core.repositories.AppConfigRepositoryImpl
 import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.CategoryRepositoryImpl
 import shiny.mc.core.repositories.PeriodRepository
@@ -49,7 +54,6 @@ import shiny.mc.core.repositories.PeriodRepositoryImpl
 import shiny.mc.core.repositories.TransactionRepository
 import shiny.mc.core.repositories.TransactionRepositoryImpl
 import shiny.mc.feature.add_category.AddCategoryViewModel
-import shiny.mc.feature.add_expense.AddExpenseViewModel
 import shiny.mc.feature.add_transaction.AddTransactionViewModel
 import shiny.mc.feature.categories.CategoriesViewModel
 import shiny.mc.feature.period.PeriodViewModel
@@ -59,7 +63,6 @@ import shiny.mc.feature.record.RecordViewModel
 import shiny.mc.services.store.RoomStore
 import shiny.mc.services.store.dao.AppConfigDao
 import shiny.mc.services.store.dao.CategoryDao
-import shiny.mc.services.store.dao.ExpenseDao
 import shiny.mc.services.store.dao.PeriodDao
 import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.dao.TransactionDao
@@ -68,15 +71,16 @@ expect val platformModule: Module
 
 val storeModule = module {
     single<RoomStore> { create(::getRoomDatabase) }
-    single<ExpenseDao> { create(::getExpenseDao) }
     single<CategoryDao> { create(::getCategoryDao) }
     single<RecordDao> { create(::getCategoryRecordDao) }
     single<TransactionDao> { create(::getTransactionDao) }
     single<PeriodDao> { create(::getPeriodDao) }
+    single<AppConfigDao> { create(::getAppConfigDao) }
 }
 
 val repositoryModule = module {
     includes(storeModule)
+    single<AppConfigRepositoryImpl>() bind AppConfigRepository::class
     single<CategoryRepositoryImpl>() bind CategoryRepository::class
     single<TransactionRepositoryImpl>() bind TransactionRepository::class
     single<PeriodRepositoryImpl>() bind PeriodRepository::class
@@ -84,6 +88,10 @@ val repositoryModule = module {
 
 val coordinateModule = module {
     includes(repositoryModule)
+
+    single<SetCurrentPeriodImpl>() bind SetCurrentPeriod::class
+    single<GetCurrentPeriodImpl>() bind GetCurrentPeriod::class
+
     single<AddCategoryImpl>() bind AddCategory::class
     single<CategoryInputValidatorImpl>() bind CategoryInputValidator::class
     single<SearchCategoriesImpl>() bind SearchCategories::class
@@ -103,9 +111,7 @@ val coordinateModule = module {
 }
 
 val viewModelModule = module {
-    viewModel<SimpleViewModel>()
     viewModel<PeriodViewModel>()
-    viewModel<AddExpenseViewModel>()
     viewModel<AddCategoryViewModel>()
     viewModel<CategoriesViewModel>()
     viewModel<RecordViewModel>()
@@ -125,10 +131,6 @@ fun getRoomDatabase(
         .build()
 }
 
-fun getExpenseDao(store: RoomStore): ExpenseDao {
-    return store.expenseDao()
-}
-
 fun getCategoryDao(store: RoomStore): CategoryDao {
     return store.categoryDao()
 }
@@ -145,7 +147,7 @@ fun getPeriodDao(store: RoomStore): PeriodDao {
     return store.periodDao()
 }
 
-fun getAppCofigDao(store: RoomStore): AppConfigDao {
+fun getAppConfigDao(store: RoomStore): AppConfigDao {
     return store.appConfigDao()
 }
 
@@ -159,7 +161,6 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     modules(
         viewModelModule,
         coordinateModule,
-//        repositoryModule,
         platformModule,
     )
 }

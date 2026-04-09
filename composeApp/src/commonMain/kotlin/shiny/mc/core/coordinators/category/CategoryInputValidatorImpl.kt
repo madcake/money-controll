@@ -1,7 +1,6 @@
 package shiny.mc.core.coordinators.category
 
 import kotlinx.coroutines.flow.firstOrNull
-import org.koin.core.annotation.Singleton
 import shiny.mc.core.domain.value.CategoryError
 import shiny.mc.core.domain.value.CategoryType
 import shiny.mc.core.repositories.CategoryRepository
