@@ -29,17 +29,6 @@ class RecordEntity(
     val scheduledValue: Double,
 )
 
-data class RecordSummaryEntity(
-    @PrimaryKey val id: String,
-    val categoryId: Long,
-    val month: Int,
-    val year: Int,
-    val scheduledValue: Double,
-    val real: Double?,
-    val title: String,
-    val type: CategoryTypeEntity,
-)
-
 fun Record.toEntity(): RecordEntity = RecordEntity(
     id = id,
     categoryId = category.id!!,
@@ -49,21 +38,3 @@ fun Record.toEntity(): RecordEntity = RecordEntity(
 )
 
 fun List<Record>.toEntity() = map { it.toEntity() }
-
-fun RecordSummaryEntity.toDto(): Record = Record(
-    id = id,
-    category = Category(
-        id = categoryId,
-        title = title,
-        type = type.toDto(),
-    ),
-    month = month,
-    year = year,
-    scheduledValue = scheduledValue,
-    realValue = real ?: 0.0,
-)
-
-fun List<RecordSummaryEntity>.toDto() = map { it.toDto() }
-
-@OptIn(ExperimentalCoroutinesApi::class)
-fun Flow<List<RecordSummaryEntity>>.toDto() = mapLatest { it.toDto() }

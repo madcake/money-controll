@@ -4,10 +4,13 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import shiny.mc.services.store.dao.AppConfigDao
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.ExpenseDao
+import shiny.mc.services.store.dao.PeriodDao
 import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.dao.TransactionDao
+import shiny.mc.services.store.entity.AppConfigEntity
 import shiny.mc.services.store.entity.CategoryEntity
 import shiny.mc.services.store.entity.Expense
 import shiny.mc.services.store.entity.RecordEntity
@@ -21,6 +24,7 @@ import shiny.mc.services.store.entity.TransactionEntity
         RecordEntity::class,
         TokenEntity::class,
         TransactionEntity::class,
+        AppConfigEntity::class,
     ],
     version = 1,
     exportSchema = false,
@@ -32,6 +36,8 @@ abstract class RoomStore : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun categoryRecordDao(): RecordDao
     abstract fun transactionDao(): TransactionDao
+    abstract fun periodDao(): PeriodDao
+    abstract fun appConfigDao(): AppConfigDao
 }
 
 

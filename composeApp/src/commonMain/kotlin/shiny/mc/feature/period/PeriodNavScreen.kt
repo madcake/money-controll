@@ -1,5 +1,6 @@
 package shiny.mc.feature.period
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.period_edit
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import shiny.mc.core.domain.value.PeriodDate
 import shiny.mc.feature.period.components.RecordItemView
 import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.feature.period.model.ValueState
@@ -29,8 +31,9 @@ import shiny.mc.feature.period.model.ValueState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PeriodNavScreen(
-    onCategories: (Int, Int) -> Unit,
+    onCategories: (PeriodDate) -> Unit,
     onRecord: (String) -> Unit,
+    onPeriods: () -> Unit,
     viewModel: PeriodViewModel = koinViewModel<PeriodViewModel>()
 ) {
     val period by viewModel.period.collectAsStateWithLifecycle()
@@ -39,10 +42,15 @@ fun PeriodNavScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(period) },
+                title = {
+                    Text(
+                        modifier = Modifier.clickable(onClick = onPeriods),
+                        text = period
+                    )
+                },
                 actions = {
                     IconButton(
-                        onClick = { onCategories(4, 2026) }
+                        onClick = { onCategories(PeriodDate(4, 2026)) }
                     ) {
                         Icon(
                             painter = painterResource(Res.drawable.period_edit),

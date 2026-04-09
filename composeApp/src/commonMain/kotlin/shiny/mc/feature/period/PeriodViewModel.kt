@@ -20,6 +20,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.koin.core.annotation.KoinViewModel
 import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.domain.aggregate.Record
+import shiny.mc.core.domain.value.PeriodDate
 import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.feature.period.model.ValueState
 import shiny.mc.platform.format
@@ -49,13 +50,13 @@ class PeriodViewModel(
     .mapLatest { items -> items.map { RecordItemImpl(it) }}
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun setPeriod(month: Int, year: Int) {
-        _period.update { Pair(month, year) }
+    fun setPeriod(date: PeriodDate) {
+        _period.update { date }
     }
 
-    private fun getCurrentPeriod(): Pair<Int, Int> {
+    private fun getCurrentPeriod(): PeriodDate {
         val dateTime = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-        return Pair(dateTime.month.number, dateTime.year)
+        return PeriodDate(dateTime.month.number, dateTime.year)
     }
 }
 
