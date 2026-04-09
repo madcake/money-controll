@@ -48,7 +48,6 @@ fun PeriodNavScreen(
                             painter = painterResource(Res.drawable.period_edit),
                             contentDescription = "Edit period"
                         )
-//                        Icon(imageVector = Icons.Default.Category, contentDescription = null)
                     }
                 }
             )
