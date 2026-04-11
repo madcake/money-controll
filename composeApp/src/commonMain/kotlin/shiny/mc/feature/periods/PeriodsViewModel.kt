@@ -10,6 +10,7 @@ import shiny.mc.core.coordinators.app_config.GetCurrentPeriod
 import shiny.mc.core.coordinators.app_config.SetCurrentPeriod
 import shiny.mc.core.coordinators.period.GetPeriods
 import shiny.mc.core.domain.value.Period
+import shiny.mc.core.domain.value.PeriodDate
 import kotlin.time.Duration.Companion.seconds
 
 class PeriodsViewModel(
@@ -21,7 +22,9 @@ class PeriodsViewModel(
     val periods = getPeriods.periods()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5.seconds), emptyList())
 
-    fun newPeriod() { }
+    fun newPeriod(month: Int, year: Int) = viewModelScope.launch {
+        setCurrentPeriod.period(PeriodDate(month, year))
+    }
 
     fun setCurrent(item: Period) = viewModelScope.launch {
         setCurrentPeriod.period(item.date)

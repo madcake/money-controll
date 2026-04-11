@@ -1,14 +1,15 @@
 package shiny.mc.feature.record
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,18 +20,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
-import kotlinx.datetime.format.byUnicodePattern
-import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.domain.entity.Transaction
 import shiny.mc.feature.add_transaction.AddTransactionNavScreen
+import shiny.mc.platform.dateFormate
 import shiny.mc.platform.format
 import shiny.mc.theme.components.ColumnItem
 import shiny.mc.theme.components.ColumnItemValue
-import kotlin.time.Instant
+import shiny.mc.theme.components.ItemPosition
+import shiny.mc.theme.components.itemsPosition
+import shiny.mc.theme.space
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -68,18 +68,22 @@ fun RecordNavScreen(
                     recordId = recordId,
                 )
             }
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            contentPadding = PaddingValues(MaterialTheme.space.paddingDefault),
+            verticalArrangement = MaterialTheme.space.dividerArrangement,
         ) {
             record?.let {
                 item {
                     RecordHeader(recordId = it.id)
                 }
             }
-            items(transactions) { tx ->
-                TransactionItem(tx)
+            val itemsCount = transactions.size
+            itemsPosition(transactions) { position, item ->
+                TransactionItem(item, position)
             }
         }
     }
@@ -87,15 +91,14 @@ fun RecordNavScreen(
 
 @OptIn(FormatStringsInDatetimeFormats::class)
 @Composable
-private fun TransactionItem(tx: Transaction) {
+private fun TransactionItem(
+    tx: Transaction,
+    position: ItemPosition,
+) {
     ColumnItem(
         headline = tx.purpose,
-        supporting = tx.datetime.let {
-            val date = Instant.fromEpochMilliseconds(it).toLocalDateTime(TimeZone.currentSystemDefault())
-            LocalDateTime.Format {
-                byUnicodePattern("dd MM yyyy")
-            }.format(date)
-        },
+        supporting = tx.datetime.dateFormate(),
+        position = position,
         trailing = { ColumnItemValue(tx.value.format(), "") }
     )
 }

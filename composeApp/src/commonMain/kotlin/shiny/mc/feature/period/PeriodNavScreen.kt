@@ -1,11 +1,9 @@
 package shiny.mc.feature.period
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -17,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.period_edit
@@ -27,6 +24,8 @@ import shiny.mc.core.domain.value.PeriodDate
 import shiny.mc.feature.period.components.RecordItemView
 import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.feature.period.model.ValueState
+import shiny.mc.theme.components.itemsPosition
+import shiny.mc.theme.space
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +36,7 @@ fun PeriodNavScreen(
     viewModel: PeriodViewModel = koinViewModel<PeriodViewModel>()
 ) {
     val period by viewModel.period.collectAsStateWithLifecycle()
+    val title by viewModel.title.collectAsStateWithLifecycle()
     val items by viewModel.records.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -45,12 +45,12 @@ fun PeriodNavScreen(
                 title = {
                     Text(
                         modifier = Modifier.clickable(onClick = onPeriods),
-                        text = period
+                        text = title
                     )
                 },
                 actions = {
                     IconButton(
-                        onClick = { onCategories(PeriodDate(4, 2026)) }
+                        onClick = { onCategories(period) }
                     ) {
                         Icon(
                             painter = painterResource(Res.drawable.period_edit),
@@ -59,7 +59,8 @@ fun PeriodNavScreen(
                     }
                 }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ) { innerPadding ->
         RecordsScene(
             modifier = Modifier.padding(innerPadding),
@@ -76,11 +77,13 @@ fun RecordsScene(
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .padding(MaterialTheme.space.paddingDefault),
+        verticalArrangement = MaterialTheme.space.dividerArrangement,
     ) {
-        items(items, key = { it.id }) { item ->
-            RecordItemView(item) {
+        itemsPosition(items, key = { _, item -> item.id }) { position, item ->
+            RecordItemView(item, position) {
                 onRecord(item.id)
             }
         }

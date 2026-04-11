@@ -3,7 +3,6 @@ package shiny.mc
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
@@ -19,6 +18,7 @@ import shiny.mc.feature.categories.CategoriesNavScreen
 import shiny.mc.feature.period.PeriodNavScreen
 import shiny.mc.feature.periods.PeriodsNavScreen
 import shiny.mc.feature.record.RecordNavScreen
+import shiny.mc.theme.MCTheme
 
 @Serializable
 object Expenses : NavKey
@@ -41,7 +41,7 @@ object Periods : NavKey
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    MCTheme {
         Scaffold { innerPadding ->
             val backStack = remember { mutableStateListOf<NavKey>(Expenses) }
             val onCancel = fun () { backStack.removeLastOrNull() }
@@ -81,6 +81,5 @@ fun App() {
                 }
             )
         }
-
     }
 }

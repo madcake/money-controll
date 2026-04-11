@@ -1,9 +1,10 @@
 package shiny.mc.theme.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.ListItem
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import shiny.mc.theme.MCTheme
 
 @Composable
 fun ColumnItem(
@@ -20,6 +22,7 @@ fun ColumnItem(
     containerColor: Color? = null,
     leading: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
+    position: ItemPosition = ItemPosition.Single,
     onMenu: (() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
@@ -30,11 +33,13 @@ fun ColumnItem(
         supporting = supporting?.let { { ColumnItemSupportText(supporting) } },
         trailing = trailing,
         leading = leading,
+        position = position,
         onMenu = onMenu,
         onClick = onClick,
     )
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ColumnItem(
     headline: @Composable () -> Unit,
@@ -43,17 +48,21 @@ fun ColumnItem(
     supporting: @Composable (() -> Unit)? = null,
     leading: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
+    position: ItemPosition,
     onMenu: (() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
-    ListItem(
-        modifier = modifier
-            .itemEventHandler(onMenu, onClick),
-        headlineContent = headline,
+    SegmentedListItem(
+        modifier = modifier,
+        onClick = onClick ?: {},
+        shapes = ListItemDefaults.segmentedShapes(position.index, position.count),
         supportingContent = supporting?.let { { supporting() } },
         leadingContent = leading,
         trailingContent = trailing,
-        colors = if (containerColor == null) ListItemDefaults.colors() else ListItemDefaults.colors().copy(containerColor = containerColor)
+        content = headline,
+        colors = ListItemDefaults.segmentedColors(
+            containerColor = containerColor ?: Color.Unspecified
+        )
     )
 }
 
@@ -102,10 +111,11 @@ fun ColumnItemValue(
     }
 }
 
+
 @Preview
 @Composable
 fun PreviewColumnItem() {
-    MaterialTheme {
+    MCTheme {
         ColumnItem(
             headline = "Foo category version 1.0 for preview and with very long title or name",
             supporting = "Test testing",

@@ -7,10 +7,12 @@ import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.feature.period.model.ValueState
 import shiny.mc.theme.components.ColumnItem
 import shiny.mc.theme.components.ColumnItemValue
+import shiny.mc.theme.components.ItemPosition
 
 @Composable
 fun RecordItemView(
     item: RecordItem,
+    position: ItemPosition,
     onClick: () -> Unit,
 ) {
     ColumnItem(
@@ -25,6 +27,7 @@ fun RecordItemView(
                 }
             )
         },
+        position = position,
         onClick = onClick,
     )
 }
@@ -41,6 +44,7 @@ fun RecordItemViewPreview() {
                 override val realValue: String = "170 000"
                 override val valueState: ValueState = ValueState.Surplus
             },
+            position = ItemPosition.Single,
             onClick = {},
         )
     }
