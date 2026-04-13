@@ -40,8 +40,8 @@ class EditRecordViewModel(
 
     fun update() = viewModelScope.launch {
         record.value?.let {
-            val value = scheduleValue.value
-            updateRecord.update(it.copy(scheduledValue = value.toDouble()))
+            val value = scheduleValue.value.toDoubleOrNull() ?: return@launch
+            updateRecord.update(it.copy(scheduledValue = value))
         }
     }
 }

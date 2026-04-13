@@ -3,11 +3,15 @@ package shiny.mc.services.store.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.Companion.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import shiny.mc.core.domain.aggregate.Record
 
 @Entity(
     tableName = "record",
+    indices = [
+        Index("categoryId", name = "record_category_id_idx")
+    ],
     foreignKeys = [
         ForeignKey(
             entity = CategoryEntity::class,

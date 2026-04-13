@@ -1,6 +1,8 @@
 <resources>
     <string name="common_cancel">Cancel</string>
     <string name="common_save">Save</string>
+    <string name="common_estimate">Estimate</string>
+    <string name="common_real">Real</string>
 
     <string name="placeholders_add_expense_title">Title</string>
     <string name="placeholders_add_expense_description">Description</string>

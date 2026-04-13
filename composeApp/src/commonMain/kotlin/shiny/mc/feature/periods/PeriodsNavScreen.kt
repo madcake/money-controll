@@ -51,7 +51,9 @@ fun PeriodsNavScreen(
                         Icon(Icons.Default.ArrowBackIosNew, contentDescription = "")
                     }
                 },
-                title = { Text(stringResource(Res.string.title_periods)) },
+                title = {
+                    Text(stringResource(Res.string.title_periods))
+                },
                 actions = {
                     IconButton(
                         onClick = { visibleMonthPicker = true }
@@ -102,8 +104,8 @@ private fun PeriodItemView(
         headline = period.date.toString(),
         trailing = {
             ColumnItemValue(
-                value = period.values.assetScheduled.format(),
-                supportValue = period.values.liabilityScheduled.format()
+                value = period.values.inEstimate.format(),
+                supportValue = period.values.outEstimate.format()
             )
         },
         position = position,

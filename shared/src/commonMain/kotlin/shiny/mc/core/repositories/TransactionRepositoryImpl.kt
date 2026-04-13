@@ -19,4 +19,8 @@ class TransactionRepositoryImpl(
     ) {
         transactionDao.insert(transaction.toEntity(recordId))
     }
+
+    override suspend fun deleteTransaction(transactionId: Long) {
+        transactionDao.delete(transactionId)
+    }
 }

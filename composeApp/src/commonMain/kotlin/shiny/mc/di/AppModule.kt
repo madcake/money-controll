@@ -15,8 +15,8 @@ import org.koin.dsl.module
 import org.koin.plugin.module.dsl.create
 import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
-import shiny.mc.core.coordinators.app_config.GetCurrentPeriod
-import shiny.mc.core.coordinators.app_config.GetCurrentPeriodImpl
+import shiny.mc.core.coordinators.app_config.GetCurrentPeriodDate
+import shiny.mc.core.coordinators.app_config.GetCurrentPeriodDateImpl
 import shiny.mc.core.coordinators.app_config.SetCurrentPeriod
 import shiny.mc.core.coordinators.app_config.SetCurrentPeriodImpl
 import shiny.mc.core.coordinators.category.AddCategory
@@ -27,6 +27,8 @@ import shiny.mc.core.coordinators.category.DeleteCategory
 import shiny.mc.core.coordinators.category.DeleteCategoryImpl
 import shiny.mc.core.coordinators.category.SearchCategories
 import shiny.mc.core.coordinators.category.SearchCategoriesImpl
+import shiny.mc.core.coordinators.period.GetPeriod
+import shiny.mc.core.coordinators.period.GetPeriodImpl
 import shiny.mc.core.coordinators.period.GetPeriods
 import shiny.mc.core.coordinators.period.GetPeriodsImpl
 import shiny.mc.core.coordinators.record.AddRecords
@@ -41,6 +43,8 @@ import shiny.mc.core.coordinators.records.GetRecordImpl
 import shiny.mc.core.coordinators.records.UpdateRecordImpl
 import shiny.mc.core.coordinators.transaction.AddRecordTransaction
 import shiny.mc.core.coordinators.transaction.AddRecordTransactionImpl
+import shiny.mc.core.coordinators.transaction.DeleteTransaction
+import shiny.mc.core.coordinators.transaction.DeleteTransactionImpl
 import shiny.mc.core.coordinators.transaction.GetRecordTransactions
 import shiny.mc.core.coordinators.transaction.GetRecordTransactionsImpl
 import shiny.mc.core.coordinators.transaction.TransactionValidator
@@ -90,7 +94,7 @@ val coordinateModule = module {
     includes(repositoryModule)
 
     single<SetCurrentPeriodImpl>() bind SetCurrentPeriod::class
-    single<GetCurrentPeriodImpl>() bind GetCurrentPeriod::class
+    single<GetCurrentPeriodDateImpl>() bind GetCurrentPeriodDate::class
 
     single<AddCategoryImpl>() bind AddCategory::class
     single<CategoryInputValidatorImpl>() bind CategoryInputValidator::class
@@ -106,8 +110,10 @@ val coordinateModule = module {
     single<GetRecordTransactionsImpl>() bind GetRecordTransactions::class
     single<TransactionValidatorImpl>() bind TransactionValidator::class
     single<AddRecordTransactionImpl>() bind AddRecordTransaction::class
+    single<DeleteTransactionImpl>() bind DeleteTransaction::class
 
     single<GetPeriodsImpl>() bind GetPeriods::class
+    single<GetPeriodImpl>() bind GetPeriod::class
 }
 
 val viewModelModule = module {

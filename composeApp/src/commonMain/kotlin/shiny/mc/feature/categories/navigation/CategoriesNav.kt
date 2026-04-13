@@ -3,9 +3,9 @@ package shiny.mc.feature.categories.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
-import shiny.mc.navigation.OnCancel
 import shiny.mc.core.domain.value.PeriodDate
 import shiny.mc.feature.categories.CategoriesNavScreen
+import shiny.mc.navigation.OnCancel
 
 @Serializable
 class CategoriesNavKey(

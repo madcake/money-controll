@@ -9,42 +9,49 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format
-import kotlinx.datetime.format.MonthNames
-import kotlinx.datetime.format.char
 import org.koin.core.annotation.KoinViewModel
-import shiny.mc.core.coordinators.app_config.GetCurrentPeriod
+import shiny.mc.core.coordinators.app_config.GetCurrentPeriodDate
+import shiny.mc.core.coordinators.period.GetPeriod
 import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.domain.aggregate.Record
+import shiny.mc.core.domain.value.CategoryType
 import shiny.mc.core.domain.value.PeriodDate
+import shiny.mc.core.domain.value.ValueState
 import shiny.mc.feature.period.model.RecordItem
-import shiny.mc.feature.period.model.ValueState
 import shiny.mc.platform.format
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
 class PeriodViewModel(
-    getCurrentPeriod: GetCurrentPeriod,
+    getCurrentPeriodDate: GetCurrentPeriodDate,
     private val getRecords: GetPeriodRecords,
+    private val getPeriod: GetPeriod,
 ) : ViewModel() {
 
-    val period = getCurrentPeriod.period()
+    val periodDate = getCurrentPeriodDate.period()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PeriodDate.default())
-    val title = period.map {
-        val (month, year) = it
-        val date = LocalDate(year, month, 1)
-        val format = LocalDate.Format {
-            monthName(MonthNames.ENGLISH_FULL)
-            char(' ')
-            year()
-        }
-        date.format(format)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
-    val records: StateFlow<List<RecordItem>> = period.flatMapLatest {
-        val (month, year) = it
-        getRecords.getRecords(month, year)
+    val title = periodDate.map { it.toString() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
+
+    private val period = periodDate.flatMapLatest { getPeriod.period(it) }
+
+    val periodValues = period.mapLatest { it?.values }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
+
+    private val records = periodDate.flatMapLatest {
+        CategoryType.Liability
+        getRecords.getRecords(it.month, it.year)
+    }
+
+    val outRecords: StateFlow<List<RecordItem>> = records.map { items ->
+        items.filter { it.category.type == CategoryType.Liability }
+    }
+    .mapLatest { items -> items.map { RecordItemImpl(it) }}
+    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    val inRecords: StateFlow<List<RecordItem>> = records.map { items ->
+        items.filter { it.category.type == CategoryType.Asset }
     }
     .mapLatest { items -> items.map { RecordItemImpl(it) }}
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

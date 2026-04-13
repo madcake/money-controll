@@ -10,23 +10,19 @@ import shiny.mc.core.domain.value.PeriodValues
 data class PeriodViewEntity(
     val month: Int,
     val year: Int,
-    val assetScheduled: Double,
-    val assetReal: Double,
-    val liabilityScheduled: Double,
-    val liabilityReal: Double,
-) {
-    fun diffScheduled() = assetScheduled - liabilityScheduled
-
-    fun diffReal() = assetReal - liabilityReal
-}
+    val inEstimate: Double,
+    val inReal: Double,
+    val outEstimate: Double,
+    val outReal: Double,
+)
 
 fun PeriodViewEntity.toDto() = Period(
     date = PeriodDate(month, year),
     values = PeriodValues(
-        assetScheduled = assetScheduled,
-        assetReal = assetReal,
-        liabilityScheduled = liabilityScheduled,
-        liabilityReal = liabilityReal,
+        inEstimate = inEstimate,
+        inReal = inReal,
+        outEstimate = outEstimate,
+        outReal = outReal,
     )
 )
 

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import shiny.mc.core.coordinators.app_config.GetCurrentPeriod
+import shiny.mc.core.coordinators.app_config.GetCurrentPeriodDate
 import shiny.mc.core.coordinators.app_config.SetCurrentPeriod
 import shiny.mc.core.coordinators.period.GetPeriods
 import shiny.mc.core.domain.value.Period
@@ -14,7 +14,7 @@ import shiny.mc.core.domain.value.PeriodDate
 import kotlin.time.Duration.Companion.seconds
 
 class PeriodsViewModel(
-    private val getCurrentPeriod: GetCurrentPeriod,
+    private val getCurrentPeriodDate: GetCurrentPeriodDate,
     private val setCurrentPeriod: SetCurrentPeriod,
     private val getPeriods: GetPeriods,
 ) : ViewModel() {

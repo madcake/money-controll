@@ -12,6 +12,9 @@ interface TransactionDao {
     @Insert
     suspend fun insert(tx: TransactionEntity): Long
 
+    @Query("DELETE FROM record_transaction WHERE id = :transactionId")
+    suspend fun delete(transactionId: Long)
+
     @Query("""
         SELECT * FROM record_transaction WHERE recordId = :recordId
     """)
