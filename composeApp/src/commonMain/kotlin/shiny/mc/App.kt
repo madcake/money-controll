@@ -1,85 +1,16 @@
 package shiny.mc
 
-import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.ui.NavDisplay
-import kotlinx.serialization.Serializable
-import shiny.mc.feature.categories.CategoriesNavScreen
-import shiny.mc.feature.period.PeriodNavScreen
-import shiny.mc.feature.periods.PeriodsNavScreen
-import shiny.mc.feature.record.RecordNavScreen
+import shiny.mc.navigation.NavGraph
 import shiny.mc.theme.MCTheme
-
-@Serializable
-object Expenses : NavKey
-
-@Serializable
-class Categories(
-    val month: Int,
-    val year: Int,
-) : NavKey
-
-@Serializable
-class Record(
-    val recordId: String,
-) : NavKey
-
-@Serializable
-object Periods : NavKey
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 @Preview
 fun App() {
     MCTheme {
-        Scaffold { innerPadding ->
-            val backStack = remember { mutableStateListOf<NavKey>(Expenses) }
-            val onCancel = fun () { backStack.removeLastOrNull() }
-            NavDisplay(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .consumeWindowInsets(innerPadding),
-                backStack = backStack,
-                onBack = onCancel,
-                entryProvider = entryProvider {
-                    entry<Expenses> {
-                        PeriodNavScreen(
-                            onCategories = { date ->
-                                backStack.add(Categories(date.month, date.year))
-                            },
-                            onRecord = { recordId ->
-                                backStack.add(Record(recordId))
-                            },
-                            onPeriods = {
-                                backStack.add(Periods)
-                            },
-                        )
-                    }
-
-                    entry<Categories> {
-                        CategoriesNavScreen(it.month, it.year, onCancel = onCancel)
-                    }
-
-                    entry<Record> { entry ->
-                        RecordNavScreen(entry.recordId, onCancel)
-                    }
-
-                    entry<Periods> {
-                        PeriodsNavScreen(onCancel = onCancel)
-                    }
-                }
-            )
-        }
+        NavGraph()
     }
 }

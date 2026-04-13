@@ -23,6 +23,7 @@ import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.placeholders_string_filter
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import shiny.mc.core.domain.value.PeriodDate
 import shiny.mc.feature.add_category.AddCategoryNavScreen
 import shiny.mc.theme.components.itemsPosition
 import shiny.mc.theme.space
@@ -30,13 +31,12 @@ import shiny.mc.theme.space
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoriesNavScreen(
-    month: Int,
-    year: Int,
+    date: PeriodDate,
     onCancel: () -> Unit,
     viewModel: CategoriesViewModel = koinViewModel(),
 ) {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
-    val selected by viewModel.selected(month, year).collectAsStateWithLifecycle()
+    val selected by viewModel.selected(date.month, date.year).collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -76,7 +76,7 @@ fun CategoriesNavScreen(
                         viewModel.removeCategory(item.id)
                     }
                 ) {
-                    viewModel.addToPeriod(item, month, year)
+                    viewModel.addToPeriod(item, date.month, date.year)
                 }
             }
         }

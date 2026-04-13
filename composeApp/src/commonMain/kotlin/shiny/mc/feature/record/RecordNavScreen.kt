@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import org.koin.compose.viewmodel.koinViewModel
+import shiny.mc.navigation.OnCancel
 import shiny.mc.core.domain.entity.Transaction
 import shiny.mc.feature.add_transaction.AddTransactionNavScreen
 import shiny.mc.platform.dateFormate
@@ -36,7 +37,7 @@ import shiny.mc.theme.space
 @Composable
 fun RecordNavScreen(
     recordId: String,
-    onCancel: () -> Unit,
+    onCancel: OnCancel,
     viewModel: RecordViewModel = koinViewModel()//(key = recordId) { parametersOf(recordId) },
 ) {
     val record by viewModel.record(recordId).collectAsStateWithLifecycle()
@@ -81,7 +82,6 @@ fun RecordNavScreen(
                     RecordHeader(recordId = it.id)
                 }
             }
-            val itemsCount = transactions.size
             itemsPosition(transactions) { position, item ->
                 TransactionItem(item, position)
             }

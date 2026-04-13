@@ -6,10 +6,12 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.Serializable
 import shiny.mc.platform.periodFormatter
 import kotlin.time.Clock
 import kotlin.time.Instant
 
+@Serializable
 data class PeriodDate(
     val month: Int,
     val year: Int
