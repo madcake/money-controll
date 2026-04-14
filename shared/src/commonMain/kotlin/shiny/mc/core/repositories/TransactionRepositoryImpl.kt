@@ -23,4 +23,11 @@ class TransactionRepositoryImpl(
     override suspend fun deleteTransaction(transactionId: Long) {
         transactionDao.delete(transactionId)
     }
+
+    override fun getSuggestions(
+        categoryId: Long,
+        query: String
+    ): Flow<List<String>> {
+        return transactionDao.getSuggestions(categoryId, query)
+    }
 }

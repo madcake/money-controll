@@ -47,6 +47,8 @@ import shiny.mc.core.coordinators.transaction.DeleteTransaction
 import shiny.mc.core.coordinators.transaction.DeleteTransactionImpl
 import shiny.mc.core.coordinators.transaction.GetRecordTransactions
 import shiny.mc.core.coordinators.transaction.GetRecordTransactionsImpl
+import shiny.mc.core.coordinators.transaction.GetTransactionSuggestions
+import shiny.mc.core.coordinators.transaction.GetTransactionSuggestionsImpl
 import shiny.mc.core.coordinators.transaction.TransactionValidator
 import shiny.mc.core.coordinators.transaction.TransactionValidatorImpl
 import shiny.mc.core.repositories.AppConfigRepository
@@ -108,6 +110,7 @@ val coordinateModule = module {
     single<ChangeRecordsImpl>() bind ChangeRecords::class
 
     single<GetRecordTransactionsImpl>() bind GetRecordTransactions::class
+    single<GetTransactionSuggestionsImpl>() bind GetTransactionSuggestions::class
     single<TransactionValidatorImpl>() bind TransactionValidator::class
     single<AddRecordTransactionImpl>() bind AddRecordTransaction::class
     single<DeleteTransactionImpl>() bind DeleteTransaction::class

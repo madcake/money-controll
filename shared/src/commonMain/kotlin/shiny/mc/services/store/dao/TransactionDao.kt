@@ -19,4 +19,14 @@ interface TransactionDao {
         SELECT * FROM record_transaction WHERE recordId = :recordId
     """)
     fun getTransactions(recordId: String): Flow<List<TransactionEntity>>
+
+    @Query("""
+        SELECT
+            purpose
+        FROM
+            record_transaction
+        JOIN record ON record_transaction.recordId = record.id AND record.categoryId = :categoryId
+        WHERE purpose LIKE '%' || :query || '%'
+    """)
+    fun getSuggestions(categoryId: Long, query: String): Flow<List<String>>
 }

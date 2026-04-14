@@ -10,14 +10,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.ExposedDropdownMenuAnchorType
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +39,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,9 +75,15 @@ fun AddTransactionScene(
     value: TextFieldState,
     purpose: TextFieldState,
     date: Long,
+    purposeSuggestions: List<String>,
     onDateSelect: (Long?) -> Unit,
     onAdd: () -> Unit,
 ) {
+    val focusManager = LocalFocusManager.current
+
+    val valueFocusRequester = remember { FocusRequester() }
+
+    var transactionSuggestionShowed by remember { mutableStateOf(false) }
     val isProcessing = state is CommandState.Processing
 
     var showDatePicker by remember { mutableStateOf(false) }
@@ -93,20 +110,57 @@ fun AddTransactionScene(
             .paddingDefault(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
+        ExposedDropdownMenuBox(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.extraSmall),
+            expanded = transactionSuggestionShowed,
+            onExpandedChange = { transactionSuggestionShowed = !transactionSuggestionShowed }
+        ) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
+                state = purpose,
+                placeholder = { Text(stringResource(Res.string.placeholders_add_transaction_purpose)) },
+                enabled = !isProcessing,
+                lineLimits = TextFieldLineLimits.MultiLine(1, 6),
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                ),
+                onKeyboardAction = {
+                    focusManager.moveFocus(FocusDirection.Next)
+                },
+            )
+            ExposedDropdownMenu(
+                expanded = transactionSuggestionShowed,
+                onDismissRequest = { transactionSuggestionShowed = false },
+            ) {
+                purposeSuggestions.forEach { item ->
+                    DropdownMenuItem(
+                        text = {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(item)
+                            }
+                        },
+                        onClick = {
+                            purpose.clearText()
+                            purpose.setTextAndPlaceCursorAtEnd(item)
+                            valueFocusRequester.requestFocus()
+                            transactionSuggestionShowed = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
+                    )
+                }
+            }
+        }
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            OutlinedTextField(
-                modifier = Modifier.weight(0.6f),
-                state = value,
-                placeholder = { Text(stringResource(Res.string.placeholders_add_expense_value)) },
-                enabled = !isProcessing,
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Next,
-                    keyboardType = KeyboardType.Decimal,
-                ),
-            )
             Row(
                 modifier = Modifier
                     .clickable(
@@ -119,25 +173,33 @@ fun AddTransactionScene(
                 Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = "")
                 Text(selectedDate?.let { "${it.first} ${it.second}" } ?: "None")
             }
-        }
-        OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
-            state = purpose,
-            placeholder = { Text(stringResource(Res.string.placeholders_add_transaction_purpose)) },
-            enabled = !isProcessing,
-            trailingIcon = {
-                IconButton(
-                    onClick = onAdd
-                ) {
-                    if (isProcessing) {
-                        SmallCircularProgressIndicator()
-                    } else {
-                        Icon(imageVector = Icons.AutoMirrored.Default.Send, contentDescription = "")
+            OutlinedTextField(
+                modifier = Modifier.weight(0.6f).focusRequester(valueFocusRequester),
+                state = value,
+                placeholder = { Text(stringResource(Res.string.placeholders_add_expense_value)) },
+                enabled = !isProcessing,
+                lineLimits = TextFieldLineLimits.SingleLine,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                    keyboardType = KeyboardType.Decimal,
+                ),
+                onKeyboardAction = { onAdd() },
+                trailingIcon = {
+                    IconButton(
+                        onClick = onAdd
+                    ) {
+                        if (isProcessing) {
+                            SmallCircularProgressIndicator()
+                        } else {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Default.Send,
+                                contentDescription = ""
+                            )
+                        }
                     }
-                }
-            },
-            lineLimits = TextFieldLineLimits.MultiLine(1, 6),
-        )
+                },
+            )
+        }
         AddTransactionFailure(state)
     }
 
@@ -191,6 +253,11 @@ fun AddTransactionScenePreview() {
             value = rememberTextFieldState(),
             purpose = rememberTextFieldState(),
             date = Clock.System.now().toEpochMilliseconds(),
+            purposeSuggestions = listOf(
+                "Transaction test 1",
+                "Transaction test 2",
+                "Transaction test 3",
+            ),
             onDateSelect = {},
             onAdd = {},
         )

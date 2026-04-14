@@ -10,4 +10,6 @@ interface TransactionRepository {
     suspend fun addRecordTransaction(recordId: String, transaction: Transaction)
 
     suspend fun deleteTransaction(transactionId: Long)
+
+    fun getSuggestions(categoryId: Long, query: String): Flow<List<String>>
 }
