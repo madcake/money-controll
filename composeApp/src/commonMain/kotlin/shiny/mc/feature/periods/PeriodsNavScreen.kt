@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,6 +28,8 @@ import moneycontroll.composeapp.generated.resources.title_periods
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.domain.value.Period
+import shiny.mc.core.domain.value.PeriodDate
+import shiny.mc.feature.record.SwipeableItem
 import shiny.mc.platform.format
 import shiny.mc.theme.components.ColumnItem
 import shiny.mc.theme.components.ColumnItemValue
@@ -41,7 +45,11 @@ fun PeriodsNavScreen(
     viewModel: PeriodsViewModel = koinViewModel(),
 ) {
     val periods by viewModel.periods.collectAsStateWithLifecycle()
-    var visibleMonthPicker by remember { mutableStateOf(false) }
+    val current by viewModel.current.collectAsStateWithLifecycle()
+
+    var addNewPeriod by remember { mutableStateOf(false) }
+    var copyPeriod by remember { mutableStateOf<Period?>(null) }
+    var periodRevealed by remember { mutableStateOf<PeriodDate?>(null) }
 
     Scaffold(
         topBar = {
@@ -56,7 +64,7 @@ fun PeriodsNavScreen(
                 },
                 actions = {
                     IconButton(
-                        onClick = { visibleMonthPicker = true }
+                        onClick = { addNewPeriod = true }
                     ) {
                         Icon(imageVector = Icons.Default.Add, contentDescription = "")
                     }
@@ -74,7 +82,11 @@ fun PeriodsNavScreen(
             itemsPosition(periods) { position, item ->
                 PeriodItemView(
                     period = item,
+                    current = item.date == current,
                     position = position,
+                    isRevealed = item.date == periodRevealed,
+                    onReveal = { state -> periodRevealed = item.date.takeIf { state } },
+                    onCopy = { copyPeriod = item }
                 ) {
                     viewModel.setCurrent(item)
                     onCancel()
@@ -84,12 +96,22 @@ fun PeriodsNavScreen(
     }
 
     MonthPicker(
-        visible = visibleMonthPicker,
+        visible = addNewPeriod || copyPeriod != null,
         onSelect = { month, year ->
-            viewModel.newPeriod(month, year)
+            when {
+                addNewPeriod -> viewModel.newPeriod(month, year)
+                copyPeriod != null -> copyPeriod?.let {
+                    viewModel.copy(it, month, year)
+                }
+            }
+            addNewPeriod = false
+            copyPeriod = null
             onCancel()
         },
-        onCancel = { visibleMonthPicker = false }
+        onCancel = {
+            addNewPeriod = false
+            copyPeriod = null
+        }
     )
 }
 
@@ -97,18 +119,42 @@ fun PeriodsNavScreen(
 @Composable
 private fun PeriodItemView(
     period: Period,
+    current: Boolean,
     position: ItemPosition,
-    onClick: () -> Unit
+    isRevealed: Boolean,
+    onReveal: (Boolean) -> Unit,
+    onCopy: () -> Unit,
+    onClick: () -> Unit,
 ) {
-    ColumnItem(
-        headline = period.date.toString(),
-        trailing = {
-            ColumnItemValue(
-                value = period.values.inEstimate.format(),
-                supportValue = period.values.outEstimate.format()
-            )
+    SwipeableItem(
+        isRevealed = isRevealed,
+        backgroundContent = {
+            IconButton(onCopy) {
+                Icon(
+                    imageVector = Icons.Default.CopyAll,
+                    tint = MaterialTheme.colorScheme.tertiary,
+                    contentDescription = "",
+                )
+            }
         },
-        position = position,
-        onClick = onClick,
-    )
+        itemPosition = position,
+        onReveal = onReveal,
+    ) {
+        ColumnItem(
+            headline = period.date.toString(),
+            leading = if (current) {
+                { Icon(imageVector = Icons.Default.Check, contentDescription = "Current period") }
+            } else {
+                null
+            },
+            trailing = {
+                ColumnItemValue(
+                    value = period.values.inEstimate.format(),
+                    supportValue = period.values.outEstimate.format()
+                )
+            },
+            position = position,
+            onClick = onClick,
+        )
+    }
 }

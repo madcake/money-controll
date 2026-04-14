@@ -27,6 +27,8 @@ import shiny.mc.core.coordinators.category.DeleteCategory
 import shiny.mc.core.coordinators.category.DeleteCategoryImpl
 import shiny.mc.core.coordinators.category.SearchCategories
 import shiny.mc.core.coordinators.category.SearchCategoriesImpl
+import shiny.mc.core.coordinators.period.CopyPeriod
+import shiny.mc.core.coordinators.period.CopyPeriodImpl
 import shiny.mc.core.coordinators.period.GetPeriod
 import shiny.mc.core.coordinators.period.GetPeriodImpl
 import shiny.mc.core.coordinators.period.GetPeriods
@@ -117,6 +119,7 @@ val coordinateModule = module {
 
     single<GetPeriodsImpl>() bind GetPeriods::class
     single<GetPeriodImpl>() bind GetPeriod::class
+    single<CopyPeriodImpl>() bind CopyPeriod::class
 }
 
 val viewModelModule = module {

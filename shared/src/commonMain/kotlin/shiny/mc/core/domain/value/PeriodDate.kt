@@ -16,7 +16,6 @@ data class PeriodDate(
     val month: Int,
     val year: Int
 ) {
-
     override fun toString(): String {
         val date = LocalDate(
             year = year,
