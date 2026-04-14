@@ -34,7 +34,7 @@ fun Record.toEntity(): RecordEntity = RecordEntity(
     categoryId = category.id!!,
     month = month,
     year = year,
-    scheduledValue = scheduledValue,
+    scheduledValue = estimateValue,
 )
 
 fun List<Record>.toEntity() = map { it.toEntity() }

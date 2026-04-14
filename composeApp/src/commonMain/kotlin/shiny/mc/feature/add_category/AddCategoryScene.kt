@@ -52,6 +52,7 @@ import shiny.mc.core.domain.value.CategoryError
 import shiny.mc.core.domain.value.CategoryType
 import shiny.mc.core.model.CommandState
 import shiny.mc.theme.components.SmallCircularProgressIndicator
+import shiny.mc.theme.space
 
 @Composable
 fun AddCategoryScene(
@@ -121,7 +122,7 @@ private fun CategoryTypeMenu(
             Row(
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = MaterialTheme.space.paddingDefault),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End)
             ) {
@@ -182,7 +183,7 @@ private fun AddCategoryError(commandState: CommandState<AddCategoryCmd>) {
         else -> return
     }
     Text(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = MaterialTheme.space.paddingDefault),
         text = message,
         color = MaterialTheme.colorScheme.error,
         style = MaterialTheme.typography.bodySmallEmphasized

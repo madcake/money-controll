@@ -35,12 +35,12 @@ import shiny.mc.core.coordinators.record.AddRecords
 import shiny.mc.core.coordinators.record.ChangeRecords
 import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.coordinators.record.GetRecord
-import shiny.mc.core.coordinators.record.UpdateRecord
+import shiny.mc.core.coordinators.record.UpdateRecordValue
 import shiny.mc.core.coordinators.records.AddRecordsImpl
 import shiny.mc.core.coordinators.records.ChangeRecordsImpl
 import shiny.mc.core.coordinators.records.GetPeriodRecordsImpl
 import shiny.mc.core.coordinators.records.GetRecordImpl
-import shiny.mc.core.coordinators.records.UpdateRecordImpl
+import shiny.mc.core.coordinators.records.UpdateRecordValueImpl
 import shiny.mc.core.coordinators.transaction.AddRecordTransaction
 import shiny.mc.core.coordinators.transaction.AddRecordTransactionImpl
 import shiny.mc.core.coordinators.transaction.DeleteTransaction
@@ -104,7 +104,7 @@ val coordinateModule = module {
     single<GetPeriodRecordsImpl>() bind GetPeriodRecords::class
     single<AddRecordsImpl>() bind AddRecords::class
     single<GetRecordImpl>() bind GetRecord::class
-    single<UpdateRecordImpl>() bind UpdateRecord::class
+    single<UpdateRecordValueImpl>() bind UpdateRecordValue::class
     single<ChangeRecordsImpl>() bind ChangeRecords::class
 
     single<GetRecordTransactionsImpl>() bind GetRecordTransactions::class

@@ -29,7 +29,7 @@ class ChangeRecordsImpl(
                 category = category,
                 month = month,
                 year = year,
-                scheduledValue = 0.0,
+                estimateValue = 0.0,
                 realValue = 0.0,
             )
             categoryRepository.addRecord(record)

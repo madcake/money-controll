@@ -50,6 +50,8 @@ import org.jetbrains.compose.resources.stringResource
 import shiny.mc.core.domain.value.TransactionError
 import shiny.mc.core.model.CommandState
 import shiny.mc.theme.components.SmallCircularProgressIndicator
+import shiny.mc.theme.paddingDefault
+import shiny.mc.theme.space
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -88,7 +90,7 @@ fun AddTransactionScene(
     Column(
         modifier = Modifier.fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
+            .paddingDefault(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Row(
@@ -171,7 +173,7 @@ private fun AddTransactionFailure(state: CommandState<AddTransactionCommand>) {
         else -> stringResource(Res.string.error_transaction_unknown_error, state.err.message ?: "")
     }
     Text(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = MaterialTheme.space.paddingDefault),
         text = message,
         color = MaterialTheme.colorScheme.error,
         style = MaterialTheme.typography.bodySmallEmphasized

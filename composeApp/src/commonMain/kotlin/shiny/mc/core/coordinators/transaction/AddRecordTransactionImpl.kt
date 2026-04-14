@@ -2,6 +2,7 @@ package shiny.mc.core.coordinators.transaction
 
 import shiny.mc.core.domain.entity.Transaction
 import shiny.mc.core.repositories.TransactionRepository
+import shiny.mc.platform.parseToDouble
 
 class AddRecordTransactionImpl(
     private val transactionValidator: TransactionValidator,
@@ -19,7 +20,7 @@ class AddRecordTransactionImpl(
             recordId = recordId,
             transaction = Transaction(
                  purpose = purpose,
-                value = value.toDouble(),
+                value = value.parseToDouble(),
                 datetime = datetime,
             )
         )

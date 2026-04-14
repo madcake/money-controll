@@ -27,7 +27,7 @@ fun RecordSummaryEntity.toDto(): Record = Record(
     ),
     month = month,
     year = year,
-    scheduledValue = scheduledValue,
+    estimateValue = scheduledValue,
     realValue = real ?: 0.0,
 )
 

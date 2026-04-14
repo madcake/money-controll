@@ -6,6 +6,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import shiny.mc.core.coordinators.record.GetRecord
 import shiny.mc.core.domain.value.TransactionError
+import shiny.mc.platform.parseToDoubleOrNull
 import kotlin.time.Instant
 
 class TransactionValidatorImpl(
@@ -18,7 +19,7 @@ class TransactionValidatorImpl(
         purpose: String?,
         date: String?,
     ): Boolean {
-        value?.toDoubleOrNull()?.let { value ->
+        value?.parseToDoubleOrNull()?.let { value ->
             value.takeIf { it > 0 }
         } ?: throw TransactionError.IncorrectValue()
 

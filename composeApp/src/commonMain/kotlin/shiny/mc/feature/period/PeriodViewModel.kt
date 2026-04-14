@@ -60,9 +60,9 @@ class PeriodViewModel(
 private class RecordItemImpl(data: Record) : RecordItem {
     override val id: String = data.id
     override val title: String = data.category.title
-    override val scheduledValue: String = data.scheduledValue.format()
+    override val scheduledValue: String = data.estimateValue.format()
     override val realValue: String = data.realValue.format()
-    override val valueState: ValueState = if (data.scheduledValue >= data.realValue) {
+    override val valueState: ValueState = if (data.estimateValue >= data.realValue) {
         ValueState.Surplus
     } else {
         ValueState.Deficit

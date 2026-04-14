@@ -11,12 +11,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 object Space {
+    val paddingHalfSmall: Dp = 4.dp
     val paddingDefault: Dp = 16.dp
     val dividerArrangement = Arrangement.spacedBy(1.dp)
-    val groupSpace = @Composable { Spacer(Modifier.size(16.dp)) }
+    val groupSpace = @Composable { Spacer(Modifier.size(paddingDefault)) }
 }
 
 val MaterialTheme.space: Space
     get() = Space
 
 fun Modifier.paddingDefault() = Modifier.padding(Space.paddingDefault)
+
+fun Modifier.paddingHalfSmall() = Modifier.padding(Space.paddingHalfSmall)

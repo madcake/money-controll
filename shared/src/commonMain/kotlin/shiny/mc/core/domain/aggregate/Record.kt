@@ -7,7 +7,7 @@ data class Record(
     val category: Category, // TODO: Remove it
     val month: Int,
     val year: Int,
-    val scheduledValue: Double,
+    val estimateValue: Double,
     val realValue: Double,
 ) {
     companion object
