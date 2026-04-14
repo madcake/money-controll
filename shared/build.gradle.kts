@@ -33,9 +33,6 @@ kotlin {
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
             api(libs.koin.annotations)
-//            implementation(libs.koin.compose)
-//            implementation(libs.koin.compose.viewmodel)
-//            implementation(libs.koin.compose.navigation)
             // Json
             implementation(libs.kotlinx.serialization.json)
             // Datetime
