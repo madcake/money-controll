@@ -35,7 +35,7 @@ class EditRecordViewModel(
     val record = getRecord.getRecord(recordId)
         .onEach { record ->
             record?.let {
-                if (estimateValueState.text.replace("[0.]*".toRegex(), "").isEmpty()) {
+                if (record.estimateValue == 0.0) {
                     estimateValueState.clearText()
                 } else {
                     estimateValueState.setTextAndPlaceCursorAtEnd(record.estimateValue.toString())

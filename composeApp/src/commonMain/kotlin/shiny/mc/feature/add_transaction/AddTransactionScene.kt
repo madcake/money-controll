@@ -163,10 +163,12 @@ fun AddTransactionScene(
         ) {
             Row(
                 modifier = Modifier
+                    .clip(MaterialTheme.shapes.medium)
                     .clickable(
                         onClick = { showDatePicker = true },
                         enabled = !isProcessing,
-                    ),
+                    )
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
