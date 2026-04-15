@@ -2,7 +2,6 @@ package shiny.mc.core.coordinators.records
 
 import kotlinx.coroutines.flow.firstOrNull
 import shiny.mc.core.coordinators.record.UpdateRecordValue
-import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.RecordRepository
 import shiny.mc.platform.parseToDoubleOrNull
 

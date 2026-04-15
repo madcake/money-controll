@@ -21,7 +21,7 @@ class RecordRepositoryImpl(
     }
 
     override fun getRecords(): Flow<List<Record>> {
-        TODO("Not yet implemented")
+        return recordDao.getRecords().toDto()
     }
 
     override fun getRecord(recordId: String): Flow<Record?> {
@@ -30,7 +30,7 @@ class RecordRepositoryImpl(
     }
 
     override fun getRecords(categoryId: Long): Flow<List<Record>> {
-        TODO("Not yet implemented")
+        return recordDao.getRecords(categoryId).toDto()
     }
 
     override fun getRecords(

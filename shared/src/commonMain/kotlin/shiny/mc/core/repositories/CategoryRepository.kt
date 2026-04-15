@@ -1,9 +1,7 @@
 package shiny.mc.core.repositories
 
 import kotlinx.coroutines.flow.Flow
-import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.entity.Category
-import shiny.mc.core.domain.value.PeriodDate
 
 interface CategoryRepository {
     /**

@@ -2,11 +2,8 @@ package shiny.mc.core.repositories
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
-import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.entity.Category
-import shiny.mc.core.domain.value.PeriodDate
 import shiny.mc.services.store.dao.CategoryDao
 import shiny.mc.services.store.dao.RecordDao
 import shiny.mc.services.store.entity.toDto

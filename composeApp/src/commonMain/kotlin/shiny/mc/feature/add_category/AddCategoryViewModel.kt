@@ -38,7 +38,7 @@ class AddCategoryViewModel(
         .stateIn(viewModelScope, SharingStarted.Eagerly, "")
 
     val type: StateFlow<CategoryType>
-        field = MutableStateFlow(CategoryType.Liability)
+        field = MutableStateFlow(CategoryType.Out)
 
     val inputValid = combine(
         title,

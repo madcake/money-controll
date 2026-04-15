@@ -8,7 +8,6 @@ import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.domain.aggregate.createId
 import shiny.mc.core.domain.entity.Category
 import shiny.mc.core.domain.value.RecordError
-import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.RecordRepository
 
 class AddRecordsImpl(

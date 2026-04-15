@@ -10,11 +10,11 @@ enum class CategoryTypeEntity {
 }
 
 fun CategoryTypeEntity.toDto(): CategoryType = when (this) {
-    Asset -> CategoryType.Asset
-    Liability -> CategoryType.Liability
+    Asset -> CategoryType.In
+    Liability -> CategoryType.Out
 }
 
 fun CategoryType.toEntity(): CategoryTypeEntity = when (this) {
-    CategoryType.Asset -> Asset
-    CategoryType.Liability -> Liability
+    CategoryType.In -> Asset
+    CategoryType.Out -> Liability
 }

@@ -49,6 +49,43 @@ interface RecordDao {
             record
         JOIN category ON record.categoryId = category.id
         LEFT JOIN record_transaction ON record.id = record_transaction.recordId
+        GROUP BY record.id
+    """)
+    fun getRecords(): Flow<List<RecordSummaryEntity>>
+
+    @Query("""
+        SELECT
+            record.id,
+            record.categoryId,
+            record.month,
+            record.year,
+            record.scheduledValue,
+            category.title,
+            category.type,
+            SUM(record_transaction.value) as real
+        FROM
+            record
+        JOIN category ON record.categoryId = category.id
+        LEFT JOIN record_transaction ON record.id = record_transaction.recordId
+        WHERE categoryId = :categoryId
+        GROUP BY record.id
+    """)
+    fun getRecords(categoryId: Long): Flow<List<RecordSummaryEntity>>
+
+    @Query("""
+        SELECT
+            record.id,
+            record.categoryId,
+            record.month,
+            record.year,
+            record.scheduledValue,
+            category.title,
+            category.type,
+            SUM(record_transaction.value) as real
+        FROM
+            record
+        JOIN category ON record.categoryId = category.id
+        LEFT JOIN record_transaction ON record.id = record_transaction.recordId
         WHERE
             month = :month AND year = :year
         GROUP BY record.id

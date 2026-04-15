@@ -40,18 +40,18 @@ class PeriodViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), null)
 
     private val records = periodDate.flatMapLatest {
-        CategoryType.Liability
+        CategoryType.Out
         getRecords.getRecords(it.month, it.year)
     }
 
     val outRecords: StateFlow<List<RecordItem>> = records.map { items ->
-        items.filter { it.category.type == CategoryType.Liability }
+        items.filter { it.category.type == CategoryType.Out }
     }
     .mapLatest { items -> items.map { RecordItemImpl(it) }}
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val inRecords: StateFlow<List<RecordItem>> = records.map { items ->
-        items.filter { it.category.type == CategoryType.Asset }
+        items.filter { it.category.type == CategoryType.In }
     }
     .mapLatest { items -> items.map { RecordItemImpl(it) }}
     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

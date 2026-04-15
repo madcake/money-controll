@@ -3,7 +3,6 @@ package shiny.mc.core.coordinators.records
 import kotlinx.coroutines.flow.Flow
 import shiny.mc.core.coordinators.record.GetRecord
 import shiny.mc.core.domain.aggregate.Record
-import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.RecordRepository
 
 class GetRecordImpl(

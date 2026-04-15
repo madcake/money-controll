@@ -192,8 +192,8 @@ private fun AddCategoryError(commandState: CommandState<AddCategoryCmd>) {
 
 val CategoryType.icon: ImageVector
     get() = when (this) {
-        CategoryType.Asset -> Icons.Default.Download
-        CategoryType.Liability -> Icons.Default.Upload
+        CategoryType.In -> Icons.Default.Download
+        CategoryType.Out -> Icons.Default.Upload
     }
 
 @Preview
@@ -202,7 +202,7 @@ fun AddCategoryScenePreview() {
     MaterialTheme {
         AddCategoryScene(
             title = rememberTextFieldState(""),
-            categoryType = CategoryType.Liability,
+            categoryType = CategoryType.Out,
             commandState = CommandState.Idle(),
             onSave = {},
             onCategoryTypeSelected = { _ -> },
