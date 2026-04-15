@@ -5,12 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
-import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.repositories.RecordRepository
 import shiny.mc.core.repositories.TransactionRepository
 
 class GetTransactionSuggestionsImpl(
     private val transactionRepository: TransactionRepository,
-    private val categoryRepository: CategoryRepository,
+    private val recordRepository: RecordRepository,
 ) : GetTransactionSuggestions {
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -18,7 +18,7 @@ class GetTransactionSuggestionsImpl(
         recordId: String,
         query: String
     ): Flow<List<String>> {
-        return categoryRepository.getRecord(recordId)
+        return recordRepository.getRecord(recordId)
             .mapLatest { it?.category?.id }
             .filterNotNull()
             .flatMapLatest {

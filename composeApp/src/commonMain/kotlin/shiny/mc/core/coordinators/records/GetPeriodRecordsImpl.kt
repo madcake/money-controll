@@ -4,11 +4,12 @@ import kotlinx.coroutines.flow.Flow
 import shiny.mc.core.coordinators.record.GetPeriodRecords
 import shiny.mc.core.domain.aggregate.Record
 import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.repositories.RecordRepository
 
 class GetPeriodRecordsImpl(
-    private val categoryRepository: CategoryRepository
+    private val recordRepository: RecordRepository,
 ) : GetPeriodRecords {
     override fun getRecords(month: Int, year: Int): Flow<List<Record>> {
-        return categoryRepository.getRecords(month, year)
+        return recordRepository.getRecords(month, year)
     }
 }

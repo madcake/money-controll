@@ -7,8 +7,10 @@ import shiny.mc.core.domain.aggregate.createId
 import shiny.mc.core.domain.entity.Category
 import shiny.mc.core.domain.value.RecordError
 import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.repositories.RecordRepository
 
 class ChangeRecordsImpl(
+    private val recordRepository: RecordRepository,
     private val categoryRepository: CategoryRepository,
 ) : ChangeRecords {
     override suspend fun changeRecord(
@@ -20,8 +22,8 @@ class ChangeRecordsImpl(
 
         val recordId = Record.createId(categoryId, month, year)
 
-        if (categoryRepository.hasRecord(recordId)) {
-            categoryRepository.removeRecord(recordId)
+        if (recordRepository.hasRecord(recordId)) {
+            recordRepository.removeRecord(recordId)
         } else {
             val category = categoryRepository.getCategory(categoryId).firstOrNull() ?: return
             val record = Record(
@@ -32,7 +34,7 @@ class ChangeRecordsImpl(
                 estimateValue = 0.0,
                 realValue = 0.0,
             )
-            categoryRepository.addRecord(record)
+            recordRepository.addRecord(record)
         }
     }
 }

@@ -59,6 +59,8 @@ import shiny.mc.core.repositories.CategoryRepository
 import shiny.mc.core.repositories.CategoryRepositoryImpl
 import shiny.mc.core.repositories.PeriodRepository
 import shiny.mc.core.repositories.PeriodRepositoryImpl
+import shiny.mc.core.repositories.RecordRepository
+import shiny.mc.core.repositories.RecordRepositoryImpl
 import shiny.mc.core.repositories.TransactionRepository
 import shiny.mc.core.repositories.TransactionRepositoryImpl
 import shiny.mc.feature.add_category.AddCategoryViewModel
@@ -90,6 +92,7 @@ val repositoryModule = module {
     includes(storeModule)
     single<AppConfigRepositoryImpl>() bind AppConfigRepository::class
     single<CategoryRepositoryImpl>() bind CategoryRepository::class
+    single<RecordRepositoryImpl>() bind RecordRepository::class
     single<TransactionRepositoryImpl>() bind TransactionRepository::class
     single<PeriodRepositoryImpl>() bind PeriodRepository::class
 }

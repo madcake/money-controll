@@ -9,9 +9,10 @@ import shiny.mc.core.domain.aggregate.createId
 import shiny.mc.core.domain.entity.Category
 import shiny.mc.core.domain.value.RecordError
 import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.repositories.RecordRepository
 
 class AddRecordsImpl(
-    private val categoryRepository: CategoryRepository,
+    private val recordRepository: RecordRepository,
 ) : AddRecords {
 
     override suspend fun addRecords(
@@ -20,7 +21,7 @@ class AddRecordsImpl(
         year: Int
     ) = withContext(Dispatchers.IO) {
 
-        categoryRepository.addRecords(
+        recordRepository.addRecords(
             records = categories.map {
                 val categoryId = it.id ?: throw RecordError.CategoryNoneExist()
                 val recordId = Record.createId(categoryId, month, year)

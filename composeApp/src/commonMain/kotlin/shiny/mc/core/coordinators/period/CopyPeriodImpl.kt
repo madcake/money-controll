@@ -1,15 +1,15 @@
 package shiny.mc.core.coordinators.period
 
 import shiny.mc.core.domain.value.PeriodDate
-import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.repositories.RecordRepository
 
 class CopyPeriodImpl(
-    private val categoryRepository: CategoryRepository
+    private val recordRepository: RecordRepository,
 ) : CopyPeriod {
     override suspend fun copy(
         from: PeriodDate,
         to: PeriodDate
     ) {
-        categoryRepository.copyPeriod(from, to)
+        recordRepository.copyPeriod(from, to)
     }
 }
