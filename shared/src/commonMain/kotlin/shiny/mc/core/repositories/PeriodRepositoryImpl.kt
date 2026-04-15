@@ -20,4 +20,10 @@ class PeriodRepositoryImpl(
     override fun getPeriod(date: PeriodDate): Flow<Period?> {
         return periodDao.getPeriod(date.month, date.year).mapLatest { it?.toDto() }
     }
+    override suspend fun copyPeriod(
+        from: PeriodDate,
+        to: PeriodDate
+    ) {
+        periodDao.copy(from.month, from.year, to.month, to.year)
+    }
 }

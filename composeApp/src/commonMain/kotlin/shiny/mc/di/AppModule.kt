@@ -64,6 +64,7 @@ import shiny.mc.core.repositories.RecordRepositoryImpl
 import shiny.mc.core.repositories.TransactionRepository
 import shiny.mc.core.repositories.TransactionRepositoryImpl
 import shiny.mc.feature.add_category.AddCategoryViewModel
+import shiny.mc.feature.add_period.AddPeriodViewModel
 import shiny.mc.feature.add_transaction.AddTransactionViewModel
 import shiny.mc.feature.categories.CategoriesViewModel
 import shiny.mc.feature.period.PeriodViewModel
@@ -133,6 +134,7 @@ val viewModelModule = module {
     viewModel<AddTransactionViewModel>()
     viewModel<EditRecordViewModel>()
     viewModel<PeriodsViewModel>()
+    viewModel<AddPeriodViewModel>()
 }
 
 fun getRoomDatabase(

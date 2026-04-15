@@ -70,4 +70,15 @@ interface PeriodDao {
     """
     )
     fun getPeriod(month: Int, year: Int): Flow<PeriodViewEntity?>
+
+    @Query("""
+        INSERT INTO record SELECT
+            categoryId || ':' || :toMonth || ':' || :toYear AS recordId,
+            categoryId,
+            :toMonth AS month,
+            :toYear AS year,
+            scheduledValue
+        FROM record WHERE month = :fromMonth AND year = :fromYear;
+    """)
+    suspend fun copy(fromMonth: Int, fromYear: Int, toMonth: Int, toYear: Int)
 }
