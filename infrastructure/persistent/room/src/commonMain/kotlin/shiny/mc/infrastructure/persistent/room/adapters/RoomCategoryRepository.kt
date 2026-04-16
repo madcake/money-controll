@@ -6,14 +6,12 @@ import kotlinx.coroutines.flow.mapLatest
 import shiny.mc.core.adapters.CategoryRepository
 import shiny.mc.core.dto.Category
 import shiny.mc.infrastructure.persistent.room.dao.CategoryDao
-import shiny.mc.infrastructure.persistent.room.dao.RecordDao
 import shiny.mc.infrastructure.persistent.room.entity.toDto
 import shiny.mc.infrastructure.persistent.room.entity.toEntity
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RoomCategoryRepository(
     private val categoryDao: CategoryDao,
-    private val recordDao: RecordDao,
 ) : CategoryRepository {
     override fun getCategories(): Flow<List<Category>> {
         return categoryDao.getCategories().toDto()

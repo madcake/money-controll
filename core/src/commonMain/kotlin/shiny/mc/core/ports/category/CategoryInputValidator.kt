@@ -9,7 +9,7 @@ interface CategoryInputValidator {
      * @param title category title
      * @param type category type
      * @return true if data valid otherwise false or throw exception
-     * @throws shiny.mc.core.domain.value.CategoryError if data is invalid
+     * @throws shiny.mc.core.dto.error.CategoryError if data is invalid
      */
     suspend fun validateCategoryInput(title: String?, type: CategoryType?): Boolean
 }

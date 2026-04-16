@@ -37,5 +37,3 @@ fun Category.toEntity(): CategoryEntity = CategoryEntity(
     title = title,
     type = type.toEntity()
 )
-
-fun List<Category>.toEntity() = map { it.toEntity() }

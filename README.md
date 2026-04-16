@@ -4,28 +4,29 @@
 
 ## Features
 
-- **Cross-Platform Support**: Target platforms include Android, iOS, Desktop (JVM), and a dedicated Backend server.
-- **Period Management**: Organize transactions by months and years for better financial tracking.
+- **Cross-Platform Support**: Target platforms include Android, iOS, and Desktop (JVM).
 - **Flexible Categories**: Create and customize categories for detailed spending analysis.
 - **Modern UI/UX**: Built with Material 3 and Adaptive Layouts for a consistent experience on all screen sizes.
 - **Local-First Reliability**: Uses Room for robust local data storage and offline capabilities.
+- **Architecture**: Clean separation of concerns with a focus on Hexagonal principles (Domain, Ports, Adapters).
 
 ## Tech Stack
 
 - **UI Framework**: [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
 - **Dependency Injection**: [Koin](https://insert-koin.io/)
 - **Database**: [Room](https://developer.android.com/kotlin/multiplatform/room)
+- **Navigation**: [Navigation3](https://developer.android.com/jetpack/compose/navigation)
 - **Networking**: [Ktor](https://ktor.io/)
 - **Serialization**: [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)
-- **Architecture**: MVVM / Command Pattern
+- **Architecture**: Hexagonal Architecture / MVVM / Command Pattern
 
 ## Project Structure
 
-* [`/composeApp`](./composeApp) — Common UI and shared logic for client applications (Android, iOS, Desktop).
-* [`/server`](./server) — Ktor-based backend server.
-* [`/core`](./core) — Core business logic, domain models, and repository interfaces.
-* [`/shared`](./shared) — Shared data sources and platform-specific implementations.
-* [`/iosApp`](./iosApp) — iOS entry point and Swift-specific code.
+* [`/composeApp`](./composeApp) — Shared UI, view models, and feature navigation.
+* [`/core`](./core) — Business logic, domain models, and port definitions.
+* [`/infrastructure`](./infrastructure) — External implementations such as Room database and persistent storage.
+* [`/shared`](./shared) — Platform-specific bridge and cross-module common utilities.
+* [`/iosApp`](./iosApp) — iOS-specific entry point and configuration.
 
 ## Getting Started
 
@@ -44,11 +45,6 @@
 #### Desktop (JVM)
 ```shell
 ./gradlew :composeApp:run
-```
-
-#### Server
-```shell
-./gradlew :server:run
 ```
 
 #### iOS
