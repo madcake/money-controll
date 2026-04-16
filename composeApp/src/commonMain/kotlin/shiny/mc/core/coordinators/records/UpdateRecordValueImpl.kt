@@ -1,8 +1,8 @@
 package shiny.mc.core.coordinators.records
 
 import kotlinx.coroutines.flow.firstOrNull
-import shiny.mc.core.coordinators.record.UpdateRecordValue
-import shiny.mc.core.repositories.RecordRepository
+import shiny.mc.core.adapters.RecordRepository
+import shiny.mc.core.ports.record.UpdateRecordValue
 import shiny.mc.platform.parseToDoubleOrNull
 
 class UpdateRecordValueImpl(

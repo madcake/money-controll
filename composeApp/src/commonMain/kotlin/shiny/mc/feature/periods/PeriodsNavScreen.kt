@@ -37,9 +37,9 @@ import moneycontroll.composeapp.generated.resources.error_title_copy
 import moneycontroll.composeapp.generated.resources.title_periods
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.core.domain.value.Period
-import shiny.mc.core.domain.value.PeriodDate
-import shiny.mc.core.domain.value.PeriodError
+import shiny.mc.core.dto.Period
+import shiny.mc.core.dto.PeriodDate
+import shiny.mc.core.dto.error.PeriodError
 import shiny.mc.core.model.CommandState
 import shiny.mc.feature.add_period.AddPeriodViewModel
 import shiny.mc.feature.add_period.model.AddPeriodCommand
@@ -123,6 +123,7 @@ fun PeriodsNavScreen(
                     }
                 ) {
                     viewModel.setCurrent(item)
+                    onCancel()
                 }
             }
         }

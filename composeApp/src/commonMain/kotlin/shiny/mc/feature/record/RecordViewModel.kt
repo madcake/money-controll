@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import shiny.mc.core.coordinators.record.GetRecord
-import shiny.mc.core.coordinators.transaction.DeleteTransaction
-import shiny.mc.core.coordinators.transaction.GetRecordTransactions
+import shiny.mc.core.ports.record.GetRecord
+import shiny.mc.core.ports.transaction.DeleteTransaction
+import shiny.mc.core.ports.transaction.GetRecordTransactions
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)

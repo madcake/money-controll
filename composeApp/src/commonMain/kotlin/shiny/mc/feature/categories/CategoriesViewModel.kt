@@ -11,11 +11,11 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
-import shiny.mc.core.coordinators.category.DeleteCategory
-import shiny.mc.core.coordinators.category.SearchCategories
-import shiny.mc.core.coordinators.record.ChangeRecords
-import shiny.mc.core.coordinators.record.GetPeriodRecords
-import shiny.mc.core.domain.entity.Category
+import shiny.mc.core.dto.Category
+import shiny.mc.core.ports.category.DeleteCategory
+import shiny.mc.core.ports.category.SearchCategories
+import shiny.mc.core.ports.record.ChangeRecords
+import shiny.mc.core.ports.record.GetPeriodRecords
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel

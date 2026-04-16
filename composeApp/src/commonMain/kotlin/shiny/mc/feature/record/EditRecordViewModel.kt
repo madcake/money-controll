@@ -16,8 +16,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.InjectedParam
 import org.koin.core.annotation.KoinViewModel
-import shiny.mc.core.coordinators.record.GetRecord
-import shiny.mc.core.coordinators.record.UpdateRecordValue
+import shiny.mc.core.ports.record.GetRecord
+import shiny.mc.core.ports.record.UpdateRecordValue
 import kotlin.time.Duration.Companion.seconds
 
 @KoinViewModel

@@ -48,8 +48,8 @@ import moneycontroll.composeapp.generated.resources.error_category_duplicated_ti
 import moneycontroll.composeapp.generated.resources.error_category_empty_title
 import moneycontroll.composeapp.generated.resources.placeholders_category_title
 import org.jetbrains.compose.resources.stringResource
-import shiny.mc.core.domain.value.CategoryError
-import shiny.mc.core.domain.value.CategoryType
+import shiny.mc.core.dto.CategoryType
+import shiny.mc.core.dto.error.CategoryError
 import shiny.mc.core.model.CommandState
 import shiny.mc.theme.components.SmallCircularProgressIndicator
 import shiny.mc.theme.space

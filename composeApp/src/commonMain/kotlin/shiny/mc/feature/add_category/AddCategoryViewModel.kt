@@ -20,11 +20,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import org.koin.core.annotation.KoinViewModel
-import shiny.mc.core.coordinators.category.AddCategory
-import shiny.mc.core.coordinators.category.CategoryInputValidator
-import shiny.mc.core.domain.value.CategoryError
-import shiny.mc.core.domain.value.CategoryType
+import shiny.mc.core.dto.CategoryType
+import shiny.mc.core.dto.error.CategoryError
 import shiny.mc.core.model.CommandState
+import shiny.mc.core.ports.category.AddCategory
+import shiny.mc.core.ports.category.CategoryInputValidator
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel

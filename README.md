@@ -1,67 +1,60 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM), Server.
+# MoneyControll
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+**MoneyControll** is a cross-platform personal finance management application built with Kotlin Multiplatform and Compose Multiplatform. It allows users to track income and expenses, plan budgets by periods, and synchronize data across multiple devices.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Features
 
-* [/server](./server/src/main/kotlin) is for the Ktor server application.
+- **Cross-Platform Support**: Target platforms include Android, iOS, Desktop (JVM), and a dedicated Backend server.
+- **Period Management**: Organize transactions by months and years for better financial tracking.
+- **Flexible Categories**: Create and customize categories for detailed spending analysis.
+- **Modern UI/UX**: Built with Material 3 and Adaptive Layouts for a consistent experience on all screen sizes.
+- **Local-First Reliability**: Uses Room for robust local data storage and offline capabilities.
 
-* [/shared](./shared/src) is for the code that will be shared between all targets in the project.
-  The most important subfolder is [commonMain](./shared/src/commonMain/kotlin). If preferred, you
-  can add code to the platform-specific folders here too.
+## Tech Stack
 
-### Build and Run Android Application
+- **UI Framework**: [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)
+- **Dependency Injection**: [Koin](https://insert-koin.io/)
+- **Database**: [Room](https://developer.android.com/kotlin/multiplatform/room)
+- **Networking**: [Ktor](https://ktor.io/)
+- **Serialization**: [Kotlinx Serialization](https://github.com/Kotlin/kotlinx.serialization)
+- **Architecture**: MVVM / Command Pattern
 
-To build and run the development version of the Android app, use the run configuration from the run widget
-in your IDE’s toolbar or build it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:assembleDebug
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:assembleDebug
-  ```
+## Project Structure
 
-### Build and Run Desktop (JVM) Application
+* [`/composeApp`](./composeApp) — Common UI and shared logic for client applications (Android, iOS, Desktop).
+* [`/server`](./server) — Ktor-based backend server.
+* [`/core`](./core) — Core business logic, domain models, and repository interfaces.
+* [`/shared`](./shared) — Shared data sources and platform-specific implementations.
+* [`/iosApp`](./iosApp) — iOS entry point and Swift-specific code.
 
-To build and run the development version of the desktop app, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :composeApp:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :composeApp:run
-  ```
+## Getting Started
 
-### Build and Run Server
+### Prerequisites
+- JDK 17 or higher
+- Android Studio or IntelliJ IDEA
+- Xcode (for iOS development)
 
-To build and run the development version of the server, use the run configuration from the run widget
-in your IDE’s toolbar or run it directly from the terminal:
-- on macOS/Linux
-  ```shell
-  ./gradlew :server:run
-  ```
-- on Windows
-  ```shell
-  .\gradlew.bat :server:run
-  ```
+### Build and Run
 
-### Build and Run iOS Application
+#### Android
+```shell
+./gradlew :composeApp:assembleDebug
+```
 
-To build and run the development version of the iOS app, use the run configuration from the run widget
-in your IDE’s toolbar or open the [/iosApp](./iosApp) directory in Xcode and run it from there.
+#### Desktop (JVM)
+```shell
+./gradlew :composeApp:run
+```
+
+#### Server
+```shell
+./gradlew :server:run
+```
+
+#### iOS
+1. Navigate to the `/iosApp` directory.
+2. Open `iosApp.xcworkspace` in Xcode.
+3. Select a simulator or device and click **Run**.
 
 ---
-
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+Developed using modern Kotlin Multiplatform best practices.

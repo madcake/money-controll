@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.annotation.KoinViewModel
-import shiny.mc.core.coordinators.app_config.GetCurrentPeriodDate
-import shiny.mc.core.coordinators.period.GetPeriod
-import shiny.mc.core.coordinators.record.GetPeriodRecords
-import shiny.mc.core.domain.aggregate.Record
-import shiny.mc.core.domain.value.CategoryType
-import shiny.mc.core.domain.value.PeriodDate
-import shiny.mc.core.domain.value.ValueState
+import shiny.mc.core.dto.CategoryType
+import shiny.mc.core.dto.PeriodDate
+import shiny.mc.core.dto.Record
+import shiny.mc.core.dto.ValueState
+import shiny.mc.core.ports.app_config.GetCurrentPeriodDate
+import shiny.mc.core.ports.period.GetPeriod
+import shiny.mc.core.ports.record.GetPeriodRecords
 import shiny.mc.feature.period.model.RecordItem
 import shiny.mc.platform.format
 
@@ -29,7 +29,7 @@ class PeriodViewModel(
 ) : ViewModel() {
 
     val periodDate = getCurrentPeriodDate.period()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PeriodDate.default())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PeriodDate(4, 2026)/* TODO: PeriodDate.default()*/)
 
     val title = periodDate.map { it.toString() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")

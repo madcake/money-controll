@@ -1,9 +1,10 @@
 package shiny.mc.core.coordinators.category
 
 import kotlinx.coroutines.flow.firstOrNull
-import shiny.mc.core.domain.value.CategoryError
-import shiny.mc.core.domain.value.CategoryType
-import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.adapters.CategoryRepository
+import shiny.mc.core.dto.CategoryType
+import shiny.mc.core.dto.error.CategoryError
+import shiny.mc.core.ports.category.CategoryInputValidator
 
 class CategoryInputValidatorImpl(
     private val categoryRepository: CategoryRepository,

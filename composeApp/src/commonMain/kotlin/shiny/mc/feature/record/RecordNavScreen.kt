@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.core.domain.entity.Transaction
+import shiny.mc.core.dto.Transaction
 import shiny.mc.feature.add_transaction.AddTransactionNavScreen
 import shiny.mc.navigation.OnCancel
 import shiny.mc.platform.dateFormate

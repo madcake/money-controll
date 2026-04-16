@@ -4,7 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import shiny.mc.core.domain.entity.Category
+import shiny.mc.core.dto.Category
 import shiny.mc.feature.add_category.icon
 import shiny.mc.theme.components.ColumnItem
 import shiny.mc.theme.components.ItemPosition

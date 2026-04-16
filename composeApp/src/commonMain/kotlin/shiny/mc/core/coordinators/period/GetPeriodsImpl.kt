@@ -1,8 +1,9 @@
 package shiny.mc.core.coordinators.period
 
 import kotlinx.coroutines.flow.Flow
-import shiny.mc.core.domain.value.Period
-import shiny.mc.core.repositories.PeriodRepository
+import shiny.mc.core.adapters.PeriodRepository
+import shiny.mc.core.dto.Period
+import shiny.mc.core.ports.period.GetPeriods
 
 class GetPeriodsImpl(
     private val periodRepository: PeriodRepository,

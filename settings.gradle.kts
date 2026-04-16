@@ -34,3 +34,7 @@ plugins {
 
 include(":composeApp")
 include(":shared")
+include(":core")
+include(":infrastructure")
+include(":infrastructure:persistent")
+include(":infrastructure:persistent:room")

@@ -23,10 +23,10 @@ import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.period_edit
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.core.domain.value.PeriodDate
-import shiny.mc.core.domain.value.PeriodValues
-import shiny.mc.core.domain.value.ValueState
-import shiny.mc.core.domain.value.ValueType
+import shiny.mc.core.dto.PeriodDate
+import shiny.mc.core.dto.PeriodValues
+import shiny.mc.core.dto.ValueState
+import shiny.mc.core.dto.ValueType
 import shiny.mc.feature.period.components.NumberColumnView
 import shiny.mc.feature.period.components.RecordItemView
 import shiny.mc.feature.period.model.RecordItem

@@ -3,24 +3,25 @@ package shiny.mc.feature.categories.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
-import shiny.mc.core.domain.value.PeriodDate
+import shiny.mc.core.dto.PeriodDate
 import shiny.mc.feature.categories.CategoriesNavScreen
 import shiny.mc.navigation.OnCancel
 
 @Serializable
 class CategoriesNavKey(
-    val date: PeriodDate,
+    val month: Int,
+    val year: Int,
 ) : NavKey
 
 
 fun MutableList<NavKey>.openCategories(periodDate: PeriodDate) {
-    add(CategoriesNavKey(periodDate))
+    add(CategoriesNavKey(periodDate.month,periodDate.year))
 }
 
 fun EntryProviderScope<NavKey>.categories(
     onCancel: OnCancel,
 ) {
     entry<CategoriesNavKey> { entry ->
-        CategoriesNavScreen(entry.date, onCancel = onCancel)
+        CategoriesNavScreen(PeriodDate(entry.month, entry.year), onCancel = onCancel)
     }
 }

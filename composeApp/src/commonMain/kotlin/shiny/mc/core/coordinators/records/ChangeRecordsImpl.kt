@@ -1,17 +1,18 @@
 package shiny.mc.core.coordinators.records
 
 import kotlinx.coroutines.flow.firstOrNull
-import shiny.mc.core.coordinators.record.ChangeRecords
-import shiny.mc.core.domain.aggregate.Record
-import shiny.mc.core.domain.aggregate.createId
-import shiny.mc.core.domain.entity.Category
-import shiny.mc.core.domain.value.RecordError
-import shiny.mc.core.repositories.CategoryRepository
-import shiny.mc.core.repositories.RecordRepository
+import shiny.mc.core.adapters.CategoryRepository
+import shiny.mc.core.adapters.RecordRepository
+import shiny.mc.core.dto.Category
+import shiny.mc.core.dto.Record
+import shiny.mc.core.dto.error.RecordError
+import shiny.mc.core.ports.record.ChangeRecords
+import shiny.mc.core.ports.record.CreateRecordId
 
 class ChangeRecordsImpl(
     private val recordRepository: RecordRepository,
     private val categoryRepository: CategoryRepository,
+    private val createRecordId: CreateRecordId = object : CreateRecordId {}
 ) : ChangeRecords {
     override suspend fun changeRecord(
         category: Category,
@@ -20,7 +21,7 @@ class ChangeRecordsImpl(
     ) {
         val categoryId = category.id ?: throw RecordError.CategoryNoneExist()
 
-        val recordId = Record.createId(categoryId, month, year)
+        val recordId = createRecordId.createId(categoryId, month, year)
 
         if (recordRepository.hasRecord(recordId)) {
             recordRepository.removeRecord(recordId)

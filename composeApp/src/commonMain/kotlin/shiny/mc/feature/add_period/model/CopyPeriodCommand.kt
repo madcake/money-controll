@@ -1,6 +1,6 @@
 package shiny.mc.feature.add_period.model
 
-import shiny.mc.core.domain.value.PeriodDate
+import shiny.mc.core.dto.PeriodDate
 
 sealed interface AddPeriodCommand {
     object None : AddPeriodCommand

@@ -1,8 +1,9 @@
 package shiny.mc.core.coordinators.transaction
 
 import kotlinx.coroutines.flow.Flow
-import shiny.mc.core.domain.entity.Transaction
-import shiny.mc.core.repositories.TransactionRepository
+import shiny.mc.core.adapters.TransactionRepository
+import shiny.mc.core.dto.Transaction
+import shiny.mc.core.ports.transaction.GetRecordTransactions
 
 class GetRecordTransactionsImpl(
     private val transactionRepository: TransactionRepository

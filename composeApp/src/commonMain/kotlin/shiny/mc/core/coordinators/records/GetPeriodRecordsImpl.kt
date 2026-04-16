@@ -1,9 +1,9 @@
 package shiny.mc.core.coordinators.records
 
 import kotlinx.coroutines.flow.Flow
-import shiny.mc.core.coordinators.record.GetPeriodRecords
-import shiny.mc.core.domain.aggregate.Record
-import shiny.mc.core.repositories.RecordRepository
+import shiny.mc.core.adapters.RecordRepository
+import shiny.mc.core.dto.Record
+import shiny.mc.core.ports.record.GetPeriodRecords
 
 class GetPeriodRecordsImpl(
     private val recordRepository: RecordRepository,

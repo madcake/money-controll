@@ -5,8 +5,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
-import shiny.mc.core.repositories.RecordRepository
-import shiny.mc.core.repositories.TransactionRepository
+import shiny.mc.core.adapters.RecordRepository
+import shiny.mc.core.adapters.TransactionRepository
+import shiny.mc.core.ports.transaction.GetTransactionSuggestions
 
 class GetTransactionSuggestionsImpl(
     private val transactionRepository: TransactionRepository,

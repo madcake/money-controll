@@ -4,8 +4,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
-import shiny.mc.core.coordinators.record.GetRecord
-import shiny.mc.core.domain.value.TransactionError
+import shiny.mc.core.dto.error.TransactionError
+import shiny.mc.core.ports.record.GetRecord
+import shiny.mc.core.ports.transaction.TransactionValidator
 import shiny.mc.platform.parseToDoubleOrNull
 import kotlin.time.Instant
 

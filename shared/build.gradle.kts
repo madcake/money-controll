@@ -4,11 +4,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinSerialization)
-//    alias(libs.plugins.gradleBuildConfig)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.room)
     alias(libs.plugins.koin.compiler)
-//    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
@@ -27,8 +24,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.androidx.coroutines.core)
             // Room
-            api(libs.room.runtime)
-            api(libs.sqlite.bundled)
+//            api(libs.room.runtime)
+//            api(libs.sqlite.bundled)
             // Koin
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
@@ -56,10 +53,6 @@ android {
     }
 }
 
-dependencies {
-    ksp(libs.room.compiler)
-}
-
 koinCompiler {
     userLogs = true  // Log component detection
 }
@@ -69,10 +62,6 @@ tasks.matching { it.name.startsWith("ksp") && it.name != "kspCommonMainKotlinMet
     dependsOn("kspCommonMainKotlinMetadata")
 }
 
-room {
-    schemaDirectory("$projectDir/schemas")
-    generateKotlin = true
-}
 
 // KSP Metadata Trigger
 tasks.matching { it.name.startsWith("ksp") && it.name != "kspCommonMainKotlinMetadata" }.configureEach {
@@ -84,5 +73,5 @@ ksp {
     arg("KOIN_CONFIG_CHECK","true")
     arg("KOIN_LOG_TIMES","true")
     arg("KOIN_GENERATION_PACKAGE","com.jetbrains.generated")
-    arg("room.schemaLocation", "$projectDir/schemas")
+//    arg("room.schemaLocation", "$projectDir/schemas")
 }

@@ -1,6 +1,7 @@
 package shiny.mc.core.coordinators.transaction
 
-import shiny.mc.core.repositories.TransactionRepository
+import shiny.mc.core.adapters.TransactionRepository
+import shiny.mc.core.ports.transaction.DeleteTransaction
 
 class DeleteTransactionImpl(
     private val transactionRepository: TransactionRepository,

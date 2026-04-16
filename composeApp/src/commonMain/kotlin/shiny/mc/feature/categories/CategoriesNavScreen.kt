@@ -28,7 +28,7 @@ import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.placeholders_string_filter
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.core.domain.value.PeriodDate
+import shiny.mc.core.dto.PeriodDate
 import shiny.mc.feature.add_category.AddCategoryNavScreen
 import shiny.mc.theme.components.itemsPosition
 import shiny.mc.theme.space

@@ -1,6 +1,6 @@
 package shiny.mc.feature.period.model
 
-import shiny.mc.core.domain.value.ValueState
+import shiny.mc.core.dto.ValueState
 
 interface RecordItem {
     val id: String

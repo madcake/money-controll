@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import shiny.mc.core.coordinators.app_config.SetCurrentPeriod
-import shiny.mc.core.coordinators.period.CopyPeriod
-import shiny.mc.core.domain.value.PeriodDate
+import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.model.CommandState
+import shiny.mc.core.ports.app_config.SetCurrentPeriod
+import shiny.mc.core.ports.period.CopyPeriod
 import shiny.mc.feature.add_period.model.AddPeriodCommand
 import kotlin.time.Duration.Companion.seconds
 

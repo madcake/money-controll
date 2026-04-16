@@ -1,7 +1,9 @@
 package shiny.mc.core.coordinators.transaction
 
-import shiny.mc.core.domain.entity.Transaction
-import shiny.mc.core.repositories.TransactionRepository
+import shiny.mc.core.adapters.TransactionRepository
+import shiny.mc.core.dto.Transaction
+import shiny.mc.core.ports.transaction.AddRecordTransaction
+import shiny.mc.core.ports.transaction.TransactionValidator
 import shiny.mc.platform.parseToDouble
 
 class AddRecordTransactionImpl(
@@ -19,7 +21,7 @@ class AddRecordTransactionImpl(
         transactionRepository.addRecordTransaction(
             recordId = recordId,
             transaction = Transaction(
-                 purpose = purpose,
+                purpose = purpose,
                 value = value.parseToDouble(),
                 datetime = datetime,
             )

@@ -12,9 +12,9 @@ import moneycontroll.composeapp.generated.resources.Res
 import moneycontroll.composeapp.generated.resources.common_estimate
 import moneycontroll.composeapp.generated.resources.common_real
 import org.jetbrains.compose.resources.stringResource
-import shiny.mc.core.domain.value.PeriodValues
-import shiny.mc.core.domain.value.ValueState
-import shiny.mc.core.domain.value.ValueType
+import shiny.mc.core.dto.PeriodValues
+import shiny.mc.core.dto.ValueState
+import shiny.mc.core.dto.ValueType
 import shiny.mc.platform.format
 import shiny.mc.theme.MCTheme
 

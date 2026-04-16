@@ -1,8 +1,9 @@
 package shiny.mc.core.coordinators.category
 
-import shiny.mc.core.domain.entity.Category
-import shiny.mc.core.domain.value.CategoryType
-import shiny.mc.core.repositories.CategoryRepository
+import shiny.mc.core.adapters.CategoryRepository
+import shiny.mc.core.dto.Category
+import shiny.mc.core.dto.CategoryType
+import shiny.mc.core.ports.category.AddCategory
 
 class AddCategoryImpl(
     private val categoryRepository: CategoryRepository,
