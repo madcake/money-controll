@@ -29,6 +29,7 @@ import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.domain.CommandState
+import shiny.mc.core.domain.value.format
 import shiny.mc.core.dto.Period
 import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.dto.error.PeriodError
@@ -209,7 +210,7 @@ private fun PeriodItemView(
         onReveal = onReveal,
     ) {
         ColumnItem(
-            headline = period.date.toString(),
+            headline = period.date.format(),
             leading = if (current) {
                 { Icon(imageVector = Icons.Default.Check, contentDescription = "Current period") }
             } else {

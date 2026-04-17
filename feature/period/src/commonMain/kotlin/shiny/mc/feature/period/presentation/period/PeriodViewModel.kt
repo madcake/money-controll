@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.annotation.KoinViewModel
+import shiny.mc.core.domain.value.format
 import shiny.mc.core.dto.CategoryType
 import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.dto.Record
@@ -31,7 +32,7 @@ class PeriodViewModel(
     val periodDate = getCurrentPeriodDate.period()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), PeriodDate(4, 2026)/* TODO: PeriodDate.default()*/)
 
-    val title = periodDate.map { it.toString() }
+    val title = periodDate.map { it.format() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     private val period = periodDate.flatMapLatest { getPeriod.period(it) }

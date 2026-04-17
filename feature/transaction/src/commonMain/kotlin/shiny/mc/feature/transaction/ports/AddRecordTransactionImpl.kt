@@ -1,4 +1,4 @@
-package shiny.mc.core.coordinators.transaction
+package shiny.mc.feature.transaction.ports
 
 import shiny.mc.core.adapters.TransactionRepository
 import shiny.mc.core.dto.Transaction

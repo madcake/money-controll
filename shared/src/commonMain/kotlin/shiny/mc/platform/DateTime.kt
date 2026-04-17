@@ -16,12 +16,6 @@ val dateFormatter = LocalDate.Format {
     year()
 }
 
-val periodFormatter = LocalDate.Format {
-    monthName(MonthNames.ENGLISH_FULL)
-    char(' ')
-    year()
-}
-
 fun currentDateTime(timeZone: TimeZone = TimeZone.currentSystemDefault()) = Instant
     .fromEpochMilliseconds(Clock.System.now().toEpochMilliseconds())
     .toLocalDateTime(timeZone = timeZone)

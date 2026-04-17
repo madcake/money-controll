@@ -1,4 +1,4 @@
-package shiny.mc.core.coordinators.period
+package shiny.mc.feature.period.ports
 
 import kotlinx.coroutines.flow.firstOrNull
 import shiny.mc.core.adapters.PeriodRepository

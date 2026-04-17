@@ -50,7 +50,6 @@ kotlin {
         commonMain {
             dependencies {
                 implementation(projects.core)
-//                implementation(libs.androidx.coroutines.core)
                 // Room
                 implementation(libs.room.runtime)
                 implementation(libs.sqlite.bundled)

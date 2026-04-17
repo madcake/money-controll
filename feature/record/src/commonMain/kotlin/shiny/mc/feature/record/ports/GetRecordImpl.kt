@@ -1,4 +1,4 @@
-package shiny.mc.core.coordinators.records
+package shiny.mc.feature.record.ports
 
 import kotlinx.coroutines.flow.Flow
 import shiny.mc.core.adapters.RecordRepository
