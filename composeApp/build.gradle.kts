@@ -44,6 +44,7 @@ kotlin {
             implementation(projects.infrastructure.persistent.room)
             implementation(projects.feature.category)
             implementation(projects.feature.record)
+            implementation(projects.feature.transaction)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

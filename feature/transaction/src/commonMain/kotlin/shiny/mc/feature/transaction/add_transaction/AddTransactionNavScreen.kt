@@ -1,4 +1,4 @@
-package shiny.mc.feature.add_transaction
+package shiny.mc.feature.transaction.add_transaction
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

@@ -1,4 +1,4 @@
-package shiny.mc.feature.add_transaction
+package shiny.mc.feature.transaction.add_transaction
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -51,18 +51,19 @@ import androidx.compose.ui.unit.dp
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
-import moneycontroll.composeapp.generated.resources.Res
-import moneycontroll.composeapp.generated.resources.error_transaction_empty_purpose
-import moneycontroll.composeapp.generated.resources.error_transaction_invalid_value
-import moneycontroll.composeapp.generated.resources.error_transaction_unknown_error
-import moneycontroll.composeapp.generated.resources.placeholders_add_expense_value
-import moneycontroll.composeapp.generated.resources.placeholders_add_transaction_purpose
 import org.jetbrains.compose.resources.stringResource
 import shiny.mc.core.domain.CommandState
 import shiny.mc.core.dto.error.TransactionError
 import shiny.mc.core_ui.components.SmallCircularProgressIndicator
+import shiny.mc.core_ui.resources.Res
+import shiny.mc.core_ui.resources.error_transaction_empty_purpose
+import shiny.mc.core_ui.resources.error_transaction_invalid_value
+import shiny.mc.core_ui.resources.error_transaction_unknown_error
+import shiny.mc.core_ui.resources.placeholders_add_expense_value
+import shiny.mc.core_ui.resources.placeholders_add_transaction_purpose
 import shiny.mc.core_ui.theme.paddingDefault
 import shiny.mc.core_ui.theme.space
+import shiny.mc.feature.transaction.model.AddTransactionCommand
 import kotlin.time.Clock
 import kotlin.time.Instant
 

@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import shiny.mc.feature.add_transaction.AddTransactionNavScreen
 import shiny.mc.feature.category.navigation.categories
 import shiny.mc.feature.category.navigation.openCategories
 import shiny.mc.feature.period.navigation.PeriodNavKey
@@ -20,6 +19,7 @@ import shiny.mc.feature.periods.navigation.openPeriods
 import shiny.mc.feature.periods.navigation.periods
 import shiny.mc.feature.record.navigation.openRecord
 import shiny.mc.feature.record.navigation.record
+import shiny.mc.feature.transaction.add_transaction.AddTransactionNavScreen
 
 @Composable
 fun NavGraph() {

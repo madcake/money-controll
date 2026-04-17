@@ -1,4 +1,4 @@
-package shiny.mc.feature.add_transaction
+package shiny.mc.feature.transaction.add_transaction
 
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText
@@ -27,6 +27,7 @@ import shiny.mc.core.domain.CommandState
 import shiny.mc.core.ports.record.GetRecord
 import shiny.mc.core.ports.transaction.AddRecordTransaction
 import shiny.mc.core.ports.transaction.GetTransactionSuggestions
+import shiny.mc.feature.transaction.model.AddTransactionCommand
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 
@@ -151,13 +152,3 @@ class AddTransactionViewModel(
     }
 }
 
-sealed interface AddTransactionCommand {
-    object None : AddTransactionCommand
-    data class Add(val recordId: String) : AddTransactionCommand
-    data class Save(
-        val recordId: String,
-        val purpose: String,
-        val value: String,
-        val date: Long,
-    ) : AddTransactionCommand
-}
