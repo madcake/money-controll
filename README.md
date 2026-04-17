@@ -10,6 +10,11 @@
 - **Local-First Reliability**: Uses Room for robust local data storage and offline capabilities.
 - **Architecture**: Clean separation of concerns with a focus on Hexagonal principles (Domain, Ports, Adapters).
 
+## Screenshots
+
+![Main Screen](screenshots/main.png)
+![Categories Screen](screenshots/categories.png)
+
 ## Tech Stack
 
 - **UI Framework**: [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/)

@@ -4,10 +4,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import shiny.mc.core.dto.ValueState
+import shiny.mc.core_ui.components.ColumnItem
+import shiny.mc.core_ui.components.ColumnItemValue
+import shiny.mc.core_ui.components.ItemPosition
 import shiny.mc.feature.period.model.RecordItem
-import shiny.mc.theme.components.ColumnItem
-import shiny.mc.theme.components.ColumnItemValue
-import shiny.mc.theme.components.ItemPosition
 
 @Composable
 fun RecordItemView(

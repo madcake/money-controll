@@ -15,8 +15,8 @@ import org.jetbrains.compose.resources.stringResource
 import shiny.mc.core.dto.PeriodValues
 import shiny.mc.core.dto.ValueState
 import shiny.mc.core.dto.ValueType
+import shiny.mc.core_ui.theme.MCTheme
 import shiny.mc.platform.format
-import shiny.mc.theme.MCTheme
 
 @Composable
 fun NumberColumnView(

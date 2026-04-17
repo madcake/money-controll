@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import shiny.mc.feature.categories.navigation.categories
-import shiny.mc.feature.categories.navigation.openCategories
+import shiny.mc.feature.category.navigation.categories
+import shiny.mc.feature.category.navigation.openCategories
 import shiny.mc.feature.period.navigation.PeriodNavKey
 import shiny.mc.feature.period.navigation.period
 import shiny.mc.feature.periods.navigation.openPeriods

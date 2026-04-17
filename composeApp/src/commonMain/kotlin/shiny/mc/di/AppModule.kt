@@ -11,10 +11,6 @@ import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
 import shiny.mc.core.coordinators.app_config.GetCurrentPeriodDateImpl
 import shiny.mc.core.coordinators.app_config.SetCurrentPeriodImpl
-import shiny.mc.core.coordinators.category.AddCategoryImpl
-import shiny.mc.core.coordinators.category.CategoryInputValidatorImpl
-import shiny.mc.core.coordinators.category.DeleteCategoryImpl
-import shiny.mc.core.coordinators.category.SearchCategoriesImpl
 import shiny.mc.core.coordinators.period.CopyPeriodImpl
 import shiny.mc.core.coordinators.period.GetPeriodImpl
 import shiny.mc.core.coordinators.period.GetPeriodsImpl
@@ -31,7 +27,6 @@ import shiny.mc.core.coordinators.transaction.TransactionValidatorImpl
 import shiny.mc.core.ports.app_config.GetCurrentPeriodDate
 import shiny.mc.core.ports.app_config.SetCurrentPeriod
 import shiny.mc.core.ports.category.AddCategory
-import shiny.mc.core.ports.category.CategoryInputValidator
 import shiny.mc.core.ports.category.DeleteCategory
 import shiny.mc.core.ports.category.SearchCategories
 import shiny.mc.core.ports.period.CopyPeriod
@@ -47,10 +42,13 @@ import shiny.mc.core.ports.transaction.DeleteTransaction
 import shiny.mc.core.ports.transaction.GetRecordTransactions
 import shiny.mc.core.ports.transaction.GetTransactionSuggestions
 import shiny.mc.core.ports.transaction.TransactionValidator
-import shiny.mc.feature.add_category.AddCategoryViewModel
 import shiny.mc.feature.add_period.AddPeriodViewModel
 import shiny.mc.feature.add_transaction.AddTransactionViewModel
-import shiny.mc.feature.categories.CategoriesViewModel
+import shiny.mc.feature.category.ports.AddCategoryImpl
+import shiny.mc.feature.category.ports.DeleteCategoryImpl
+import shiny.mc.feature.category.ports.SearchCategoriesImpl
+import shiny.mc.feature.category.presentation.add_category.AddCategoryViewModel
+import shiny.mc.feature.category.presentation.categories.CategoriesViewModel
 import shiny.mc.feature.period.PeriodViewModel
 import shiny.mc.feature.periods.PeriodsViewModel
 import shiny.mc.feature.record.EditRecordViewModel
@@ -66,7 +64,6 @@ val coordinateModule = module {
     single<GetCurrentPeriodDateImpl>() bind GetCurrentPeriodDate::class
 
     single<AddCategoryImpl>() bind AddCategory::class
-    single<CategoryInputValidatorImpl>() bind CategoryInputValidator::class
     single<SearchCategoriesImpl>() bind SearchCategories::class
     single<DeleteCategoryImpl>() bind DeleteCategory::class
 

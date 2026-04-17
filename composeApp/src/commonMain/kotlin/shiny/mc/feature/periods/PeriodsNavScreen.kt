@@ -37,20 +37,20 @@ import moneycontroll.composeapp.generated.resources.error_title_copy
 import moneycontroll.composeapp.generated.resources.title_periods
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
+import shiny.mc.core.domain.CommandState
 import shiny.mc.core.dto.Period
 import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.dto.error.PeriodError
-import shiny.mc.core.model.CommandState
+import shiny.mc.core_ui.components.ColumnItem
+import shiny.mc.core_ui.components.ColumnItemValue
+import shiny.mc.core_ui.components.ItemPosition
+import shiny.mc.core_ui.components.MonthPicker
+import shiny.mc.core_ui.components.itemsPosition
+import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.add_period.AddPeriodViewModel
 import shiny.mc.feature.add_period.model.AddPeriodCommand
 import shiny.mc.feature.record.SwipeableItem
 import shiny.mc.platform.format
-import shiny.mc.theme.components.ColumnItem
-import shiny.mc.theme.components.ColumnItemValue
-import shiny.mc.theme.components.ItemPosition
-import shiny.mc.theme.components.MonthPicker
-import shiny.mc.theme.components.itemsPosition
-import shiny.mc.theme.space
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

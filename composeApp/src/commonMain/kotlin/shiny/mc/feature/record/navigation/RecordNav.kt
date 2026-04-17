@@ -3,8 +3,8 @@ package shiny.mc.feature.record.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import shiny.mc.core_ui.model.OnCancel
 import shiny.mc.feature.record.RecordNavScreen
-import shiny.mc.navigation.OnCancel
 
 @Serializable
 class RecordNavKey(

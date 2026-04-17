@@ -58,11 +58,11 @@ import moneycontroll.composeapp.generated.resources.error_transaction_unknown_er
 import moneycontroll.composeapp.generated.resources.placeholders_add_expense_value
 import moneycontroll.composeapp.generated.resources.placeholders_add_transaction_purpose
 import org.jetbrains.compose.resources.stringResource
+import shiny.mc.core.domain.CommandState
 import shiny.mc.core.dto.error.TransactionError
-import shiny.mc.core.model.CommandState
-import shiny.mc.theme.components.SmallCircularProgressIndicator
-import shiny.mc.theme.paddingDefault
-import shiny.mc.theme.space
+import shiny.mc.core_ui.components.SmallCircularProgressIndicator
+import shiny.mc.core_ui.theme.paddingDefault
+import shiny.mc.core_ui.theme.space
 import kotlin.time.Clock
 import kotlin.time.Instant
 

@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
+
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
@@ -38,8 +39,10 @@ kotlin {
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
-            implementation(project(":core"))
-            implementation(project(":infrastructure:persistent:room"))
+            implementation(projects.core)
+            implementation(projects.coreUi)
+            implementation(projects.infrastructure.persistent.room)
+            implementation(projects.feature.category)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

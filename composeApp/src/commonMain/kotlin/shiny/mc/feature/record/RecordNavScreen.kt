@@ -42,15 +42,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.dto.Transaction
+import shiny.mc.core_ui.components.ColumnItem
+import shiny.mc.core_ui.components.ColumnItemValue
+import shiny.mc.core_ui.components.ItemPosition
+import shiny.mc.core_ui.components.itemsPosition
+import shiny.mc.core_ui.model.OnCancel
+import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.add_transaction.AddTransactionNavScreen
-import shiny.mc.navigation.OnCancel
 import shiny.mc.platform.dateFormate
 import shiny.mc.platform.format
-import shiny.mc.theme.components.ColumnItem
-import shiny.mc.theme.components.ColumnItemValue
-import shiny.mc.theme.components.ItemPosition
-import shiny.mc.theme.components.itemsPosition
-import shiny.mc.theme.space
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)

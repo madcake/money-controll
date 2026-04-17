@@ -35,10 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
+import shiny.mc.core_ui.theme.paddingDefault
+import shiny.mc.core_ui.theme.space
 import shiny.mc.platform.format
 import shiny.mc.platform.parseToDoubleOrNull
-import shiny.mc.theme.paddingDefault
-import shiny.mc.theme.space
 
 @Composable
 internal fun RecordHeader(

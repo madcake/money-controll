@@ -27,12 +27,12 @@ import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.dto.PeriodValues
 import shiny.mc.core.dto.ValueState
 import shiny.mc.core.dto.ValueType
+import shiny.mc.core_ui.components.itemsPosition
+import shiny.mc.core_ui.theme.paddingDefault
+import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.period.components.NumberColumnView
 import shiny.mc.feature.period.components.RecordItemView
 import shiny.mc.feature.period.model.RecordItem
-import shiny.mc.theme.components.itemsPosition
-import shiny.mc.theme.paddingDefault
-import shiny.mc.theme.space
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
