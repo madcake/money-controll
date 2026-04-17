@@ -8,13 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import moneycontroll.composeapp.generated.resources.Res
-import moneycontroll.composeapp.generated.resources.common_estimate
-import moneycontroll.composeapp.generated.resources.common_real
 import org.jetbrains.compose.resources.stringResource
 import shiny.mc.core.dto.PeriodValues
 import shiny.mc.core.dto.ValueState
 import shiny.mc.core.dto.ValueType
+import shiny.mc.core_ui.resources.Res
+import shiny.mc.core_ui.resources.common_estimate
+import shiny.mc.core_ui.resources.common_real
 import shiny.mc.core_ui.theme.MCTheme
 import shiny.mc.platform.format
 

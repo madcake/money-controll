@@ -1,4 +1,4 @@
-package shiny.mc.feature.periods
+package shiny.mc.feature.period.presentation.periods
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -26,15 +26,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
-import moneycontroll.composeapp.generated.resources.Res
-import moneycontroll.composeapp.generated.resources.common_error
-import moneycontroll.composeapp.generated.resources.common_error_unknown
-import moneycontroll.composeapp.generated.resources.common_ok
-import moneycontroll.composeapp.generated.resources.error_period_add_exists
-import moneycontroll.composeapp.generated.resources.error_period_add_not_found
-import moneycontroll.composeapp.generated.resources.error_title_add
-import moneycontroll.composeapp.generated.resources.error_title_copy
-import moneycontroll.composeapp.generated.resources.title_periods
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.domain.CommandState
@@ -45,11 +36,20 @@ import shiny.mc.core_ui.components.ColumnItem
 import shiny.mc.core_ui.components.ColumnItemValue
 import shiny.mc.core_ui.components.ItemPosition
 import shiny.mc.core_ui.components.MonthPicker
+import shiny.mc.core_ui.components.SwipeableItem
 import shiny.mc.core_ui.components.itemsPosition
+import shiny.mc.core_ui.resources.Res
+import shiny.mc.core_ui.resources.common_error
+import shiny.mc.core_ui.resources.common_error_unknown
+import shiny.mc.core_ui.resources.common_ok
+import shiny.mc.core_ui.resources.error_period_add_exists
+import shiny.mc.core_ui.resources.error_period_add_not_found
+import shiny.mc.core_ui.resources.error_title_add
+import shiny.mc.core_ui.resources.error_title_copy
+import shiny.mc.core_ui.resources.title_periods
 import shiny.mc.core_ui.theme.space
-import shiny.mc.feature.add_period.AddPeriodViewModel
-import shiny.mc.feature.add_period.model.AddPeriodCommand
-import shiny.mc.feature.record.presentation.SwipeableItem
+import shiny.mc.feature.period.model.AddPeriodCommand
+import shiny.mc.feature.period.presentation.add_period.AddPeriodViewModel
 import shiny.mc.platform.format
 
 @OptIn(ExperimentalMaterial3Api::class)

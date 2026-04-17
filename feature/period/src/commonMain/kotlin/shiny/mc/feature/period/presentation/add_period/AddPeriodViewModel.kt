@@ -1,4 +1,4 @@
-package shiny.mc.feature.add_period
+package shiny.mc.feature.period.presentation.add_period
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +17,7 @@ import shiny.mc.core.domain.CommandState
 import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.ports.app_config.SetCurrentPeriod
 import shiny.mc.core.ports.period.CopyPeriod
-import shiny.mc.feature.add_period.model.AddPeriodCommand
+import shiny.mc.feature.period.model.AddPeriodCommand
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)

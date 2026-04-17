@@ -45,6 +45,7 @@ kotlin {
             implementation(projects.feature.category)
             implementation(projects.feature.record)
             implementation(projects.feature.transaction)
+            implementation(projects.feature.period)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

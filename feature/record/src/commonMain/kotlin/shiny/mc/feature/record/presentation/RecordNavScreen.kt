@@ -1,14 +1,6 @@
 package shiny.mc.feature.record.presentation
 
-import androidx.compose.animation.core.Animatable
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -23,32 +15,24 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.dto.Transaction
 import shiny.mc.core_ui.components.ColumnItem
 import shiny.mc.core_ui.components.ColumnItemValue
 import shiny.mc.core_ui.components.ItemPosition
+import shiny.mc.core_ui.components.SwipeableItem
 import shiny.mc.core_ui.components.itemsPosition
 import shiny.mc.core_ui.model.OnCancel
 import shiny.mc.core_ui.theme.space
 import shiny.mc.platform.dateFormate
 import shiny.mc.platform.format
-import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -134,79 +118,5 @@ private fun TransactionItem(
             position = position,
             trailing = { ColumnItemValue(tx.value.format(), "") }
         )
-    }
-}
-
-@Composable
-fun SwipeableItem(
-    isRevealed: Boolean,
-    backgroundContent: @Composable RowScope.() -> Unit,
-    itemPosition: ItemPosition,
-    onReveal: (Boolean) -> Unit,
-    content: @Composable (ItemPosition) -> Unit
-) {
-
-    var contextMenuWidth by remember { mutableFloatStateOf(0f) }
-    val offset = remember { Animatable(initialValue = 0f) }
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(key1 = isRevealed, contextMenuWidth) {
-        if (isRevealed) {
-            offset.animateTo(contextMenuWidth)
-        } else {
-            offset.animateTo(0f)
-        }
-    }
-
-    Box {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .align(Alignment.Center),
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .align(Alignment.CenterEnd)
-                    .onSizeChanged { contextMenuWidth = -it.width.toFloat() },
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                backgroundContent()
-            }
-        }
-        Box(
-            modifier = Modifier
-                .offset { IntOffset(offset.value.roundToInt(), 0) }
-                .pointerInput(contextMenuWidth) {
-                    detectHorizontalDragGestures(
-                        onHorizontalDrag = { _, dragAmount ->
-                            scope.launch {
-                                val newOffset = (offset.value + dragAmount)
-                                    .coerceIn(contextMenuWidth, 0f)
-                                offset.snapTo(newOffset)
-                            }
-                        },
-                        onDragEnd = {
-                            when {
-                                offset.value <= contextMenuWidth / 2f -> {
-                                    scope.launch {
-                                        offset.animateTo(contextMenuWidth)
-                                        onReveal(true)
-                                    }
-                                }
-
-                                else -> {
-                                    scope.launch {
-                                        offset.animateTo(0f)
-                                        onReveal(false)
-                                    }
-                                }
-                            }
-                        }
-                    )
-                },
-        ) {
-            content(itemPosition)
-        }
     }
 }

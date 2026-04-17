@@ -1,4 +1,4 @@
-package shiny.mc.feature.add_period.model
+package shiny.mc.feature.period.model
 
 import shiny.mc.core.dto.PeriodDate
 

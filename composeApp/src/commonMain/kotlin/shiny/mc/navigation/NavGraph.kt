@@ -14,9 +14,9 @@ import androidx.navigation3.ui.NavDisplay
 import shiny.mc.feature.category.navigation.categories
 import shiny.mc.feature.category.navigation.openCategories
 import shiny.mc.feature.period.navigation.PeriodNavKey
+import shiny.mc.feature.period.navigation.openPeriods
 import shiny.mc.feature.period.navigation.period
-import shiny.mc.feature.periods.navigation.openPeriods
-import shiny.mc.feature.periods.navigation.periods
+import shiny.mc.feature.period.navigation.periods
 import shiny.mc.feature.record.navigation.openRecord
 import shiny.mc.feature.record.navigation.record
 import shiny.mc.feature.transaction.add_transaction.AddTransactionNavScreen

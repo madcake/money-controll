@@ -1,4 +1,4 @@
-package shiny.mc.feature.period
+package shiny.mc.feature.period.presentation.period
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import moneycontroll.composeapp.generated.resources.Res
-import moneycontroll.composeapp.generated.resources.period_edit
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import shiny.mc.core.dto.PeriodDate
@@ -28,6 +26,8 @@ import shiny.mc.core.dto.PeriodValues
 import shiny.mc.core.dto.ValueState
 import shiny.mc.core.dto.ValueType
 import shiny.mc.core_ui.components.itemsPosition
+import shiny.mc.core_ui.resources.Res
+import shiny.mc.core_ui.resources.period_edit
 import shiny.mc.core_ui.theme.paddingDefault
 import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.period.components.NumberColumnView

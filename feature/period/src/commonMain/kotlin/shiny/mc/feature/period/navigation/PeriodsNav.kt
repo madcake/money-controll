@@ -1,10 +1,10 @@
-package shiny.mc.feature.periods.navigation
+package shiny.mc.feature.period.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import shiny.mc.core_ui.model.OnCancel
-import shiny.mc.feature.periods.PeriodsNavScreen
+import shiny.mc.feature.period.presentation.periods.PeriodsNavScreen
 
 @Serializable
 object PeriodsNavKey : NavKey

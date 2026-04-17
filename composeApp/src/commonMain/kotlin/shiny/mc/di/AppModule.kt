@@ -42,14 +42,14 @@ import shiny.mc.core.ports.transaction.DeleteTransaction
 import shiny.mc.core.ports.transaction.GetRecordTransactions
 import shiny.mc.core.ports.transaction.GetTransactionSuggestions
 import shiny.mc.core.ports.transaction.TransactionValidator
-import shiny.mc.feature.add_period.AddPeriodViewModel
 import shiny.mc.feature.category.ports.AddCategoryImpl
 import shiny.mc.feature.category.ports.DeleteCategoryImpl
 import shiny.mc.feature.category.ports.SearchCategoriesImpl
 import shiny.mc.feature.category.presentation.add_category.AddCategoryViewModel
 import shiny.mc.feature.category.presentation.categories.CategoriesViewModel
-import shiny.mc.feature.period.PeriodViewModel
-import shiny.mc.feature.periods.PeriodsViewModel
+import shiny.mc.feature.period.presentation.add_period.AddPeriodViewModel
+import shiny.mc.feature.period.presentation.period.PeriodViewModel
+import shiny.mc.feature.period.presentation.periods.PeriodsViewModel
 import shiny.mc.feature.record.presentation.EditRecordViewModel
 import shiny.mc.feature.record.presentation.RecordViewModel
 import shiny.mc.feature.transaction.add_transaction.AddTransactionViewModel

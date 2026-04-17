@@ -1,4 +1,4 @@
-package shiny.mc.feature.period
+package shiny.mc.feature.period.presentation.period
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
