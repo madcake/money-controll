@@ -13,8 +13,20 @@
 
 ## Screenshots
 
-![Main Screen](screenshots/main.png)
-![Categories Screen](screenshots/categories.png)
+### Main Screen
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Main Light](screenshots/main_light.png) | ![Main Dark](screenshots/main_dark.png) |
+
+### Categories Management
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Categories Light](screenshots/categories_light.png) | ![Categories Dark](screenshots/categories_dark.png) |
+
+### Record Details & Transactions
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Record Details Light](screenshots/record_details_light.png) | ![Record Details Dark](screenshots/record_details_dark.png) |
 
 ## Tech Stack
 

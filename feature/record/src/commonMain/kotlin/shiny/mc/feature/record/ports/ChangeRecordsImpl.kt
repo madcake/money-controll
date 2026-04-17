@@ -5,7 +5,6 @@ import shiny.mc.core.adapters.CategoryRepository
 import shiny.mc.core.adapters.RecordRepository
 import shiny.mc.core.dto.Category
 import shiny.mc.core.dto.Record
-import shiny.mc.core.dto.error.RecordError
 import shiny.mc.core.ports.record.ChangeRecords
 import shiny.mc.core.ports.record.CreateRecordId
 
@@ -14,12 +13,13 @@ class ChangeRecordsImpl(
     private val categoryRepository: CategoryRepository,
     private val createRecordId: CreateRecordId = object : CreateRecordId {}
 ) : ChangeRecords {
+
     override suspend fun changeRecord(
         category: Category,
         month: Int,
         year: Int
     ) {
-        val categoryId = category.id ?: throw RecordError.CategoryNoneExist()
+        val categoryId = category.id
 
         val recordId = createRecordId.createId(categoryId, month, year)
 

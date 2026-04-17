@@ -8,6 +8,7 @@ import shiny.mc.core.ports.record.GetRecord
 class GetRecordImpl(
     private val recordRepository: RecordRepository,
 ) : GetRecord {
+
     override fun getRecord(recordId: String): Flow<Record?> {
         return recordRepository.getRecord(recordId)
     }

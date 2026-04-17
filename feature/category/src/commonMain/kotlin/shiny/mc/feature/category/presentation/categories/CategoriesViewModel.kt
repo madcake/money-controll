@@ -32,7 +32,7 @@ class CategoriesViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), emptyList())
 
     fun selected(month: Int, year: Int) = getPeriodRecords.getRecords(month, year)
-        .mapLatest { items -> items.map { it.category.id } }
+        .mapLatest { items -> items.map { it.categoryId } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun removeCategory(id: Long?) {

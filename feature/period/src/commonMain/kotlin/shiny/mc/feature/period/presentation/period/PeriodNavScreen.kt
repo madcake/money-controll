@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import shiny.mc.core.domain.entity.RecordInfo
+import shiny.mc.core.dto.CategoryType
 import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.dto.PeriodValues
 import shiny.mc.core.dto.ValueState
@@ -32,7 +36,6 @@ import shiny.mc.core_ui.theme.paddingDefault
 import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.period.components.NumberColumnView
 import shiny.mc.feature.period.components.RecordItemView
-import shiny.mc.feature.period.model.RecordItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -87,8 +90,8 @@ fun PeriodNavScreen(
 @Composable
 fun RecordsScene(
     periodValues: PeriodValues?,
-    inRecords: List<RecordItem>,
-    outRecords: List<RecordItem>,
+    inRecords: List<RecordInfo>,
+    outRecords: List<RecordInfo>,
     onRecord: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -137,11 +140,14 @@ fun RecordsScene(
 @Preview
 @Composable
 fun RecordsScenePreview() {
-    class Item(override val id: String) : RecordItem {
-        override val title: String = "Record Item #$id"
-        override val scheduledValue: String = "${(id.toInt()) * 34}"
-        override val realValue: String = "${(id.toInt() + 1108) * 34}"
+    class Item(override val id: String) : RecordInfo {
+        override val categoryId: Long = 1L + id.toLong()
+        override val categoryType: CategoryType = CategoryType.Out
+        override val title: String = "Foo category version 1.0 for preview"
+        override val estimateValue: String = "${id}0 000"
+        override val realValue: String = "${id + 7}0 000"
         override val valueState: ValueState = ValueState.Surplus
+        override val icon: Any = Icons.Default.ArrowDropUp
     }
 
     MaterialTheme {

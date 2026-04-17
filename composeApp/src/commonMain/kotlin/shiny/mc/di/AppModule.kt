@@ -19,7 +19,6 @@ import shiny.mc.core.ports.category.SearchCategories
 import shiny.mc.core.ports.period.CopyPeriod
 import shiny.mc.core.ports.period.GetPeriod
 import shiny.mc.core.ports.period.GetPeriods
-import shiny.mc.core.ports.record.AddRecords
 import shiny.mc.core.ports.record.ChangeRecords
 import shiny.mc.core.ports.record.GetPeriodRecords
 import shiny.mc.core.ports.record.GetRecord
@@ -40,7 +39,6 @@ import shiny.mc.feature.period.ports.GetPeriodsImpl
 import shiny.mc.feature.period.presentation.add_period.AddPeriodViewModel
 import shiny.mc.feature.period.presentation.period.PeriodViewModel
 import shiny.mc.feature.period.presentation.periods.PeriodsViewModel
-import shiny.mc.feature.record.ports.AddRecordsImpl
 import shiny.mc.feature.record.ports.ChangeRecordsImpl
 import shiny.mc.feature.record.ports.GetPeriodRecordsImpl
 import shiny.mc.feature.record.ports.GetRecordImpl
@@ -68,7 +66,6 @@ val coordinateModule = module {
     single<DeleteCategoryImpl>() bind DeleteCategory::class
 
     single<GetPeriodRecordsImpl>() bind GetPeriodRecords::class
-    single<AddRecordsImpl>() bind AddRecords::class
     single<GetRecordImpl>() bind GetRecord::class
     single<UpdateRecordValueImpl>() bind UpdateRecordValue::class
     single<ChangeRecordsImpl>() bind ChangeRecords::class
