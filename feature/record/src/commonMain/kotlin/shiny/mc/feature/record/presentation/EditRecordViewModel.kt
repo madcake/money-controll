@@ -1,4 +1,4 @@
-package shiny.mc.feature.record
+package shiny.mc.feature.record.presentation
 
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.clearText

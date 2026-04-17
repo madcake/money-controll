@@ -51,8 +51,8 @@ import shiny.mc.feature.category.presentation.add_category.AddCategoryViewModel
 import shiny.mc.feature.category.presentation.categories.CategoriesViewModel
 import shiny.mc.feature.period.PeriodViewModel
 import shiny.mc.feature.periods.PeriodsViewModel
-import shiny.mc.feature.record.EditRecordViewModel
-import shiny.mc.feature.record.RecordViewModel
+import shiny.mc.feature.record.presentation.EditRecordViewModel
+import shiny.mc.feature.record.presentation.RecordViewModel
 import shiny.mc.infrastructure.persistent.room.di.platformStoreModule
 import shiny.mc.infrastructure.persistent.room.di.repositoryModule
 import shiny.mc.infrastructure.persistent.room.di.storeModule

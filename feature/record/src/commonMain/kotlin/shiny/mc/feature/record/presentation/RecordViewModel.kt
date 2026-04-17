@@ -1,4 +1,4 @@
-package shiny.mc.feature.record
+package shiny.mc.feature.record.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

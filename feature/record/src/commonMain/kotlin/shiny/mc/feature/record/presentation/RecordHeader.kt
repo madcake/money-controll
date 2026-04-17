@@ -1,4 +1,4 @@
-package shiny.mc.feature.record
+package shiny.mc.feature.record.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

@@ -1,10 +1,13 @@
 package shiny.mc.feature.record.navigation
 
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 import shiny.mc.core_ui.model.OnCancel
-import shiny.mc.feature.record.RecordNavScreen
+import shiny.mc.feature.record.presentation.RecordNavScreen
 
 @Serializable
 class RecordNavKey(
@@ -16,9 +19,14 @@ fun MutableList<NavKey>.openRecord(recordId: String) {
 }
 
 fun EntryProviderScope<NavKey>.record(
-    onCancel: OnCancel
+    onTransaction: @Composable (String) -> Unit,
+    onCancel: OnCancel,
 ) {
     entry<RecordNavKey> { entry ->
-        RecordNavScreen(entry.recordId, onCancel)
+        RecordNavScreen(
+            recordId = entry.recordId,
+            onTransaction = onTransaction,
+            onCancel = onCancel,
+        )
     }
 }

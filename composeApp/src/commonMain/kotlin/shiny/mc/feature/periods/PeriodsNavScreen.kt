@@ -49,7 +49,7 @@ import shiny.mc.core_ui.components.itemsPosition
 import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.add_period.AddPeriodViewModel
 import shiny.mc.feature.add_period.model.AddPeriodCommand
-import shiny.mc.feature.record.SwipeableItem
+import shiny.mc.feature.record.presentation.SwipeableItem
 import shiny.mc.platform.format
 
 @OptIn(ExperimentalMaterial3Api::class)

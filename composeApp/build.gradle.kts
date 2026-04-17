@@ -43,6 +43,7 @@ kotlin {
             implementation(projects.coreUi)
             implementation(projects.infrastructure.persistent.room)
             implementation(projects.feature.category)
+            implementation(projects.feature.record)
 
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)

@@ -1,4 +1,4 @@
-package shiny.mc.feature.record
+package shiny.mc.feature.record.presentation
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -20,7 +20,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -37,7 +36,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
@@ -48,7 +46,6 @@ import shiny.mc.core_ui.components.ItemPosition
 import shiny.mc.core_ui.components.itemsPosition
 import shiny.mc.core_ui.model.OnCancel
 import shiny.mc.core_ui.theme.space
-import shiny.mc.feature.add_transaction.AddTransactionNavScreen
 import shiny.mc.platform.dateFormate
 import shiny.mc.platform.format
 import kotlin.math.roundToInt
@@ -58,6 +55,7 @@ import kotlin.math.roundToInt
 fun RecordNavScreen(
     recordId: String,
     onCancel: OnCancel,
+    onTransaction: @Composable (String) -> Unit,
     viewModel: RecordViewModel = koinViewModel()//(key = recordId) { parametersOf(recordId) },
 ) {
     val record by viewModel.record(recordId).collectAsStateWithLifecycle()
@@ -82,16 +80,7 @@ fun RecordNavScreen(
                 },
             )
         },
-        bottomBar = {
-            Surface(
-                shadowElevation = 1.dp,
-            ) {
-                AddTransactionNavScreen(
-                    onCancel = {},
-                    recordId = recordId,
-                )
-            }
-        },
+        bottomBar = { onTransaction(recordId) },
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
     ) { innerPadding ->
         LazyColumn(

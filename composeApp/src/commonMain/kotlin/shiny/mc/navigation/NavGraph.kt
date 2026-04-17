@@ -2,13 +2,16 @@ package shiny.mc.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
+import shiny.mc.feature.add_transaction.AddTransactionNavScreen
 import shiny.mc.feature.category.navigation.categories
 import shiny.mc.feature.category.navigation.openCategories
 import shiny.mc.feature.period.navigation.PeriodNavKey
@@ -43,7 +46,17 @@ fun NavGraph() {
             )
 
             record(
-                onCancel = onCancel
+                onCancel = onCancel,
+                onTransaction = { recordId ->
+                    Surface(
+                        shadowElevation = 1.dp,
+                    ) {
+                        AddTransactionNavScreen(
+                            onCancel = {},
+                            recordId = recordId,
+                        )
+                    }
+                }
             )
         }
     )
