@@ -23,10 +23,10 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.koin.core.annotation.KoinViewModel
-import shiny.mc.core_ui.model.CommandState
 import shiny.mc.core.ports.record.GetRecord
 import shiny.mc.core.ports.transaction.AddRecordTransaction
 import shiny.mc.core.ports.transaction.GetTransactionSuggestions
+import shiny.mc.core_ui.model.CommandState
 import shiny.mc.feature.transaction.model.AddTransactionCommand
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds

@@ -3,21 +3,19 @@ package shiny.mc.feature.period.presentation.add_period
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import shiny.mc.core_ui.model.CommandState
+import kotlinx.coroutines.launch
 import shiny.mc.core.dto.PeriodDate
 import shiny.mc.core.ports.app_config.SetCurrentPeriod
 import shiny.mc.core.ports.period.CopyPeriod
-import shiny.mc.feature.period.model.AddPeriodCommand
+import shiny.mc.core_ui.model.Command
+import shiny.mc.core_ui.model.CommandState
+import shiny.mc.core_ui.model.processCommand
+import shiny.mc.feature.period.model.CopyPeriodValue
 import kotlin.time.Duration.Companion.seconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -26,65 +24,24 @@ class AddPeriodViewModel(
     private val setCurrentPeriod: SetCurrentPeriod
 ) : ViewModel() {
 
-    val command: StateFlow<AddPeriodCommand>
-        field = MutableStateFlow<AddPeriodCommand>(AddPeriodCommand.None)
-
-    val commandState = command
-        .filter { it != AddPeriodCommand.None }
-        .flatMapLatest { command ->
-            flow {
-                when (command) {
-                    is AddPeriodCommand.Add -> {
-                        emit(CommandState.Processing(command))
-                        setCurrentPeriod.period(command.date)
-                        emit(CommandState.Success(command))
-                    }
-                    is AddPeriodCommand.Copy -> try {
-                        emit(CommandState.Processing(command))
-                        copyPeriod.copy(command.from, command.to)
-                        setCurrentPeriod.period(PeriodDate(command.to.month, command.to.year))
-                        emit(CommandState.Success(command))
-                    } catch (err: Throwable) {
-                        emit(CommandState.Failure(err, command))
-                    }
-                    is AddPeriodCommand.CopySelectTo -> emit(CommandState.Processing(command))
-                    AddPeriodCommand.None,
-                    AddPeriodCommand.Reset -> emit(CommandState.Idle())
-                }
-            }
-        }
-        .onEach {
-            when (it) {
-                is CommandState.Success -> when (it.command) {
-                    is AddPeriodCommand.Copy -> setCurrentPeriod.period(period = (it.command as AddPeriodCommand.Copy).to)
-                    else -> {}
-                }
-                else -> {}
-            }
-        }
-        .onEach {
-            when (it) {
-                is CommandState.Processing<*> -> {}
-                is CommandState.Failure<*>,
-                is CommandState.Idle<*>,
-                is CommandState.Success<*> -> command.update { AddPeriodCommand.None }
-            }
-        }
+    private val copyPeriodCommand = MutableSharedFlow<Command<CopyPeriodValue>>()
+    val copyPeriodState = copyPeriodCommand.processCommand { copyPeriod.copy(it.from, it.to) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5.seconds), CommandState.Idle())
 
-    fun add(date: PeriodDate) {
-        command.update { AddPeriodCommand.Add(date) }
+    private val newEmptyPeriodCommand = MutableSharedFlow<Command<PeriodDate>>()
+    val newEmptyPeriodState = newEmptyPeriodCommand.processCommand(setCurrentPeriod::period)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5.seconds), CommandState.Idle())
+
+    fun copyPeriod(from: PeriodDate, to: PeriodDate) = viewModelScope.launch {
+        copyPeriodCommand.emit(Command.Action(CopyPeriodValue(from, to)))
     }
 
-    fun copy(from: PeriodDate) {
-        command.update { AddPeriodCommand.CopySelectTo(from) }
+    fun newEmptyPeriod(period: PeriodDate) = viewModelScope.launch {
+        newEmptyPeriodCommand.emit(Command.Action(period))
     }
 
-    fun copy(from: PeriodDate, to: PeriodDate) {
-        command.update { AddPeriodCommand.Copy(from, to) }
-    }
-
-    fun reset() {
-        command.update { AddPeriodCommand.Reset }
+    fun reset() = viewModelScope.launch {
+        copyPeriodCommand.emit(Command.Reset())
+        newEmptyPeriodCommand.emit(Command.Reset())
     }
 }

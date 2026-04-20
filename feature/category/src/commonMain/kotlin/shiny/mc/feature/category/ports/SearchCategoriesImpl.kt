@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 import shiny.mc.core.adapters.CategoryRepository
 import shiny.mc.core.domain.entity.CategoryInfo
-import shiny.mc.core.dto.Category
 import shiny.mc.core.ports.category.SearchCategories
 import shiny.mc.feature.category.domain.CategoryInfoImpl
 

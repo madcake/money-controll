@@ -1,8 +1,5 @@
 package shiny.mc.feature.category.domain
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import shiny.mc.core.dto.Category
 import shiny.mc.core.dto.CategoryType
 import kotlin.test.Test

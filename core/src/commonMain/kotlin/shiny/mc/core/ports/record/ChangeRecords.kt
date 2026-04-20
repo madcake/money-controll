@@ -1,7 +1,5 @@
 package shiny.mc.core.ports.record
 
-import shiny.mc.core.dto.Category
-
 /**
  * Port for managing record associations with periods.
  */

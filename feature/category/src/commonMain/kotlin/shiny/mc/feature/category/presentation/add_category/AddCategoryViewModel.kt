@@ -35,9 +35,9 @@ class AddCategoryViewModel(
     val type: StateFlow<CategoryType>
         field = MutableStateFlow(CategoryType.Out)
 
-    private val command = MutableSharedFlow<Command>()
+    private val command = MutableSharedFlow<Command<CategoryValue>>()
 
-    val commandState = command.processCommand<CategoryValue> {
+    val commandState = command.processCommand {
         addCategory.addCategory(it.title, it.type)
     }
     .onSuccess { titleState.clearText() }
@@ -51,17 +51,7 @@ class AddCategoryViewModel(
         this.type.update { type }
     }
 
-    fun onSave() {
-        viewModelScope.launch {
-            command.emit(
-                Command.Action(
-                    CategoryValue(
-                        title.value,
-                        type.value
-                    )
-                )
-            )
-        }
-
+    fun onSave() = viewModelScope.launch {
+        command.emit(Command.Action(CategoryValue(title.value, type.value)))
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.core_ui.model.CommandState
 import shiny.mc.core.domain.value.format
 import shiny.mc.core.dto.Period
 import shiny.mc.core.dto.PeriodDate
@@ -39,6 +39,7 @@ import shiny.mc.core_ui.components.ItemPosition
 import shiny.mc.core_ui.components.MonthPicker
 import shiny.mc.core_ui.components.SwipeableItem
 import shiny.mc.core_ui.components.itemsPosition
+import shiny.mc.core_ui.model.CommandState
 import shiny.mc.core_ui.resources.Res
 import shiny.mc.core_ui.resources.common_error
 import shiny.mc.core_ui.resources.common_error_unknown
@@ -49,7 +50,6 @@ import shiny.mc.core_ui.resources.error_title_add
 import shiny.mc.core_ui.resources.error_title_copy
 import shiny.mc.core_ui.resources.title_periods
 import shiny.mc.core_ui.theme.space
-import shiny.mc.feature.period.model.AddPeriodCommand
 import shiny.mc.feature.period.presentation.add_period.AddPeriodViewModel
 import shiny.mc.platform.format
 
@@ -62,7 +62,9 @@ fun PeriodsNavScreen(
 ) {
     val periods by viewModel.periods.collectAsStateWithLifecycle()
     val current by viewModel.current.collectAsStateWithLifecycle()
-    val commandState by addPeriodViewModel.commandState.collectAsStateWithLifecycle()
+
+    val copyPeriodState by addPeriodViewModel.copyPeriodState.collectAsStateWithLifecycle()
+    val newEmptyPeriodState by addPeriodViewModel.newEmptyPeriodState.collectAsStateWithLifecycle()
 
     var selectDate by remember { mutableStateOf(false) }
     var periodRevealed by remember { mutableStateOf<PeriodDate?>(null) }
@@ -75,13 +77,26 @@ fun PeriodsNavScreen(
         onCancel()
     }
 
-    LaunchedEffect(commandState) {
-        when (commandState) {
+    LaunchedEffect(copyPeriodState) {
+        when (copyPeriodState) {
             is CommandState.Success<*> -> onCancel()
-            is CommandState.Failure -> showError = (commandState as CommandState.Failure<*>).err
-            is CommandState.Idle -> showError = null
-            is CommandState.Processing -> {}
+            is CommandState.Failure<*> -> showError = (copyPeriodState as CommandState.Failure<*>).err
+            is CommandState.Idle<*> -> showError = null
+            is CommandState.Processing<*> -> {}
         }
+    }
+
+    LaunchedEffect(newEmptyPeriodState) {
+        when (newEmptyPeriodState) {
+            is CommandState.Success<*> -> onCancel()
+            is CommandState.Failure<*> -> showError = (newEmptyPeriodState as CommandState.Failure<*>).err
+            is CommandState.Idle<*> -> showError = null
+            is CommandState.Processing<*> -> {}
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { addPeriodViewModel.reset()}
     }
 
     Scaffold(
@@ -119,9 +134,7 @@ fun PeriodsNavScreen(
                     position = position,
                     isRevealed = item.date == periodRevealed,
                     onReveal = { state -> periodRevealed = item.date.takeIf { state } },
-                    onCopy = {
-                        addPeriodViewModel.copy(item.date)
-                    }
+                    onCopy = { selectDate = true }
                 ) {
                     viewModel.setCurrent(item)
                     onCancel()
@@ -132,12 +145,15 @@ fun PeriodsNavScreen(
 
     SelectPeriod(
         selectDate = selectDate,
-        selectTo = commandState.command as? AddPeriodCommand.CopySelectTo,
-        onCancel = {},
+        selectTo = periodRevealed,
+        onCancel = {
+            selectDate = false
+            periodRevealed = null
+        },
     ) { month, year, from ->
         when {
-            selectDate -> addPeriodViewModel.add(PeriodDate(month, year))
-            from != null -> addPeriodViewModel.copy(from, PeriodDate(month, year))
+            from != null -> addPeriodViewModel.copyPeriod(from, PeriodDate(month, year))
+            else -> addPeriodViewModel.newEmptyPeriod(PeriodDate(month, year))
         }
         selectDate = false
     }
@@ -151,9 +167,9 @@ fun PeriodsNavScreen(
                 }
             },
             title = {
-                val text = when (commandState.command) {
-                    is AddPeriodCommand.Add -> stringResource(Res.string.error_title_add)
-                    is AddPeriodCommand.Copy -> stringResource(Res.string.error_title_copy)
+                val text = when {
+                    newEmptyPeriodState is CommandState.Failure -> stringResource(Res.string.error_title_add)
+                    copyPeriodState is CommandState.Failure -> stringResource(Res.string.error_title_copy)
                     else -> stringResource(Res.string.common_error)
                 }
                 Text(text)
@@ -173,13 +189,13 @@ fun PeriodsNavScreen(
 @Composable
 private fun SelectPeriod(
     selectDate: Boolean,
-    selectTo: AddPeriodCommand.CopySelectTo?,
+    selectTo: PeriodDate?,
     onCancel: () -> Unit,
     onSelect: (Int, Int, PeriodDate?) -> Unit,
 ) {
     MonthPicker(
         visible = selectDate || selectTo != null,
-        onSelect = { month, year -> onSelect(month, year, selectTo?.from) },
+        onSelect = { month, year -> onSelect(month, year, selectTo) },
         onCancel = onCancel,
     )
 }

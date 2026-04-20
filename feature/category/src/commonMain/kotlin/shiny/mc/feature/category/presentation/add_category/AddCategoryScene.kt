@@ -42,6 +42,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
+import shiny.mc.core.domain.value.CategoryValue
 import shiny.mc.core.dto.CategoryType
 import shiny.mc.core.dto.error.CategoryError
 import shiny.mc.core_ui.components.SmallCircularProgressIndicator
@@ -61,7 +62,7 @@ import shiny.mc.core_ui.theme.space
 fun AddCategoryScene(
     title: TextFieldState,
     categoryType: CategoryType,
-    commandState: CommandState<Command>,
+    commandState: CommandState<Command<CategoryValue>>,
     onCategoryTypeSelected: (CategoryType) -> Unit,
     onSave: () -> Unit,
 ) {
@@ -106,7 +107,7 @@ fun AddCategoryScene(
 @Composable
 private fun CategoryTypeMenu(
     categoryType: CategoryType,
-    commandState: CommandState<Command>,
+    commandState: CommandState<Command<CategoryValue>>,
     onCategoryTypeSelected: (CategoryType) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -176,7 +177,7 @@ private fun CategoryTypeMenu(
 }
 
 @Composable
-private fun AddCategoryError(commandState: CommandState<Command>) {
+private fun AddCategoryError(commandState: CommandState<Command<CategoryValue>>) {
     val message = when (commandState) {
         is CommandState.Failure -> when (commandState.err) {
             is CategoryError.DuplicatedTitle -> stringResource(Res.string.error_category_duplicated_title)

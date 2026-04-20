@@ -8,22 +8,22 @@ import kotlinx.coroutines.flow.transformLatest
 /**
  * Represents a command that can be executed, typically from a UI component.
  */
-sealed interface Command {
+sealed interface Command<out T> {
     /**
      * An action command containing data of type [T].
      */
-    class Action<T>(val data: T) : Command
+    class Action<out T>(val data: T) : Command<T>
 
     /**
      * A command to reset the state.
      */
-    object Reset : Command
+    class Reset<out T> : Command<T>
 }
 
 /**
  * Executes the [action] when the flow emits a [CommandState.Success] state.
  */
-fun Flow<CommandState<Command>>.onSuccess(action: suspend (CommandState<Command>) -> Unit): Flow<CommandState<Command>> = transform { value ->
+fun <T> Flow<CommandState<Command<T>>>.onSuccess(action: suspend (CommandState<Command<T>>) -> Unit): Flow<CommandState<Command<T>>> = transform { value ->
     if (value is CommandState.Success<*>) {
         action(value)
     }
@@ -33,7 +33,7 @@ fun Flow<CommandState<Command>>.onSuccess(action: suspend (CommandState<Command>
 /**
  * Executes the [action] when the flow emits a [CommandState.Failure] state.
  */
-fun Flow<CommandState<Command>>.onFailure(action: suspend (CommandState<Command>) -> Unit): Flow<CommandState<Command>> = transform { value ->
+fun <T> Flow<CommandState<Command<T>>>.onFailure(action: suspend (CommandState<Command<T>>) -> Unit): Flow<CommandState<Command<T>>> = transform { value ->
     if (value is CommandState.Failure<*>) {
         action(value)
     }
@@ -44,7 +44,7 @@ fun Flow<CommandState<Command>>.onFailure(action: suspend (CommandState<Command>
  * Executes the [action] when the flow emits either a [CommandState.Failure] or [CommandState.Success] state,
  * typically used to reset UI state after a command finishes.
  */
-fun Flow<CommandState<Command>>.onReset(action: suspend (CommandState<Command>) -> Unit): Flow<CommandState<Command>> = transform { value ->
+fun <T> Flow<CommandState<Command<T>>>.onReset(action: suspend (CommandState<Command<T>>) -> Unit): Flow<CommandState<Command<T>>> = transform { value ->
     if (value is CommandState.Failure<*> || value is CommandState.Success<*>) {
         action(value)
     }
@@ -60,9 +60,9 @@ fun Flow<CommandState<Command>>.onReset(action: suspend (CommandState<Command>) 
  * @return A [Flow] of [CommandState] representing the progress and result of processing.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-fun <T> Flow<Command>.processCommand(handle: suspend (T) -> Unit): Flow<CommandState<Command>> = transformLatest { command ->
+fun <T> Flow<Command<T>>.processCommand(handle: suspend (T) -> Unit): Flow<CommandState<Command<T>>> = transformLatest { command ->
     when (command) {
-        Command.Reset -> emit(CommandState.Idle())
+        is Command.Reset -> emit(CommandState.Idle())
         is Command.Action<*> -> {
             try {
                 handle((command.data as? T) ?: throw IllegalArgumentException())

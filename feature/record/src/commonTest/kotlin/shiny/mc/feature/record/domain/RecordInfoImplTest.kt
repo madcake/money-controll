@@ -1,15 +1,11 @@
 package shiny.mc.feature.record.domain
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.ArrowDropUp
 import shiny.mc.core.dto.Category
 import shiny.mc.core.dto.CategoryType
 import shiny.mc.core.dto.Record
 import shiny.mc.core.dto.ValueState
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class RecordInfoImplTest {
 

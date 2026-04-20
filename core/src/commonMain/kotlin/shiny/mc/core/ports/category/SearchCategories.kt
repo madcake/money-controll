@@ -2,7 +2,6 @@ package shiny.mc.core.ports.category
 
 import kotlinx.coroutines.flow.Flow
 import shiny.mc.core.domain.entity.CategoryInfo
-import shiny.mc.core.dto.Category
 
 /**
  * Port for searching through transaction categories.
