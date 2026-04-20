@@ -3,7 +3,6 @@ package shiny.mc.feature.record.ports
 import kotlinx.coroutines.flow.firstOrNull
 import shiny.mc.core.adapters.CategoryRepository
 import shiny.mc.core.adapters.RecordRepository
-import shiny.mc.core.dto.Category
 import shiny.mc.core.dto.Record
 import shiny.mc.core.ports.record.ChangeRecords
 import shiny.mc.core.ports.record.CreateRecordId
@@ -14,13 +13,11 @@ class ChangeRecordsImpl(
     private val createRecordId: CreateRecordId = object : CreateRecordId {}
 ) : ChangeRecords {
 
-    override suspend fun changeRecord(
-        category: Category,
+    override suspend fun addToPeriod(
+        categoryId: Long,
         month: Int,
         year: Int
     ) {
-        val categoryId = category.id
-
         val recordId = createRecordId.createId(categoryId, month, year)
 
         if (recordRepository.hasRecord(recordId)) {

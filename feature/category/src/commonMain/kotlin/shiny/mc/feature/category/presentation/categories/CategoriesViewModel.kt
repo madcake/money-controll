@@ -35,12 +35,12 @@ class CategoriesViewModel(
         .mapLatest { items -> items.map { it.categoryId } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun removeCategory(id: Long?) {
-        id ?: return
-        viewModelScope.launch { deleteCategory.deleteCategory(id) }
-    }
+//    fun removeCategory(id: Long?) {
+//        id ?: return
+//        viewModelScope.launch { deleteCategory.deleteCategory(id) }
+//    }
 
-    fun addToPeriod(category: Category, month: Int, year: Int) = viewModelScope.launch {
-        changeRecords.changeRecord(category, month, year)
+    fun addToPeriod(categoryId: Long, month: Int, year: Int) = viewModelScope.launch {
+        changeRecords.addToPeriod(categoryId, month, year)
     }
 }

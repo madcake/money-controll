@@ -107,7 +107,7 @@ fun CategoriesNavScreen(
                     isSelected = selected.contains(item.id),
                     position = position,
                 ) {
-                    viewModel.addToPeriod(item, date.month, date.year)
+                    viewModel.addToPeriod(item.id, date.month, date.year)
                 }
             }
         }

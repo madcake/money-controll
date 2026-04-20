@@ -9,6 +9,7 @@ import shiny.mc.core.ports.category.DeleteCategory
 class DeleteCategoryImpl(
     private val categoryRepository: CategoryRepository,
 ) : DeleteCategory {
+
     override suspend fun deleteCategory(categoryId: Long) = withContext(Dispatchers.IO) {
         try {
             categoryRepository.deleteCategory(categoryId)

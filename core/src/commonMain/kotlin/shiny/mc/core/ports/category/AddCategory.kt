@@ -7,6 +7,7 @@ import shiny.mc.core.dto.error.CategoryError
  * Port for adding new transaction categories.
  */
 interface AddCategory {
+
     /**
      * Adds a new category with the specified title and type.
      *

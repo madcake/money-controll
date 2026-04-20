@@ -11,6 +11,7 @@ import shiny.mc.core.ports.category.AddCategory
 class AddCategoryImpl(
     private val categoryRepository: CategoryRepository,
 ) : AddCategory {
+
     override suspend fun addCategory(
         title: String,
         type: CategoryType

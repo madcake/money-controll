@@ -42,16 +42,16 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
-import shiny.mc.core.domain.CommandState
 import shiny.mc.core.dto.CategoryType
 import shiny.mc.core.dto.error.CategoryError
 import shiny.mc.core_ui.components.SmallCircularProgressIndicator
+import shiny.mc.core_ui.model.Command
+import shiny.mc.core_ui.model.CommandState
 import shiny.mc.core_ui.resources.Res
 import shiny.mc.core_ui.resources.error_category_duplicated_title
 import shiny.mc.core_ui.resources.error_category_empty_title
 import shiny.mc.core_ui.resources.placeholders_category_title
 import shiny.mc.core_ui.theme.space
-import shiny.mc.feature.category.model.AddCategoryCommand
 
 @OptIn(
     ExperimentalMaterial3Api::class,
@@ -61,7 +61,7 @@ import shiny.mc.feature.category.model.AddCategoryCommand
 fun AddCategoryScene(
     title: TextFieldState,
     categoryType: CategoryType,
-    commandState: CommandState<AddCategoryCommand>,
+    commandState: CommandState<Command>,
     onCategoryTypeSelected: (CategoryType) -> Unit,
     onSave: () -> Unit,
 ) {
@@ -106,7 +106,7 @@ fun AddCategoryScene(
 @Composable
 private fun CategoryTypeMenu(
     categoryType: CategoryType,
-    commandState: CommandState<AddCategoryCommand>,
+    commandState: CommandState<Command>,
     onCategoryTypeSelected: (CategoryType) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -176,7 +176,7 @@ private fun CategoryTypeMenu(
 }
 
 @Composable
-private fun AddCategoryError(commandState: CommandState<AddCategoryCommand>) {
+private fun AddCategoryError(commandState: CommandState<Command>) {
     val message = when (commandState) {
         is CommandState.Failure -> when (commandState.err) {
             is CategoryError.DuplicatedTitle -> stringResource(Res.string.error_category_duplicated_title)

@@ -28,7 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import shiny.mc.core.domain.CommandState
+import shiny.mc.core_ui.model.CommandState
 import shiny.mc.core.domain.value.format
 import shiny.mc.core.dto.Period
 import shiny.mc.core.dto.PeriodDate

@@ -3,60 +3,63 @@ package shiny.mc.core.adapters
 import kotlinx.coroutines.flow.Flow
 import shiny.mc.core.dto.Category
 
+/**
+ * Repository interface for managing transaction categories in persistent storage.
+ */
 interface CategoryRepository {
     /**
-     * @return available categories from store
+     * Retrieves all available categories.
+     *
+     * @return A [Flow] emitting a list of all [Category] objects.
      */
     fun getCategories(): Flow<List<Category>>
 
     /**
-     * Add category to store
+     * Adds a new category to the store.
      *
-     * @param category to add
-     * @return added category
-     * @throws shiny.mc.core.dto.error.CategoryError
+     * @param category The category to add.
+     * @return The added category
+     * @throws shiny.mc.core.dto.error.CategoryError If the category is invalid or a duplicate.
      */
     suspend fun addCategory(category: Category): Category
 
     /**
-     * Delete category by category id
+     * Deletes a category by its ID.
      *
-     * @param category id
-     * @throws shiny.mc.core.dto.error.CategoryError.CategoryNotFound
+     * @param id The unique identifier of the category to delete.
+     * @throws shiny.mc.core.dto.error.CategoryError.CategoryNotFound If no category exists with the given ID.
      */
     suspend fun deleteCategory(id: Long)
 
     /**
-     * Update category
+     * Updates an existing category.
      *
-     * @param category category
-     * @throws shiny.mc.core.dto.error.CategoryError.CategoryNotFound
+     * @param category The category with updated information.
+     * @throws shiny.mc.core.dto.error.CategoryError.CategoryNotFound If the category to update does not exist.
      */
     suspend fun updateCategory(category: Category)
 
     /**
-     * Get category by id
+     * Retrieves a category by its ID.
      *
-     * @return category, null if not found
-     * @throws shiny.mc.core.dto.error.CategoryError
+     * @param id The unique identifier of the category.
+     * @return A [Flow] emitting the category, or null if not found.
      */
     fun getCategory(id: Long): Flow<Category?>
 
     /**
-     * Get category by title
+     * Retrieves a category by its title.
      *
-     * @param title category title
-     * @return category, null if not found
-     * @throws shiny.mc.core.dto.error.CategoryError
+     * @param title The exact title of the category.
+     * @return A [Flow] emitting the category, or null if not found.
      */
     fun getCategory(title: String): Flow<Category?>
 
     /**
-     * Find categories by query string.
+     * Searches for categories that match a query string.
      *
-     * @param query Query string could be empty
-     * @return categories
-     * @throws shiny.mc.core.dto.error.CategoryError
+     * @param query The search term (can be empty to return all).
+     * @return A [Flow] emitting a list of matching categories.
      */
     fun find(query: String): Flow<List<Category>>
 }

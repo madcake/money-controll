@@ -1,4 +1,4 @@
-package shiny.mc.core.domain
+package shiny.mc.core_ui.model
 
 sealed class CommandState<Command>(val command: Command? = null) {
     class Idle<Command> : CommandState<Command>()
