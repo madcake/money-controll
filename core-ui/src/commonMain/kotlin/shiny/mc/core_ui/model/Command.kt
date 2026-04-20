@@ -2,6 +2,8 @@ package shiny.mc.core_ui.model
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.transformLatest
 
@@ -19,6 +21,8 @@ sealed interface Command<out T> {
      */
     class Reset<out T> : Command<T>
 }
+
+suspend fun <T> MutableSharedFlow<Command<T>>.action(data: T) = emit(Command.Action(data))
 
 /**
  * Executes the [action] when the flow emits a [CommandState.Success] state.

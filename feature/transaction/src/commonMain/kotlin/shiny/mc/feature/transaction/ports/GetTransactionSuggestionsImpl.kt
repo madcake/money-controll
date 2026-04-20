@@ -22,8 +22,6 @@ class GetTransactionSuggestionsImpl(
         return recordRepository.getRecord(recordId)
             .mapLatest { it?.category?.id }
             .filterNotNull()
-            .flatMapLatest {
-                transactionRepository.getSuggestions(it, query)
-            }
+            .flatMapLatest { transactionRepository.getSuggestions(it, query) }
     }
 }

@@ -52,8 +52,10 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
+import shiny.mc.core.domain.value.TransactionValue
 import shiny.mc.core.dto.error.TransactionError
 import shiny.mc.core_ui.components.SmallCircularProgressIndicator
+import shiny.mc.core_ui.model.Command
 import shiny.mc.core_ui.model.CommandState
 import shiny.mc.core_ui.resources.Res
 import shiny.mc.core_ui.resources.error_transaction_empty_purpose
@@ -63,7 +65,6 @@ import shiny.mc.core_ui.resources.placeholders_add_expense_value
 import shiny.mc.core_ui.resources.placeholders_add_transaction_purpose
 import shiny.mc.core_ui.theme.paddingDefault
 import shiny.mc.core_ui.theme.space
-import shiny.mc.feature.transaction.model.AddTransactionCommand
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -72,7 +73,7 @@ import kotlin.time.Instant
 fun AddTransactionScene(
     recordMonth: Int,
     recordYear: Int,
-    state: CommandState<AddTransactionCommand>,
+    state: CommandState<Command<TransactionValue>>,
     value: TextFieldState,
     purpose: TextFieldState,
     date: Long,
@@ -228,7 +229,7 @@ fun AddTransactionScene(
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun AddTransactionFailure(state: CommandState<AddTransactionCommand>) {
+private fun AddTransactionFailure(state: CommandState<Command<TransactionValue>>) {
     if (state !is CommandState.Failure) {
         return
     }
