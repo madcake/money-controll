@@ -3,7 +3,6 @@ package shiny.mc.core_ui.model
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.flow.transformLatest
 
