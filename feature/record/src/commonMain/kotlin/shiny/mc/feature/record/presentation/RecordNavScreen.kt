@@ -52,7 +52,7 @@ fun RecordNavScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "${record?.category?.title}",
+                        text = "${record?.title}",
                         maxLines = 2,
                         overflow = TextOverflow.MiddleEllipsis,
                     )

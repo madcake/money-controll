@@ -31,8 +31,8 @@ fun AddTransactionNavScreen(
         return
     }
     AddTransactionScene(
-        recordMonth = record?.month ?: 0,
-        recordYear = record?.year ?: 0,
+        recordMonth = record?.period?.month ?: 0,
+        recordYear = record?.period?.year ?: 0,
         state = commandState,
         value = viewModel.valueState,
         purpose = viewModel.purposeState,

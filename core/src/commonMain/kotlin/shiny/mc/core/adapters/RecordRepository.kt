@@ -49,7 +49,7 @@ interface RecordRepository {
     /**
      * Get records by period. Period equals' month.
      *
-     * @param month month number start from 1 (Junuary)
+     * @param month month number start from 1 (January)
      * @param year year number
      * @return category record or empty list
      * @throws shiny.mc.core.dto.error.RecordError

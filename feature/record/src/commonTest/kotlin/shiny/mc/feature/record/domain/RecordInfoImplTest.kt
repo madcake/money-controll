@@ -31,7 +31,7 @@ class RecordInfoImplTest {
         assertEquals(123L, recordInfo.categoryId)
         assertEquals(CategoryType.Out, recordInfo.categoryType)
         assertEquals("Groceries", recordInfo.title)
-        assertEquals("500,00 \$", recordInfo.estimateValue)
+        assertEquals("500,00 \$", recordInfo.estimateValueFormatted)
         assertEquals("450,00 \$", recordInfo.realValue)
     }
 

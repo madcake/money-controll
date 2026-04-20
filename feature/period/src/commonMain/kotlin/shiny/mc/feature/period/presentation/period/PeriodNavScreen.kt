@@ -144,10 +144,12 @@ fun RecordsScenePreview() {
         override val categoryId: Long = 1L + id.toLong()
         override val categoryType: CategoryType = CategoryType.Out
         override val title: String = "Foo category version 1.0 for preview"
-        override val estimateValue: String = "${id}0 000"
+        override val estimateValueFormatted: String = "${id}0 000"
+        override val estimateValue: Double = id.toDouble() * 10_000
         override val realValue: String = "${id + 7}0 000"
         override val valueState: ValueState = ValueState.Surplus
         override val icon: Any = Icons.Default.ArrowDropUp
+        override val period: PeriodDate = PeriodDate(4, 2026)
     }
 
     MaterialTheme {

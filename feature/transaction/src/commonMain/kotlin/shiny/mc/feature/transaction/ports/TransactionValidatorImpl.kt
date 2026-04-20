@@ -34,7 +34,7 @@ class TransactionValidatorImpl(
         } catch (_: Throwable) {
             null
         }
-        if (dateTime?.date?.month?.number != record.month || dateTime.year != record.year) {
+        if (dateTime?.date?.month?.number != record.period.month || dateTime.year != record.period.year) {
             throw TransactionError.InvalidDate()
         }
 

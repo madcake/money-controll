@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
+import shiny.mc.core.dto.ValueState
 import shiny.mc.core_ui.theme.paddingDefault
 import shiny.mc.core_ui.theme.space
 import shiny.mc.platform.format
@@ -124,13 +125,14 @@ internal fun RecordHeader(
             }
         }
         Text(
-            text = record?.realValue?.format() ?: "",
+            text = record?.realValue ?: "",
             style = MaterialTheme.typography.displaySmall.copy(
                 textAlign = TextAlign.Center,
-                color = if ((record?.estimateValue ?: 0.0) < (record?.realValue ?: 0.0)) {
-                    MaterialTheme.colorScheme.error
-                } else {
-                    MaterialTheme.colorScheme.secondary
+                color = when (record?.valueState) {
+                    ValueState.Deficit -> MaterialTheme.colorScheme.error
+                    ValueState.Surplus -> MaterialTheme.colorScheme.tertiary
+                    null -> MaterialTheme.colorScheme.secondary
+
                 }
             ),
         )

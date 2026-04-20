@@ -56,7 +56,7 @@ class AddTransactionViewModel(
         .onEach { record ->
             if (date.value == 0L) {
                 val millis = LocalDateTime(
-                    month = record.month, year = record.year, day = 1,
+                    month = record.period.month, year = record.period.year, day = 1,
                     hour = 0, minute = 0, second = 1
                 ).toInstant(TimeZone.UTC).toEpochMilliseconds()
                 date.update { millis }
