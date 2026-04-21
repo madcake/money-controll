@@ -15,11 +15,9 @@ plugins {
 kotlin {
     android {
         namespace = "shiny.mc.feature.category"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+//        compileSdk {
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+//        }
         minSdk = 31
 
         withHostTestBuilder {
