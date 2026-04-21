@@ -128,8 +128,21 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "shiny.mc"
+            packageName = "shiny.mc.moneycontroll"
             packageVersion = "1.0.0"
+            description = "MoneyControll - Personal Finance Manager"
+            copyright = "© 2024 Shiny. All rights reserved."
+
+            linux {
+                shortcut = true
+            }
+            windows {
+                shortcut = true
+                menuGroup = "MoneyControll"
+            }
+            macOS {
+                bundleID = "shiny.mc.moneycontroll"
+            }
         }
     }
 }
