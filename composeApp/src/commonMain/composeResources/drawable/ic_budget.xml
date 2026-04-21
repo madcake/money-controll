@@ -1,0 +1,48 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <!-- Top Left Segment (Solid) -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M60,240C60,140.589 140.589,60 240,60V140C184.772,140 140,184.772 140,240H60Z" />
+
+    <!-- Top Right Segment (Outlined) -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="20"
+        android:strokeLineJoin="round"
+        android:pathData="M272,60C371.411,60 452,140.589 452,240H372C372,184.772 327.228,140 272,140V60Z" />
+
+    <!-- Bottom Right Segment (Outlined) -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="20"
+        android:strokeLineJoin="round"
+        android:pathData="M452,272C452,371.411 371.411,452 272,452V372C327.228,372 372,327.228 372,272H452Z" />
+
+    <!-- Bottom Left Segment (Outlined) -->
+    <path
+        android:strokeColor="#FF000000"
+        android:strokeWidth="20"
+        android:strokeLineJoin="round"
+        android:pathData="M240,452C140.589,452 60,371.411 60,272H140C140,327.228 184.772,372 240,372V452Z" />
+
+    <!-- Center Coin -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M256,256m-100,0a100,100 0,1 1,200 0a100,100 0,1 1,-200 0" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="8"
+        android:pathData="M256,256m-85,0a85,85 0,1 1,170 0a85,85 0,1 1,-170 0" />
+
+    <!-- Dollar Sign -->
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="16"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M256,195V210M256,302V317M280,230C280,215 270,205 256,205H245C235,205 228,215 228,225C228,245 256,245 256,265C256,275 245,285 235,285H225M232,285C232,300 242,310 256,310H267C277,310 284,300 284,290C284,270 256,270 256,250C256,240 267,230 277,230H287" />
+</vector>

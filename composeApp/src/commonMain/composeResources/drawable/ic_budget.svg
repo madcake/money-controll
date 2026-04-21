@@ -1,0 +1,17 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Top Left Solid Segment -->
+  <path d="M242 40C134.48 45.92 48.4 132 42.48 242H130.73C136.47 182.21 182.53 136.14 242.33 130.4V40H242Z" fill="black"/>
+
+  <!-- Top Right Outlined Segment -->
+  <path d="M270 40V128C329.8 133.8 378.2 182.2 384 244H472C466 135.2 376.8 46 270 40Z" stroke="black" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Bottom Outlined Segment -->
+  <path d="M472 268H384C378.2 329.8 329.8 378.2 268 384V472C376.8 466 466 376.8 472 268ZM244 472V384C182.2 378.2 133.8 329.8 128 268H40C46 376.8 135.2 466 244 472Z" stroke="black" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Center Coin -->
+  <circle cx="256" cy="256" r="110" fill="black"/>
+  <circle cx="256" cy="256" r="95" stroke="white" stroke-width="10"/>
+
+  <!-- Dollar Sign -->
+  <path d="M256 190V210M256 302V322M284 235C284 220 272 210 256 210H244C234 210 228 220 228 235S240 260 256 260H260C276 260 288 270 288 285S276 310 260 310H244C228 310 216 300 216 285" stroke="white" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -10,8 +10,8 @@ fun MCTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        darkTheme -> darkBlueTheme
-        else -> lightTheme
+        darkTheme -> darkColorScheme
+        else -> lightColorScheme
     }
 
     MaterialTheme(

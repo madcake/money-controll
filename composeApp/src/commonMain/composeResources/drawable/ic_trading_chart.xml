@@ -1,0 +1,66 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <!-- Browser Window -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M448,48H64C46.33,48 32,62.33 32,80V400C32,417.67 46.33,432 64,432H256V400H64V128H448V256H480V80C480,62.33 465.67,48 448,48Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M96,88m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M144,88m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M192,88m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0" />
+
+    <!-- Candlestick Chart -->
+    <!-- Stick 1 -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M116,190h8v180h-8z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M104,240h32c6.63,0 12,5.37 12,12v76c0,6.63 -5.37,12 -12,12h-32c-6.63,0 -12,-5.37 -12,-12v-76c0,-6.63 5.37,-12 12,-12z" />
+
+    <!-- Stick 2 -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M212,150h8v220h-8z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M200,180h32c6.63,0 12,5.37 12,12v136c0,6.63 -5.37,12 -12,12h-32c-6.63,0 -12,-5.37 -12,-12v-136c0,-6.63 5.37,-12 12,-12z" />
+
+    <!-- Stick 3 -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M308,220h8v150h-8z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M296,260h32c6.63,0 12,5.37 12,12v56c0,6.63 -5.37,12 -12,12h-32c-6.63,0 -12,-5.37 -12,-12v-56c0,-6.63 5.37,-12 12,-12z" />
+
+    <!-- Stick 4 -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M404,180h8v160h-8z" />
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M392,220h32c6.63,0 12,5.37 12,12v76c0,6.63 -5.37,12 -12,12h-32c-6.63,0 -12,-5.37 -12,-12v-76c0,-6.63 5.37,-12 12,-12z" />
+
+    <!-- Dollar Coin -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:strokeColor="#FF000000"
+        android:strokeWidth="24"
+        android:pathData="M384,384m-100,0a100,100 0,1 1,200 0a100,100 0,1 1,-200 0" />
+    <group
+        android:translateX="-8"
+        android:translateY="-4">
+        <path
+            android:fillColor="#FF000000"
+            android:pathData="M384,320V332C402,332 414,342 414,358C414,374 402,382 384,384C366,386 354,394 354,410C354,426 366,436 384,436V448H400V436C418,436 430,426 430,410H414C414,420 408,424 400,424V400C382,400 370,390 370,374C370,358 382,350 400,348C418,346 430,338 430,322C430,306 418,296 400,296V284H384V296C366,296 354,306 354,322H370C370,312 376,308 384,308V320Z" />
+    </group>
+</vector>
