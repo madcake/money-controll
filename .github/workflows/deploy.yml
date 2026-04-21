@@ -24,7 +24,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run Tests
-        run: ./gradlew test
+        run: ./gradlew jvmTest testAndroidHostTest
 
   build-desktop:
     needs: check
