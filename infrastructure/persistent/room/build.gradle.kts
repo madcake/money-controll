@@ -9,16 +9,9 @@ plugins {
 
 kotlin {
 
-    // Target declarations - add or remove as needed below. These define
-    // which platforms this KMP module supports.
-    // See: https://kotlinlang.org/docs/multiplatform-discover-project.html#targets
     android {
         namespace = "shiny.mc.infrastructure.persistent.room"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 31
 
         withHostTestBuilder {

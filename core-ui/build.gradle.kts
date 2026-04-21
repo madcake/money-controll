@@ -12,11 +12,7 @@ kotlin {
 
     android {
         namespace = "shiny.mc.core_ui"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 31
 
         withHostTestBuilder {

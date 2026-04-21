@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
@@ -11,11 +13,7 @@ kotlin {
 
     android {
         namespace = "shiny.mc.core"
-        compileSdk {
-            version = release(36) {
-                minorApiLevel = 1
-            }
-        }
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
         minSdk = 31
 
         withHostTestBuilder {
