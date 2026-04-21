@@ -27,7 +27,8 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
-            isStatic = true
+            isStatic = false
+            freeCompilerArgs += listOf("-Xobjc-generics", "-Xg0")
         }
     }
     
@@ -105,7 +106,12 @@ android {
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -143,6 +149,14 @@ compose.desktop {
             macOS {
                 bundleID = "shiny.mc.moneycontroll"
             }
+
+            modules("java.instrument", "jdk.unsupported")
+        }
+
+        buildTypes.release.proguard {
+            optimize.set(true)
+            obfuscate.set(true)
+            joinOutputJars.set(true)
         }
     }
 }
