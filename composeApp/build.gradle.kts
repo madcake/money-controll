@@ -137,17 +137,19 @@ compose.desktop {
             packageName = "shiny.mc.moneycontroll"
             packageVersion = "1.0.0"
             description = "MoneyControll - Personal Finance Manager"
-            copyright = "© 2024 Shiny. All rights reserved."
 
             linux {
                 shortcut = true
+                iconFile.set(project.file("../media/appicon/linux_icon.png"))
             }
             windows {
                 shortcut = true
                 menuGroup = "MoneyControll"
+                iconFile.set(project.file("../media/appicon/win_icon.ico"))
             }
             macOS {
                 bundleID = "shiny.mc.moneycontroll"
+                iconFile.set(project.file("../media/appicon/macos_icon.icns"))
             }
 
             modules("java.instrument", "jdk.unsupported")
