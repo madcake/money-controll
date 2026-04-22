@@ -134,8 +134,8 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "shiny.mc.moneycontroll"
-            packageVersion = "1.0.0"
+            packageName = libs.versions.app.name.get()
+            packageVersion = libs.versions.version.name.get()
             description = "MoneyControll - Personal Finance Manager"
 
             linux {
