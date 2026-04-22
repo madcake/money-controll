@@ -19,8 +19,11 @@ fun MutableList<NavKey>.openRecord(recordId: String) {
 fun EntryProviderScope<NavKey>.record(
     onTransaction: @Composable (String) -> Unit,
     onCancel: OnCancel,
+    metadata: Map<String, Any> = emptyMap(),
 ) {
-    entry<RecordNavKey> { entry ->
+    entry<RecordNavKey>(
+        metadata = metadata,
+    ) { entry ->
         RecordNavScreen(
             recordId = entry.recordId,
             onTransaction = onTransaction,

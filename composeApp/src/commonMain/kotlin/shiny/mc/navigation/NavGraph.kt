@@ -1,8 +1,12 @@
 package shiny.mc.navigation
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -20,21 +24,37 @@ import shiny.mc.feature.period.navigation.periods
 import shiny.mc.feature.record.navigation.openRecord
 import shiny.mc.feature.record.navigation.record
 import shiny.mc.feature.transaction.add_transaction.AddTransactionNavScreen
+import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
+import androidx.compose.ui.Alignment
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun NavGraph() {
     val backStack = remember { mutableStateListOf<NavKey>(PeriodNavKey) }
     val onCancel = fun () { backStack.removeLastOrNull() }
+    val sceneStrategy = rememberListDetailSceneStrategy<NavKey>()
 
     NavDisplay(
         modifier = Modifier.fillMaxSize().imePadding(),
         backStack = backStack,
         onBack = onCancel,
+        sceneStrategies = listOf(sceneStrategy),
         entryProvider = entryProvider {
             period(
                 openCategories = backStack::openCategories,
                 openPeriods = backStack::openPeriods,
                 openRecord = backStack::openRecord,
+                metadata = ListDetailSceneStrategy.listPane(
+                    detailPlaceholder = {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            Text(
+                                modifier = Modifier.align(Alignment.Center),
+                                text = "Select record",
+                            )
+                        }
+//                            DetailPaneContent(selectedItem = null, onShowExtra = {})
+                    }
+                )
             )
 
             categories(
@@ -56,7 +76,8 @@ fun NavGraph() {
                             recordId = recordId,
                         )
                     }
-                }
+                },
+                metadata = ListDetailSceneStrategy.detailPane(),
             )
         }
     )

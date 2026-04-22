@@ -17,8 +17,11 @@ fun EntryProviderScope<NavKey>.period(
     openCategories: (PeriodDate) -> Unit,
     openPeriods: () -> Unit,
     openRecord: (String) -> Unit,
+    metadata: Map<String, Any> = emptyMap()
 ) {
-    entry<PeriodNavKey> {
+    entry<PeriodNavKey>(
+        metadata = metadata
+    ) {
         PeriodNavScreen(
             onCategories = openCategories,
             onRecord = openRecord,
