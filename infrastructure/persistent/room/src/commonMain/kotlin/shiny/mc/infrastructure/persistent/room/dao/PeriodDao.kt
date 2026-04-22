@@ -24,10 +24,10 @@ interface PeriodDao {
                     record."month",
                     record."year",
                     category.type,
-                    IIF(category.type = 'Asset', record.estimateValue, 0) AS inEstimateValue,
-                    IIF(category.type = 'Liability', record.estimateValue, 0) AS outEstimateValue,
-                    SUM(IIF(category.type = 'Asset', record_transaction."value", 0)) AS inRealValue,
-                    SUM(IIF(category.type = 'Liability', record_transaction."value", 0)) AS outRealValue
+                    IIF(category.type = 'In', record.estimateValue, 0) AS inEstimateValue,
+                    IIF(category.type = 'Out', record.estimateValue, 0) AS outEstimateValue,
+                    SUM(IIF(category.type = 'In', record_transaction."value", 0)) AS inRealValue,
+                    SUM(IIF(category.type = 'Out', record_transaction."value", 0)) AS outRealValue
                 FROM
                     record
                 JOIN category ON record.categoryId = category.id
@@ -55,10 +55,10 @@ interface PeriodDao {
                     record."month",
                     record."year",
                     category.type,
-                    IIF(category.type = 'Asset', record.estimateValue, 0) AS inEstimateValue,
-                    IIF(category.type = 'Liability', record.estimateValue, 0) AS outEstimateValue,
-                    SUM(IIF(category.type = 'Asset', record_transaction."value", 0)) AS inRealValue,
-                    SUM(IIF(category.type = 'Liability', record_transaction."value", 0)) AS outRealValue
+                    IIF(category.type = 'In', record.estimateValue, 0) AS inEstimateValue,
+                    IIF(category.type = 'Out', record.estimateValue, 0) AS outEstimateValue,
+                    SUM(IIF(category.type = 'In', record_transaction."value", 0)) AS inRealValue,
+                    SUM(IIF(category.type = 'Out', record_transaction."value", 0)) AS outRealValue
                 FROM
                     record
                 JOIN category ON record.categoryId = category.id
