@@ -33,10 +33,17 @@ class RecordInfoImpl(
         estimateValue = dto.estimateValue,
         estimateValueFormatted = dto.estimateValue.format(currencyCode),
         realValue = dto.realValue.format(currencyCode),
-        valueState = if (dto.estimateValue >= dto.realValue) {
-            ValueState.Surplus
-        } else {
-            ValueState.Deficit
+        valueState = when (dto.category.type) {
+            CategoryType.In -> if (dto.estimateValue <= dto.realValue) {
+                ValueState.Surplus
+            } else {
+                ValueState.Deficit
+            }
+            CategoryType.Out -> if (dto.estimateValue >= dto.realValue) {
+                ValueState.Surplus
+            } else {
+                ValueState.Deficit
+            }
         },
         icon = when (dto.category.type) {
             CategoryType.In -> Icons.Default.ArrowDropDown
