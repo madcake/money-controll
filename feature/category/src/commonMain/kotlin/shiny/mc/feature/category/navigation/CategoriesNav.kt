@@ -20,8 +20,14 @@ fun MutableList<NavKey>.openCategories(periodDate: PeriodDate) {
 
 fun EntryProviderScope<NavKey>.categories(
     onCancel: OnCancel,
+    metadata: Map<String, Any> = emptyMap()
 ) {
-    entry<CategoriesNavKey> { entry ->
-        CategoriesNavScreen(PeriodDate(entry.month, entry.year), onCancel = onCancel)
+    entry<CategoriesNavKey>(
+        metadata = metadata,
+    ) { entry ->
+        CategoriesNavScreen(
+            date = PeriodDate(entry.month, entry.year),
+            onCancel = onCancel
+        )
     }
 }

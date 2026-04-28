@@ -67,7 +67,7 @@ fun NumberColumnView(
             style = MaterialTheme.typography.bodySmall,
         )
         Text(text = inValue)
-        Text(text = "-$outValue")
+        Text(text = outValue, color = MaterialTheme.colorScheme.deficit)
         HorizontalDivider()
         Text(
             text = diff,
