@@ -39,8 +39,8 @@ fun NavGraph() {
     val entries = listOf(
         PeriodNavKey,
         PeriodsNavKey
-    ).associateWith { item -> remember { mutableStateListOf(item) } }
-    val backStack = entries[currentRoot]!!
+    ).associateWith { item -> mutableStateListOf<NavKey>(item) }
+    val backStack: MutableList<NavKey> = entries[currentRoot]!!
     val onCancel = fun () { backStack.removeLastOrNull() }
 
     NavDisplay(

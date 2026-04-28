@@ -125,7 +125,7 @@ dependencies {
 }
 
 koinCompiler {
-    userLogs = true  // Log component detection
+    userLogs = true
 }
 
 compose.desktop {

@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.KoinViewModel
+import shiny.mc.core.dto.CategoryType
 import shiny.mc.core.ports.category.DeleteCategory
 import shiny.mc.core.ports.category.SearchCategories
 import shiny.mc.core.ports.record.ChangeRecords
@@ -27,7 +29,12 @@ class CategoriesViewModel(
     val queryState = TextFieldState("")
     val query = snapshotFlow { queryState.text.toString() }
 
-    val categories = query.flatMapLatest { searchCategories.searchCategories(it) }
+    private val categories = query.flatMapLatest { searchCategories.searchCategories(it) }
+
+    val inCategories = categories.map { it.filter { it.type == CategoryType.In } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), emptyList())
+
+    val outCategories = categories.map { it.filter { it.type == CategoryType.Out } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(500), emptyList())
 
     fun selected(month: Int, year: Int) = getPeriodRecords.getRecords(month, year)

@@ -40,7 +40,8 @@ fun CategoriesNavScreen(
     onCancel: () -> Unit,
     viewModel: CategoriesViewModel = koinViewModel(),
 ) {
-    val categories by viewModel.categories.collectAsStateWithLifecycle()
+    val inCategories by viewModel.inCategories.collectAsStateWithLifecycle()
+    val outCategories by viewModel.outCategories.collectAsStateWithLifecycle()
     val selected by viewModel.selected(date.month, date.year).collectAsStateWithLifecycle()
 
     val searchBarState = rememberContainedSearchBarState()
@@ -101,7 +102,19 @@ fun CategoriesNavScreen(
             contentPadding = PaddingValues(MaterialTheme.space.paddingDefault),
             verticalArrangement = MaterialTheme.space.dividerArrangement
         ) {
-            itemsPosition(categories) { position, item ->
+            itemsPosition(inCategories) { position, item ->
+                CategoryItem(
+                    category = item,
+                    isSelected = selected.contains(item.id),
+                    position = position,
+                ) {
+                    viewModel.addToPeriod(item.id, date.month, date.year)
+                }
+            }
+
+            item { if (inCategories.isNotEmpty()) MaterialTheme.space.groupSpace() }
+
+            itemsPosition(outCategories) { position, item ->
                 CategoryItem(
                     category = item,
                     isSelected = selected.contains(item.id),
