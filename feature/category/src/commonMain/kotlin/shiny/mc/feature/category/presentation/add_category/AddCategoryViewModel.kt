@@ -37,15 +37,16 @@ class AddCategoryViewModel(
 
     private val command = MutableSharedFlow<Command<CategoryValue>>()
 
-    val commandState = command.processCommand {
-        addCategory.addCategory(it.title, it.type)
-    }
-    .onSuccess { titleState.clearText() }
-    .stateIn(
-        viewModelScope,
-        SharingStarted.WhileSubscribed(500),
-        CommandState.Idle()
-    )
+    val commandState =
+        command.processCommand {
+            addCategory.addCategory(it.title, it.type)
+        }
+        .onSuccess { titleState.clearText() }
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(500),
+            CommandState.Idle()
+        )
 
     fun onCategoryTypeSelected(type: CategoryType) {
         this.type.update { type }

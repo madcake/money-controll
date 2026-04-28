@@ -55,15 +55,26 @@ class AddTransactionViewModel(
     private val purpose = snapshotFlow { purposeState.text.toString() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5.seconds), "")
 
-    val record = recordId.filterNotNull().flatMapLatest { getRecord.getRecord(it) }
+    val record = recordId
+        .filterNotNull()
+        .flatMapLatest { getRecord.getRecord(it) }
         .filterNotNull()
         .onEach { record ->
             if (date.value == 0L) {
-                val millis = LocalDateTime(
+                val start = LocalDateTime(
                     month = record.period.month, year = record.period.year, day = 1,
                     hour = 0, minute = 0, second = 1
                 ).toInstant(TimeZone.UTC).toEpochMilliseconds()
-                date.update { millis }
+
+                val end = LocalDateTime(
+                    month = (record.period.month + 1).takeIf { it <= 12 } ?: 1, year = (record.period.month + 1).takeIf { it <= 12 }
+                        ?.let { record.period.year } ?: (record.period.year + 1), day = 1,
+                    hour = 0, minute = 0, second = 1
+                ).toInstant(TimeZone.UTC).toEpochMilliseconds()
+
+                if (date.value !in LongRange(start, end)) {
+                    date.update { start }
+                }
             }
         }
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
