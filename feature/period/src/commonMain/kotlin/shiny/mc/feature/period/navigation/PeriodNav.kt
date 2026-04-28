@@ -9,10 +9,6 @@ import shiny.mc.feature.period.presentation.period.PeriodNavScreen
 @Serializable
 object PeriodNavKey : NavKey
 
-//fun MutableList<NavKey>.openPeriod() {
-//    add(PeriodNavKey)
-//}
-
 fun EntryProviderScope<NavKey>.period(
     openCategories: (PeriodDate) -> Unit,
     openPeriods: () -> Unit,

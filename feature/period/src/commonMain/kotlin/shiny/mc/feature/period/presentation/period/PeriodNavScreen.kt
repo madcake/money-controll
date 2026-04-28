@@ -101,7 +101,6 @@ fun RecordsScene(
             .padding(MaterialTheme.space.paddingDefault),
         verticalArrangement = MaterialTheme.space.dividerArrangement,
     ) {
-
         periodValues?.let {
             item {
                 Row(
