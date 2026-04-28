@@ -36,8 +36,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import shiny.mc.core.dto.ValueState
+import shiny.mc.core_ui.theme.deficit
 import shiny.mc.core_ui.theme.paddingDefault
 import shiny.mc.core_ui.theme.space
+import shiny.mc.core_ui.theme.surplus
 import shiny.mc.platform.format
 import shiny.mc.platform.parseToDoubleOrNull
 
@@ -129,8 +131,8 @@ internal fun RecordHeader(
             style = MaterialTheme.typography.displaySmall.copy(
                 textAlign = TextAlign.Center,
                 color = when (record?.valueState) {
-                    ValueState.Deficit -> MaterialTheme.colorScheme.error
-                    ValueState.Surplus -> MaterialTheme.colorScheme.tertiary
+                    ValueState.Deficit -> MaterialTheme.colorScheme.deficit
+                    ValueState.Surplus -> MaterialTheme.colorScheme.surplus
                     null -> MaterialTheme.colorScheme.secondary
 
                 }

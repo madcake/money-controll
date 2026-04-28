@@ -16,6 +16,8 @@ import shiny.mc.core_ui.resources.Res
 import shiny.mc.core_ui.resources.common_estimate
 import shiny.mc.core_ui.resources.common_real
 import shiny.mc.core_ui.theme.MCTheme
+import shiny.mc.core_ui.theme.deficit
+import shiny.mc.core_ui.theme.surplus
 import shiny.mc.platform.format
 
 @Composable
@@ -71,8 +73,8 @@ fun NumberColumnView(
             text = diff,
             style = MaterialTheme.typography.titleMedium,
             color = when (state) {
-                ValueState.Deficit -> MaterialTheme.colorScheme.error
-                ValueState.Surplus -> MaterialTheme.colorScheme.tertiary
+                ValueState.Deficit -> MaterialTheme.colorScheme.deficit
+                ValueState.Surplus -> MaterialTheme.colorScheme.surplus
             }
         )
     }

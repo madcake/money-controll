@@ -49,6 +49,7 @@ import shiny.mc.core_ui.resources.error_period_add_not_found
 import shiny.mc.core_ui.resources.error_title_add
 import shiny.mc.core_ui.resources.error_title_copy
 import shiny.mc.core_ui.resources.title_periods
+import shiny.mc.core_ui.theme.bullish
 import shiny.mc.core_ui.theme.space
 import shiny.mc.feature.period.presentation.add_period.AddPeriodViewModel
 import shiny.mc.platform.format
@@ -217,7 +218,7 @@ private fun PeriodItemView(
             IconButton(onCopy) {
                 Icon(
                     imageVector = Icons.Default.CopyAll,
-                    tint = MaterialTheme.colorScheme.tertiary,
+                    tint = MaterialTheme.colorScheme.bullish,
                     contentDescription = "",
                 )
             }

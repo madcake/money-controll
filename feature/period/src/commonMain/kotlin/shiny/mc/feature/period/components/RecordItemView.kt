@@ -12,6 +12,7 @@ import shiny.mc.core.dto.ValueState
 import shiny.mc.core_ui.components.ColumnItem
 import shiny.mc.core_ui.components.ColumnItemValue
 import shiny.mc.core_ui.components.ItemPosition
+import shiny.mc.core_ui.theme.deficit
 
 @Composable
 fun RecordItemView(
@@ -26,7 +27,7 @@ fun RecordItemView(
                 value = item.estimateValueFormatted,
                 supportValue = item.realValue,
                 supportColor = when (item.valueState) {
-                    ValueState.Deficit -> MaterialTheme.colorScheme.error
+                    ValueState.Deficit -> MaterialTheme.colorScheme.deficit
                     ValueState.Surplus -> MaterialTheme.colorScheme.secondary
                 }
             )

@@ -1,5 +1,6 @@
 package shiny.mc.core_ui.theme
 
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
@@ -107,3 +108,12 @@ val darkColorScheme = darkColorScheme(
     onSurfaceVariant = OnSurfaceVariantDark,
     outline = OutlineDark
 )
+
+val ColorScheme.bullish: Color
+    get() = Color(0xFF4C9900)
+
+val ColorScheme.deficit: Color
+    get() = Error
+
+val ColorScheme.surplus: Color
+    get() = bullish
