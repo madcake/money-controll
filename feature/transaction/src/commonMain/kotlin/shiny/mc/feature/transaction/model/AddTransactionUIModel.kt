@@ -37,11 +37,11 @@ class AddTransactionUIModel(
     override val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob()),
 ) : UIModel<AddTransactionUIState, AddTransactionCommand> {
 
-    val recordId = MutableStateFlow("")
-    val purpose = MutableStateFlow("")
-    val value = MutableStateFlow("")
-    val date = MutableStateFlow(0L)
-    val command = MutableSharedFlow<Command<TransactionValue>>()
+    private val recordId = MutableStateFlow("")
+    private val purpose = MutableStateFlow("")
+    private val value = MutableStateFlow("")
+    private val date = MutableStateFlow(0L)
+    private val command = MutableSharedFlow<Command<TransactionValue>>()
 
     val commandState: StateFlow<CommandState<Command<TransactionValue>>> = command.processCommand {
             addRecordTransaction.addTransaction(
