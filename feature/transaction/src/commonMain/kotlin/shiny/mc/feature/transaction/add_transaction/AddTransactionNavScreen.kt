@@ -4,41 +4,51 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.flow.update
 import org.koin.compose.viewmodel.koinViewModel
+import shiny.mc.feature.transaction.model.AddTransactionCommand
+import shiny.mc.feature.transaction.model.AddTransactionUIState
+import shiny.mc.feature.transaction.model.AddTransactionViewModel
 
 @Composable
 fun AddTransactionNavScreen(
     onCancel: () -> Unit,
     recordId: String,
-    viewModel: AddTransactionViewModel = koinViewModel()//(key = recordId) { parametersOf(recordId) },
+    viewModel: AddTransactionViewModel = koinViewModel(),//(key = recordId) { parametersOf(recordId) },
 ) {
     DisposableEffect(recordId) {
 
-        viewModel.recordId.update { recordId }
+        viewModel.sendCommand(AddTransactionCommand.ChangeRecord(recordId))
 
         onDispose {
             viewModel.reset()
         }
     }
 
-    val date by viewModel.date.collectAsStateWithLifecycle()
-    val commandState by viewModel.commandState.collectAsStateWithLifecycle()
-    val record by viewModel.record.collectAsStateWithLifecycle()
-    val purposeSuggestions by viewModel.purposeSuggestions.collectAsStateWithLifecycle()
+    val state: AddTransactionUIState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (record == null) {
+    if (state.record == null) {
         return
     }
     AddTransactionScene(
-        recordMonth = record?.period?.month ?: 0,
-        recordYear = record?.period?.year ?: 0,
-        state = commandState,
-        value = viewModel.valueState,
-        purpose = viewModel.purposeState,
-        purposeSuggestions = purposeSuggestions,
-        date = date,
-        onDateSelect = viewModel::date,
-        onAdd = { viewModel.add(recordId) },
+        recordMonth = state.record?.period?.month ?: 0,
+        recordYear = state.record?.period?.year ?: 0,
+        state = state.saveState,
+        value = state.value,
+        purpose = state.purpose,
+        purposeSuggestions = state.purposeSuggestions,
+        date = state.date,
+        onPurposeChange = { viewModel.sendCommand(AddTransactionCommand.ChangePurpose(it)) },
+        onValueChange = { viewModel.sendCommand(AddTransactionCommand.ChangeValue(it)) },
+        onDateSelect = { viewModel.sendCommand(AddTransactionCommand.ChangeDate(it ?: 0L)) },
+        onAdd = {
+            viewModel.sendCommand(
+                AddTransactionCommand.Save(
+                    recordId = state.record?.id!!,
+                    purpose = state.purpose,
+                    value = state.value,
+                    date = state.date,
+                )
+            )
+        },
     )
 }

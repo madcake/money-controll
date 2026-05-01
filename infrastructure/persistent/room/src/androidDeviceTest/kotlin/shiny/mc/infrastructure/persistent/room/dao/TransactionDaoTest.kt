@@ -112,4 +112,26 @@ class TransactionDaoTest {
         assertEquals(1, transportSuggestions.size)
         assertEquals("Bus", transportSuggestions[0])
     }
+
+    @Test
+    fun getSuggestions_uniqueAndOrdered() = runBlocking {
+        val categoryId = categoryDao.insert(CategoryEntity(title = "Food", type = CategoryTypeEntity.Out))
+        val recordId = "record1"
+        recordDao.insert(RecordEntity(id = recordId, categoryId = categoryId, month = 1, year = 2024, estimateValue = 100.0))
+
+        // Insert duplicate purposes
+        transactionDao.insert(TransactionEntity(id = 0, recordId = recordId, value = 10.0, purpose = "Coffee", datetime = 1L))
+        transactionDao.insert(TransactionEntity(id = 0, recordId = recordId, value = 5.0, purpose = "Coffee", datetime = 2L))
+        
+        // Insert purposes that should be ordered alphabetically
+        transactionDao.insert(TransactionEntity(id = 0, recordId = recordId, value = 15.0, purpose = "Apple", datetime = 3L))
+        transactionDao.insert(TransactionEntity(id = 0, recordId = recordId, value = 20.0, purpose = "Banana", datetime = 4L))
+
+        val suggestions = transactionDao.getSuggestions(categoryId, "").first()
+        
+        assertEquals(3, suggestions.size)
+        assertEquals("Apple", suggestions[0])
+        assertEquals("Banana", suggestions[1])
+        assertEquals("Coffee", suggestions[2])
+    }
 }

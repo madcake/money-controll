@@ -7,12 +7,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.clearText
-import androidx.compose.foundation.text.input.rememberTextFieldState
-import androidx.compose.foundation.text.input.setTextAndPlaceCursorAtEnd
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -44,8 +40,10 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.TimeZone
@@ -74,14 +72,32 @@ fun AddTransactionScene(
     recordMonth: Int,
     recordYear: Int,
     state: CommandState<Command<TransactionValue>>,
-    value: TextFieldState,
-    purpose: TextFieldState,
+    value: String,
+    purpose: String,
     date: Long,
     purposeSuggestions: List<String>,
+    onPurposeChange: (String) -> Unit,
+    onValueChange: (String) -> Unit,
     onDateSelect: (Long?) -> Unit,
     onAdd: () -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
+    val purposeValue by remember(purpose) {
+        mutableStateOf(
+            TextFieldValue(
+                text = purpose,
+                selection = TextRange(purpose.length)
+            )
+        )
+    }
+    val amountValue by remember(value) {
+        mutableStateOf(
+            TextFieldValue(
+                text = value,
+                selection = TextRange(value.length)
+            )
+        )
+    }
 
     val valueFocusRequester = remember { FocusRequester() }
 
@@ -123,16 +139,20 @@ fun AddTransactionScene(
                 modifier = Modifier
                     .fillMaxWidth()
                     .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryEditable),
-                state = purpose,
+                value = purposeValue,
+                onValueChange = { onPurposeChange(it.text) },
                 placeholder = { Text(stringResource(Res.string.placeholders_add_transaction_purpose)) },
                 enabled = !isProcessing,
-                lineLimits = TextFieldLineLimits.MultiLine(1, 6),
+                minLines = 1,
+                maxLines = 6,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                 ),
-                onKeyboardAction = {
-                    focusManager.moveFocus(FocusDirection.Next)
-                },
+                keyboardActions = KeyboardActions(
+                    onNext = {
+                        focusManager.moveFocus(FocusDirection.Next)
+                    }
+                ),
             )
             ExposedDropdownMenu(
                 expanded = transactionSuggestionShowed,
@@ -149,8 +169,7 @@ fun AddTransactionScene(
                             }
                         },
                         onClick = {
-                            purpose.clearText()
-                            purpose.setTextAndPlaceCursorAtEnd(item)
+                            onPurposeChange(item)
                             valueFocusRequester.requestFocus()
                             transactionSuggestionShowed = false
                         },
@@ -179,15 +198,16 @@ fun AddTransactionScene(
             }
             OutlinedTextField(
                 modifier = Modifier.weight(0.6f).focusRequester(valueFocusRequester),
-                state = value,
+                value = amountValue,
+                onValueChange = { onValueChange(it.text) },
                 placeholder = { Text(stringResource(Res.string.placeholders_add_expense_value)) },
                 enabled = !isProcessing,
-                lineLimits = TextFieldLineLimits.SingleLine,
+                singleLine = true,
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
                     keyboardType = KeyboardType.Decimal,
                 ),
-                onKeyboardAction = { onAdd() },
+                keyboardActions = KeyboardActions(onDone = { onAdd() }),
                 trailingIcon = {
                     IconButton(
                         onClick = onAdd
@@ -254,14 +274,16 @@ fun AddTransactionScenePreview() {
             recordMonth = 4,
             recordYear = 2026,
             state = CommandState.Idle(),
-            value = rememberTextFieldState(),
-            purpose = rememberTextFieldState(),
+            value = "8000",
+            purpose = "Some purpose",
             date = Clock.System.now().toEpochMilliseconds(),
             purposeSuggestions = listOf(
                 "Transaction test 1",
                 "Transaction test 2",
                 "Transaction test 3",
             ),
+            onPurposeChange = {},
+            onValueChange = {},
             onDateSelect = {},
             onAdd = {},
         )

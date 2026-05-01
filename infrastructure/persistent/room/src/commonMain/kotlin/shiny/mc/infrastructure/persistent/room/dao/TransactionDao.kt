@@ -27,6 +27,8 @@ interface TransactionDao {
             record_transaction
         JOIN record ON record_transaction.recordId = record.id AND record.categoryId = :categoryId
         WHERE purpose LIKE '%' || :query || '%'
+        GROUP BY purpose
+        ORDER BY purpose
     """)
     fun getSuggestions(categoryId: Long, query: String): Flow<List<String>>
 }

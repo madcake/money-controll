@@ -28,6 +28,7 @@ import shiny.mc.core.ports.transaction.DeleteTransaction
 import shiny.mc.core.ports.transaction.GetRecordTransactions
 import shiny.mc.core.ports.transaction.GetTransactionSuggestions
 import shiny.mc.core.ports.transaction.TransactionValidator
+import shiny.mc.core.ports.ui.UIModel
 import shiny.mc.feature.category.ports.AddCategoryImpl
 import shiny.mc.feature.category.ports.DeleteCategoryImpl
 import shiny.mc.feature.category.ports.SearchCategoriesImpl
@@ -45,7 +46,8 @@ import shiny.mc.feature.record.ports.GetRecordImpl
 import shiny.mc.feature.record.ports.UpdateRecordValueImpl
 import shiny.mc.feature.record.presentation.EditRecordViewModel
 import shiny.mc.feature.record.presentation.RecordViewModel
-import shiny.mc.feature.transaction.add_transaction.AddTransactionViewModel
+import shiny.mc.feature.transaction.model.AddTransactionUIModel
+import shiny.mc.feature.transaction.model.AddTransactionViewModel
 import shiny.mc.feature.transaction.ports.AddRecordTransactionImpl
 import shiny.mc.feature.transaction.ports.DeleteTransactionImpl
 import shiny.mc.feature.transaction.ports.GetRecordTransactionsImpl
@@ -56,8 +58,6 @@ import shiny.mc.infrastructure.persistent.room.di.repositoryModule
 import shiny.mc.infrastructure.persistent.room.di.storeModule
 
 val coordinateModule = module {
-//    includes(repositoryModule)
-
     single<SetCurrentPeriodImpl>() bind SetCurrentPeriod::class
     single<GetCurrentPeriodDateImpl>() bind GetCurrentPeriodDate::class
 
@@ -81,6 +81,10 @@ val coordinateModule = module {
     single<CopyPeriodImpl>() bind CopyPeriod::class
 }
 
+val uiModel = module {
+    single<AddTransactionUIModel>() bind UIModel::class
+}
+
 val viewModelModule = module {
     viewModel<PeriodViewModel>()
     viewModel<AddCategoryViewModel>()
@@ -101,6 +105,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) = startKoin {
     })
     modules(
         viewModelModule,
+        uiModel,
         coordinateModule,
         repositoryModule,
         storeModule,
