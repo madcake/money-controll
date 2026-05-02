@@ -118,13 +118,12 @@ class AddTransactionUIModelTest {
     }
 
     @Test
-    fun `sendCommand ChangeDate updates date in uiState`() = runTest {
+    fun `sendCommand ChangeDate updates date in uiState`() = runTest(UnconfinedTestDispatcher()) {
         val (uiModel, states) = createModel(backgroundScope)
         
         uiModel.sendCommand(AddTransactionCommand.ChangeDate(123456789L))
         
         val state = states.last()
-        assertEquals(listOf(), states)
         assertEquals(123456789L, state.date)
     }
 
@@ -190,7 +189,7 @@ class AddTransactionUIModelTest {
     }
 
     @Test
-    fun `purposeSuggestions updates when recordId or purpose changes`() = runTest {
+    fun `purposeSuggestions updates when recordId or purpose changes`() = runTest(UnconfinedTestDispatcher()) {
         val mockSuggestions = MockGetTransactionSuggestions()
         val (uiModel, states) = createModel(backgroundScope, getTransactionSuggestions = mockSuggestions)
         
