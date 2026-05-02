@@ -17,11 +17,12 @@ actual val platformStoreModule = module {
 }
 
 private fun getDatabaseBuilder(): RoomDatabase.Builder<RoomStore> {
-    val dbFilePath = documentDirectory() + "/store.db"
+    val dbFilePath = documentDirectory() + "/" + DATABASE_NAME
     return Room.databaseBuilder<RoomStore>(
         name = dbFilePath,
     )
 }
+
 @OptIn(ExperimentalForeignApi::class)
 private fun documentDirectory(): String {
     val documentDirectory = NSFileManager.defaultManager.URLForDirectory(

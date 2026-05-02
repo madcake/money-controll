@@ -14,7 +14,10 @@ actual val platformStoreModule = module {
 }
 
 private fun getDatabaseBuilder(): RoomDatabase.Builder<RoomStore> {
-    val dbFile = File(System.getProperty("user.home"), ".money_control")
+    val dbFile = File(System.getProperty("user.home") + File.separator + ".money_control", DATABASE_NAME)
+    if (!dbFile.parentFile.exists()) {
+        dbFile.parentFile.mkdirs()
+    }
     return Room.databaseBuilder<RoomStore>(
         name = dbFile.absolutePath,
     )

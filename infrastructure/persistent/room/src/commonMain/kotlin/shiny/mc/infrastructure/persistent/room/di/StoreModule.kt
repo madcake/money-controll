@@ -26,6 +26,8 @@ import shiny.mc.infrastructure.persistent.room.dao.PeriodDao
 import shiny.mc.infrastructure.persistent.room.dao.RecordDao
 import shiny.mc.infrastructure.persistent.room.dao.TransactionDao
 
+const val DATABASE_NAME = "store.db"
+
 expect val platformStoreModule: Module
 
 val storeModule = module {
@@ -45,7 +47,7 @@ val repositoryModule = module {
     single<RoomPeriodRepository>() bind PeriodRepository::class
 }
 
-fun getRoomDatabase(
+internal fun getRoomDatabase(
     builder: RoomDatabase.Builder<RoomStore>,
 ): RoomStore {
     return builder
@@ -56,8 +58,8 @@ fun getRoomDatabase(
         .build()
 }
 
-private fun getAppConfigDao(source: RoomStore): AppConfigDao = source.appConfigDao()
-private fun getCategoryDao(source: RoomStore): CategoryDao = source.categoryDao()
-private fun getRecordDao(source: RoomStore): RecordDao = source.categoryRecordDao()
-private fun getTransactionDao(source: RoomStore): TransactionDao = source.transactionDao()
-private fun getPeriodDao(source: RoomStore): PeriodDao = source.periodDao()
+internal fun getAppConfigDao(source: RoomStore): AppConfigDao = source.appConfigDao()
+internal fun getCategoryDao(source: RoomStore): CategoryDao = source.categoryDao()
+internal fun getRecordDao(source: RoomStore): RecordDao = source.categoryRecordDao()
+internal fun getTransactionDao(source: RoomStore): TransactionDao = source.transactionDao()
+internal fun getPeriodDao(source: RoomStore): PeriodDao = source.periodDao()

@@ -15,7 +15,7 @@ actual val platformStoreModule = module {
 
 private fun getDatabaseBuilder(ctx: Context): RoomDatabase.Builder<RoomStore> {
     val appContext = ctx.applicationContext
-    val dbFile = appContext.getDatabasePath("store.db")
+    val dbFile = appContext.getDatabasePath(DATABASE_NAME)
     return Room.databaseBuilder<RoomStore>(
         context = appContext,
         name = dbFile.absolutePath
