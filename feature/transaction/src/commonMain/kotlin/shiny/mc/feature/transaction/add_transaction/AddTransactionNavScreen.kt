@@ -1,7 +1,7 @@
 package shiny.mc.feature.transaction.add_transaction
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.viewmodel.koinViewModel
@@ -15,13 +15,9 @@ fun AddTransactionNavScreen(
     recordId: String,
     viewModel: AddTransactionViewModel = koinViewModel(),//(key = recordId) { parametersOf(recordId) },
 ) {
-    DisposableEffect(recordId) {
-
+    LaunchedEffect(recordId) {
+        viewModel.reset()
         viewModel.sendCommand(AddTransactionCommand.ChangeRecord(recordId))
-
-        onDispose {
-            viewModel.reset()
-        }
     }
 
     val state: AddTransactionUIState by viewModel.uiState.collectAsStateWithLifecycle()

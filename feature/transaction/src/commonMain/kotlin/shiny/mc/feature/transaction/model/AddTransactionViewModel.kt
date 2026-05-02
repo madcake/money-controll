@@ -9,6 +9,7 @@ import shiny.mc.core.ports.ui.UIModel
 @OptIn(ExperimentalCoroutinesApi::class)
 @KoinViewModel
 class AddTransactionViewModel(
+    // @InjectedParam val recordId: String,
     @Named("add_transaction") private val uiModel: UIModel<AddTransactionUIState, AddTransactionCommand>
 ) : ViewModel(uiModel.scope), UIModel<AddTransactionUIState, AddTransactionCommand> by uiModel
 

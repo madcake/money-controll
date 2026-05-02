@@ -18,6 +18,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import org.koin.core.annotation.Named
+import shiny.mc.core.domain.entity.RecordInfo
 import shiny.mc.core.domain.value.TransactionValue
 import shiny.mc.core.ports.record.GetRecord
 import shiny.mc.core.ports.transaction.AddRecordTransaction
@@ -59,25 +60,7 @@ class AddTransactionUIModel(
 
     val record = recordId
         .flatMapLatest { getRecord.getRecord(it) }
-        .onEach { record ->
-            record ?: return@onEach
-
-            val start = LocalDateTime(
-                month = record.period.month, year = record.period.year, day = 1,
-                hour = 0, minute = 0, second = 1
-            ).toInstant(TimeZone.UTC).toEpochMilliseconds()
-
-            val end = LocalDateTime(
-                month = (record.period.month + 1).takeIf { it <= 12 } ?: 1, year = (record.period.month + 1).takeIf { it <= 12 }
-                    ?.let { record.period.year } ?: (record.period.year + 1), day = 1,
-                hour = 0, minute = 0, second = 1
-            ).toInstant(TimeZone.UTC).toEpochMilliseconds()
-            val range = LongRange(start, end)
-
-            if (!range.contains(date.value)) {
-                date.update { start }
-            }
-        }
+        .onEach(::updateDate)
 
     val purposeSuggestions
         = combine(recordId, purpose, ::Pair)
@@ -123,5 +106,25 @@ class AddTransactionUIModel(
         purpose.update { "" }
         value.update { "" }
         date.update { 0L }
+    }
+
+    private fun updateDate(record: RecordInfo?) {
+        record ?: return
+
+        val start = LocalDateTime(
+            month = record.period.month, year = record.period.year, day = 1,
+            hour = 0, minute = 0, second = 1
+        ).toInstant(TimeZone.UTC).toEpochMilliseconds()
+
+        val end = LocalDateTime(
+            month = (record.period.month + 1).takeIf { it <= 12 } ?: 1, year = (record.period.month + 1).takeIf { it <= 12 }
+                ?.let { record.period.year } ?: (record.period.year + 1), day = 1,
+            hour = 0, minute = 0, second = 1
+        ).toInstant(TimeZone.UTC).toEpochMilliseconds()
+        val range = LongRange(start, end)
+
+        if (!range.contains(date.value)) {
+            date.update { start }
+        }
     }
 }
